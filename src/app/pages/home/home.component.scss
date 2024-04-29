@@ -1,0 +1,99 @@
+.wrapper{
+
+}
+
+.banner{
+    .banner__hard{
+        img{
+            width: 100%;
+            height: auto;
+        }
+    }
+    .banner__soft{
+        
+    }
+}
+
+.main{
+    padding: 0px var(--default-medium-zone);
+    display: flex;
+    flex-direction: row;
+    .filter{
+        flex: 1;
+        padding: 0px var(--default-medium-zone);
+        .filter__body{
+            margin: var(--default-small-zone) 0px;
+            .filter__search{
+                display: flex;
+                align-items: center;
+                .search__input{
+                    flex: 1;
+                    display: flex;
+                    margin-right: var(--default-small-zone);
+                    border: 1px solid var(--color-disable);
+                    border-radius: var(--default-small-zone);
+                    input{
+                        width: 100%;
+                        padding: var(--default-mini-zone) var(--default-medium-zone);
+                        border: none;
+                        background-color: transparent;
+                        font-size: var(--default-small-font-size);
+                    }
+                    input:focus{
+                        outline: none;
+                    }
+                }
+            }
+            .filter__display{
+                .display__hintWord{
+                    margin-left: var(--default-small-zone);
+                    p {
+                        font-size: var(--default-small-font-size);
+                        font-weight: var(--default-mini-font-weight);
+                        color: var(--primary);
+                        word-break: break-all;
+                    }
+                }
+                .tag__input{
+                    border: 1px solid var(--color-disable);
+                    border-radius: var(--default-small-zone);
+                    textarea{
+                        width: 100%;
+                        padding: var(--default-small-zone);
+                        background-color: transparent;
+                        border: none;
+                    }
+                    textarea:focus{
+                        outline: none;
+                    }
+                }
+            }
+        }
+    }
+    .listView{
+        flex: 1;
+        padding: 0px var(--default-medium-zone);
+        .listView__header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .pageSelect{
+                a + a {
+                    margin-left: 8px;
+                }
+            }
+        }
+    }
+    .quickView{
+        flex: 1;
+        padding: 0px var(--default-medium-zone);
+    }
+}
+
+
+.header__title {
+    color: var(--black);
+    font-size: var(--default-medium-font-size);
+    font-weight: var(--default-medium-font-weight);
+    padding: var(--default-mini-zone);
+}

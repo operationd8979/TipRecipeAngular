@@ -1,0 +1,82 @@
+<body class="wrapper">
+    <component-text-box [type]="'text'" [(valueModel)]="username" [size]="'small'" ></component-text-box>
+    <p>{{username}}</p>
+    <div class="banner">
+        <div class="banner__hard">
+            <img src="./assets/images/banner.png" alt="banner">
+        </div>
+        <div class="banner__soft">
+            <!-- <h1>This is banner recommend dishs</h1> -->
+            <!-- recommend food banner -->
+        </div>
+    </div>
+    <main class="main">
+        <aside class="filter">
+            <div class="header__title">Filter</div>
+            <hr>
+            <div class="filter__body">
+                <div class="filter__search">
+                    <div class="search__input">
+                        <input type="text" id="search"
+                        onKeyDown="if(event.key === 'Enter') {event.preventDefault(); callApiSearch();}"
+                        placeholder="Search... by dish's name">
+                    </div>
+                    <components-button [type]="'primary'" (clicked)="callApiSearch()">Search</components-button>
+                </div>
+                <div class="filter__display">
+                    <div class="header__title">
+                        Ingredients/Type tag            
+                    </div>
+                    <div class="display__hintWord">
+                        <p class="font-thin text-blue-600/100 truncate line-clamp-1" id="hintTag">hint</p>
+                    </div>
+                    <div class="tag__input">
+                        <textarea id="tagInput"
+                            class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500 w-full"
+                            placeholder="Enter tags..."></textarea>
+                    </div>
+                    <h2 class="text-lg font-semibold mt-4">Ingredients filter</h2>
+                    <div class="flex flex-wrap gap-2" id="ingredients"></div>
+                    <h2 class="text-lg font-semibold mt-4">Type filter</h2>
+                    <div class="flex flex-wrap gap-2 mb-4" id="types"></div>
+                </div>
+            </div>
+        </aside>
+        <section class="listView">
+            <div class="listView__header">
+                <div class="header__title">Dishs</div>
+                <div class="pageSelect">
+                    <a href="javascript:void(0)" onClick="changePage('back')"
+                        class="mr-2 text-blue-500 hover:text-blue-800">back</a>
+                    <a href="javascript:void(0)" onClick="changePage('next')"
+                        class="mr-2 text-blue-500 hover:text-blue-800">next</a>
+                </div>
+            </div>
+            <hr>
+            <ul>
+                <!-- <?php renderRecipce($dishs); ?> -->
+            </ul>
+        </section>
+        <aside class="quickView">
+            <div class="header__title">Quick view</div>
+            <hr>
+            <ul>
+                <li class="mb-4">
+                    <h3 id="dish-name" class="text-xl font-semibold"></h3>
+                    <div class="flex">
+                        <img id="dish-url"
+                            src="assets/images/default/defaultDishPhoto.png"
+                            alt="" class="w-32 h-32 object-cover rounded-lg">
+                        <div class="ml-2">
+                            <p class="text-gray-600">Ingredients: </p>
+                            <ul id="dish-ingredients" class="list-disc ml-4"></ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p id="dish-description" class="text-gray-600"></p>
+            <p id="dish-types" class="text-gray-600"></p>
+            <div id="dish-content" class="mt-4"></div>
+        </aside>
+    </main>
+</body>

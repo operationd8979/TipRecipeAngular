@@ -1,0 +1,26 @@
+<div class="wrapper">
+    <div class="container">
+        <div class="header__title">Login</div>
+        <div class="error__message">error</div>
+        <form action="" method="POST">
+            <div class="form__fill">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="operationddd@gmail.com">
+            </div>
+            <div class="form__fill">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" value="12345678">
+            </div>
+            <div class="form__catcha">
+                <div class="captcha">
+                    <img src="captcha.php" alt="Captcha" onclick="this.src='captcha.php?refresh=1'">
+                </div>
+                <input type="text" id="captcha" name="captcha" placeholder="Enter Captcha">
+            </div>
+            <div class="active__wrapper">
+                <components-button [type]="'primary'">Sign in</components-button>
+                <a href="register.php" class="text-blue-500 hover:text-blue-800 text-sm">Sign up?</a>
+            </div>
+        </form>
+    </div>
+</div>
