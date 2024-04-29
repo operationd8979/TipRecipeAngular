@@ -1,0 +1,1 @@
+export {ListDishComponent as DishList} from './list-dish.component';

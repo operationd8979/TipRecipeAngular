@@ -1,0 +1,19 @@
+.wrapper{
+    display: inline-block;
+    margin-top: var(--default-small-zone);
+    margin-right: var(--default-small-zone);
+    background-color: var(--white);
+    color: var(--black);
+    padding: var(--default-mini-zone) var(--default-small-zone);
+    border-radius: var(--default-medium-zone);
+}
+
+.red {
+    background-color: rgb(254 202 202);
+    color: var(--black);
+}
+
+.gray {
+    background-color: rgb(229 231 235);
+    color: var(--black);
+}

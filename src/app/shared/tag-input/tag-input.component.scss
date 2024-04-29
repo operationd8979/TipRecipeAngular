@@ -1,0 +1,31 @@
+.display__hintWord{
+    margin-left: var(--default-small-zone);
+    p {
+        font-size: var(--default-mini-font-size);
+        font-weight: var(--default-mini-font-weight);
+        color: var(--primary);
+        word-break: break-all;
+    }
+}
+.tag__input{
+    border: 1px solid var(--color-disable);
+    border-radius: var(--default-small-zone);
+    textarea{
+        width: 100%;
+        padding: var(--default-small-zone);
+        background-color: transparent;
+        border: none;
+        font-size: var(--default-mini-font-size);
+        font-weight: var(--default-mini-font-weight);
+    }
+    textarea:focus{
+        outline: none;
+    }
+}
+
+.header__title {
+    color: var(--black);
+    font-size: var(--default-small-font-size);
+    font-weight: var(--default-medium-font-weight);
+    padding: var(--default-mini-zone);
+}

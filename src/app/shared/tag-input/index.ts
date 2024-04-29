@@ -1,0 +1,1 @@
+export {TagInputComponent as TagInput} from './tag-input.component';

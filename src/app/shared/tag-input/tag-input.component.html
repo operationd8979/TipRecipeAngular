@@ -1,0 +1,11 @@
+<div class="wrapper">
+    <div class="header__title">
+        Ingredients/Type tag            
+    </div>
+    <div class="display__hintWord">
+        <p>hint</p>
+    </div>
+    <div class="tag__input">
+        <textarea [(ngModel)]="valueModel" placeholder="Enter tags..." (input)="onChange($event);" #tagInput></textarea>
+    </div>
+</div>

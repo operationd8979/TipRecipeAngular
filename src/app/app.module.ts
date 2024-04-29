@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { Header, Footer } from './layout';
 import { Home, Login, Register, UserProfile } from './pages';
-import { Button, TextBox, PlainTextCard } from './shared';
+import { Button, TextBox, PlainTextCard, TagInput, TagItem, DishList, DishItem } from './shared';
 
 
 @NgModule({
@@ -21,6 +21,10 @@ import { Button, TextBox, PlainTextCard } from './shared';
     Button,
     TextBox,
     PlainTextCard,
+    TagInput,
+    TagItem,
+    DishList,
+    DishItem,
   ],
   imports: [
     BrowserModule,

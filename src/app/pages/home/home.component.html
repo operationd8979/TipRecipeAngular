@@ -15,26 +15,26 @@
             <div class="filter__body">
                 <div class="filter__search">
                     <div class="search__input">
-                        <shared-text-box [type]="'text'" [size]="'medium'" [(valueModel)]="username"></shared-text-box>
+                        <shared-text-box [type]="'text'" [size]="'medium'" [placeholder]="'search by name'" [(valueModel)]="query"></shared-text-box>
                     </div>
                     <shared-button [type]="'primary'" [size]="'medium'" (clicked)="callApiSearch()">Search</shared-button>
                 </div>
                 <div class="filter__display">
-                    <div class="header__title">
-                        Ingredients/Type tag            
-                    </div>
-                    <div class="display__hintWord">
-                        <p class="font-thin text-blue-600/100 truncate line-clamp-1" id="hintTag">hint</p>
-                    </div>
                     <div class="tag__input">
-                        <textarea id="tagInput"
-                            class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500 w-full"
-                            placeholder="Enter tags..."></textarea>
+                        <shared-tag-input [(valueModel)]="tagValue" [(tagPayModel)]="tagPayload" ></shared-tag-input>
                     </div>
-                    <h2 class="text-lg font-semibold mt-4">Ingredients filter</h2>
-                    <div class="flex flex-wrap gap-2" id="ingredients"></div>
-                    <h2 class="text-lg font-semibold mt-4">Type filter</h2>
-                    <div class="flex flex-wrap gap-2 mb-4" id="types"></div>
+                    <div class="tags__container">
+                        <div class="header__title">Ingredients filter</div>
+                        <div class="tag__load">
+                            <shared-tag-item *ngFor="let ingredient of ingredients" [tag]="ingredient.value" [color]="'gray'"></shared-tag-item>
+                        </div>
+                    </div>
+                    <div class="tags__container">
+                        <div class="header__title">Type filter</div>
+                        <div class="tag__load">
+                            <shared-tag-item *ngFor="let type of types" [tag]="type.value" [color]="'red'"></shared-tag-item>
+                        </div>
+                    </div>
                 </div>
             </div>
         </aside>
@@ -50,6 +50,7 @@
             </div>
             <hr>
             <ul>
+                <shared-list-dish></shared-list-dish>
                 <!-- <?php renderRecipce($dishs); ?> -->
             </ul>
         </section>

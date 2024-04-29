@@ -1,0 +1,1 @@
+export {TagItemComponent as TagItem} from './tag-item.component';
