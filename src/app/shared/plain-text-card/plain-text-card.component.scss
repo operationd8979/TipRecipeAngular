@@ -1,0 +1,24 @@
+.wrapper{
+    width: 100%;
+
+    background-color: var(--white);
+    border-radius: var(--default-small-zone);
+    box-shadow: var(--default-box-shadow);
+}
+
+.container{
+    padding: var(--default-xlarge-zone) var(--default-xlarge-zone);
+    .header{
+        margin-bottom: var(--default-small-zone);
+        font-size: var(--default-medium-font-size);
+        color: var(--black);
+        font-weight: var(--default-large-font-weight);
+    }
+    .payload{
+        font-weight: var(--default-small-font-weight);
+        font-size: var(--default-small-font-size);
+    }
+    p + p{
+        margin-top: var(--default-small-zone);
+    }
+}

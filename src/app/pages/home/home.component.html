@@ -1,6 +1,4 @@
 <body class="wrapper">
-    <component-text-box [type]="'text'" [(valueModel)]="username" [size]="'small'" ></component-text-box>
-    <p>{{username}}</p>
     <div class="banner">
         <div class="banner__hard">
             <img src="./assets/images/banner.png" alt="banner">
@@ -17,11 +15,9 @@
             <div class="filter__body">
                 <div class="filter__search">
                     <div class="search__input">
-                        <input type="text" id="search"
-                        onKeyDown="if(event.key === 'Enter') {event.preventDefault(); callApiSearch();}"
-                        placeholder="Search... by dish's name">
+                        <shared-text-box [type]="'text'" [size]="'medium'" [(valueModel)]="username"></shared-text-box>
                     </div>
-                    <components-button [type]="'primary'" (clicked)="callApiSearch()">Search</components-button>
+                    <shared-button [type]="'primary'" [size]="'medium'" (clicked)="callApiSearch()">Search</shared-button>
                 </div>
                 <div class="filter__display">
                     <div class="header__title">

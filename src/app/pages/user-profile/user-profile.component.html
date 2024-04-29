@@ -1,0 +1,29 @@
+<div class="wrapper">
+    <div class="container">
+        <div class="card">
+            <shared-plain-text-card [title]="'Your Card'" [payload]="user"></shared-plain-text-card>
+        </div>
+        <div class="form">
+            <div class="form__title">
+                Update Profile
+            </div>
+            <div class="form__body">
+                <div class="form__fill">
+                    <label for="email">Username</label>
+                    <shared-text-box [type]="'text'" [size]="'medium'" [(valueModel)]="user.Name"></shared-text-box>
+                </div>
+                <div class="form__fill">
+                    <label for="email">Email</label>
+                    <shared-text-box [type]="'email'" [size]="'medium'" [(valueModel)]="user.Email"></shared-text-box>
+                </div>
+                <div class="form__fill">
+                    <label for="email">Password</label>
+                    <shared-text-box [type]="'password'" [size]="'medium'" [(valueModel)]="newPassword"></shared-text-box>
+                </div>
+                <div class="active__wrapper">
+                    <shared-button [type]="'primary'" [size]="'medium'">Update</shared-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

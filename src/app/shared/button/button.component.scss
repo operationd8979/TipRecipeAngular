@@ -15,7 +15,7 @@ button:hover{
     background-color: var(--primary);
 }
 .primary:hover{
-    background-color: var(--hover-primary);
+    background-color: var(--primary-hover);
 }
 
 .outline{
@@ -35,4 +35,16 @@ button:hover{
 .disabled:hover{
     background-color: var(--color-disable);
     cursor: default;
+}
+
+.small {
+    padding: var(--default-small-zone) var(--default-small-zone);
+    font-size: var(--default-mini-font-size);
+    font-weight: var(--default-small-font-weight);
+}
+
+.large {
+    padding: var(--default-large-zone) var(--default-xlarge-zone);
+    font-size: var(--default-large-font-size);
+    font-weight: var(--default-large-font-weight);
 }

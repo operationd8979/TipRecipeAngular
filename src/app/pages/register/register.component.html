@@ -5,29 +5,29 @@
         <form action="" method="POST">
             <div class="form__fill">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="operationddd@gmail.com">
+                <shared-text-box [type]="'email'" [size]="'medium'" [(valueModel)]="email"></shared-text-box>
             </div>
             <div class="form__fill">
                 <label for="username">Username (display name)</label>
-                <input type="text" id="username" name="username" value="operationddd">
+                <shared-text-box [type]="'text'" [size]="'medium'" [(valueModel)]="username"></shared-text-box>
             </div>
             <div class="form__fill">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" value="12345678">
+                <shared-text-box [type]="'password'" [size]="'medium'" [(valueModel)]="password"></shared-text-box>
             </div>
             <div class="form__fill">
                 <label for="confrimPassword">Confirm Password</label>
-                <input type="password" id="confrimPassword" name="confrimPassword" value="12345678">
+                <shared-text-box [type]="'passwrod'" [size]="'medium'" [(valueModel)]="confirmPassword"></shared-text-box>
             </div>
             <div class="form__catcha">
                 <div class="captcha">
                     <img src="captcha.php" alt="Captcha" onclick="this.src='captcha.php?refresh=1'">
                 </div>
-                <input type="text" id="captcha" name="captcha" placeholder="Enter Captcha">
+                <shared-text-box [type]="'text'" [size]="'small'" [(valueModel)]="captcha"></shared-text-box>
             </div>
             <div class="active__wrapper">
-                <components-button [type]="'primary'">Sign in</components-button>
-                <a href="register.php" class="text-blue-500 hover:text-blue-800 text-sm">Sign up?</a>
+                <shared-button [type]="'primary'" [size]="'medium'">Sign up</shared-button>
+                <a href="login">Sign in?</a>
             </div>
         </form>
     </div>

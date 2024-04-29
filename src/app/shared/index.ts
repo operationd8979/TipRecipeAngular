@@ -1,3 +1,4 @@
 import { Button } from "./button";
 import { TextBox } from "./text-box";
-export { Button, TextBox };
+import { PlainTextCard } from "./plain-text-card";
+export { Button, TextBox, PlainTextCard };

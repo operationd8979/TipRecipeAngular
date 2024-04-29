@@ -1,0 +1,10 @@
+<div class="wrapper">
+    <div class="container">
+        <div class="header">{{title}}</div>
+        <div class="payload">
+            <p *ngFor="let key of payloadKeys">
+                <b>{{ key }}</b>: {{ payload[key] }}
+            </p>
+        </div>
+    </div>
+</div>

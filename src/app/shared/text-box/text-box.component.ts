@@ -1,16 +1,15 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'component-text-box',
+  selector: 'shared-text-box',
   template: `
-  <input [type]="type" [(ngModel)]="valueModel" [class.{{size}}]="true">`,
+  <input [type]="type" [(ngModel)]="valueModel" [class]="size">`,
   styleUrls: ['./text-box.component.scss']
 })
 export class TextBoxComponent implements OnInit {
 
   @Input() type: string = 'text';
   @Input() size: string = 'medium';
-
 
   value = "";
 

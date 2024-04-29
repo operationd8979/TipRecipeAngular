@@ -1,0 +1,38 @@
+.wrapper{
+    // background-color: var(--white);
+}
+
+
+.container{
+    padding: var(--default-medium-zone) 0 ;
+    width: 60%;
+    margin: 0 auto;
+    .card{
+        width: 100%;
+    }
+    .form{
+        margin: var(--default-medium-zone) 0;
+        padding: var(--default-xxlarge-zone);
+        background-color: var(--white);
+        .form__title{
+            text-align: center;
+            font-size: var(--default-medium-font-size);
+            font-weight: var(--default-medium-font-weight);
+            margin-bottom: var(--default-medium-zone);
+        }
+        .form__body{
+            padding: 0 var(--default-large-zone);
+            .form__fill{
+                margin-bottom: var(--default-medium-zone);
+
+                label{
+                    font-size: var(--default-small-font-size);
+                    font-weight: var(--default-medium-font-weight);
+                    padding: var(--default-small-zone) 0;
+                }
+
+            }
+   
+        }
+    }
+}

@@ -1,20 +1,12 @@
 .wrapper{
-    input {
-        padding: var(--default-small-zone) var(--default-medium-zone);
-        width: 100%;
-        border-radius: var(--default-mini-zone);
-        border: solid 1px #ccc;
-    }
-    input:focus {
-        outline: none;
-    }
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
 }
 
 .container{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 50%;
     padding: var(--default-xlarge-zone);
     background-color: var(--white);
     border: solid 1px #ccc;
@@ -36,9 +28,7 @@
         display: block;
         font-size: var(--default-small-font-size);
         font-weight: var(--default-large-font-weight);
-    }
-    input {
-        margin-top: var(--default-mini-zone);
+        margin-bottom: var(--default-small-zone);
     }
 }
 
@@ -54,9 +44,6 @@
     .captcha{
         
     }
-    input{
-        margin-left: var(--default-large-zone);
-    }
 }
 
 .active__wrapper{
@@ -67,5 +54,8 @@
     a{
         color: var(--primary);
         font-size: var(--default-small-font-size);
+    }
+    a:hover{
+        color: var(--primary-hover);
     }
 }

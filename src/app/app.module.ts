@@ -5,8 +5,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { Header, Footer } from './layout';
-import { Home,Login,Register } from './pages';
-import { Button, TextBox } from './shared';
+import { Home, Login, Register, UserProfile } from './pages';
+import { Button, TextBox, PlainTextCard } from './shared';
 
 
 @NgModule({
@@ -16,9 +16,11 @@ import { Button, TextBox } from './shared';
     Footer,
     Home,
     Login,
+    UserProfile,
     Register,
     Button,
-    TextBox
+    TextBox,
+    PlainTextCard,
   ],
   imports: [
     BrowserModule,

@@ -16,19 +16,21 @@ a, button {
 :root {
     --primary: #006ce8;
     --darkPrimary: rgb(31 41 55);
-    --hover-primary: #0f519c;
+    --primary-hover: #0f519c;
     --black: #000;
     --white: #fff;
     --color-text: #333;
     --color-light-text: #9e9e9e;
     --color-disable: rgba(22, 24, 35, 0.5);
     --color-shadow: rgba(0, 0, 0, 0.15);
+    --color-background: rgb(229 231 235);
     // Default layout
     --default-mini-zone: 5px;
     --default-small-zone: 8px;
     --default-medium-zone: 16px;
     --default-large-zone: 24px;
     --default-xlarge-zone: 32px;
+    --default-xxlarge-zone: 48px;
     --default-tiny-font-size: 0.6rem;
     --default-mini-font-size: 1.0rem;
     --default-small-font-size: 1.4rem;

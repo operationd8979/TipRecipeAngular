@@ -1,21 +1,22 @@
 input {
-    padding: var(--default-small-zone) var(--default-medium-zone);
     width: 100%;
     border-radius: var(--default-mini-zone);
     border: solid 1px #ccc;
-    font-size: var(--default-small-font-size);
-    font-weight: var(--default-small-font-weight);
 }
 input:focus {
     outline: none;
 }
 
-
 .small {
     padding: var(--default-mini-zone) var(--default-small-zone);
     font-size: var(--default-mini-font-size);
     font-weight: var(--default-small-font-weight);
-    background-color: black;
+}
+
+.medium {
+    padding: var(--default-small-zone) var(--default-medium-zone);
+    font-size: var(--default-small-font-size);
+    font-weight: var(--default-small-font-weight);
 }
 
 .large {
