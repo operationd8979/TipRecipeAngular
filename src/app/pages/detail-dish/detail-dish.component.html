@@ -6,7 +6,7 @@
     <div class="container">
         <div class="side__bar">
             <div class="dish__photo">
-                <img style="width: 150px;" src="https://i.ytimg.com/vi/AabvzQyml9E/maxresdefault.jpg">
+                <img src="https://i.ytimg.com/vi/AabvzQyml9E/maxresdefault.jpg">
             </div>
             <div class="dish__name">
                 Cơm tấm sườn bì
@@ -14,27 +14,46 @@
             <div class="dish__sumary">
                 Món ăn phổ biến với cơm tấm, sườn và bì thơm ngon.
             </div>
+            <div class="types">
+                <shared-tag-item [tag]="'chính'" [color]="'red'"></shared-tag-item>
+            </div>
+            <div class="ingredients">
+                Ingredients:
+                <ul>
+                    <li>Hành lá: 100 gram</li>
+                </ul>
+            </div>
         </div>
         <div class="main__body">
-            Step by step
+            <div class="header">
+                Step by step
+            </div>
             <div class="recipe">
                 *Sơ chế
+                <br>
                 Bước 1: Làm sạch sườn, bì và các nguyên liệu khác.
+                <br>
                 *Chế biến
+                <br>
                 Bước 1: Nướng sườn và thái thành lát.
+                <br>
                 Bước 2: Xào bì với gia vị.
+                <br>
                 Bước 3: Làm cơm và dọn ra đĩa cùng với sườn và bì.
+                <br>
                 Bước 4: Thêm nước mắm và thưởng thức.
             </div>
-            Rating this recipe
+            <div class="header">
+                Rating this recipe
+            </div>
             <div class="rating">
                 Your rating before: Not yet
                 <div class="rating__input">
                     Rating score:
-                    <input/>
+                    <shared-text-box [type]="'number'" [size]="'small'" [placeholder]="'your rating'"></shared-text-box>
                 </div>
                 <div class="ratting__button">
-                    <button>Send rating</button>
+                    <shared-button [type]="'primary'" [size]="'small'">Send rating</shared-button>
                 </div>
             </div>
         </div>

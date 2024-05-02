@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Dish } from 'src/app/models';
 
 @Component({
   selector: 'app-detail-dish',
@@ -7,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./detail-dish.component.scss']
 })
 export class DetailDishComponent implements OnInit {
+
 
   constructor(private route:ActivatedRoute) { 
   }

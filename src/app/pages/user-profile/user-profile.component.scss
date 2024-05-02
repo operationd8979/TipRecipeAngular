@@ -1,9 +1,11 @@
 .wrapper{
     // background-color: var(--white);
+
 }
 
 
 .container{
+    // box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
     padding: var(--default-medium-zone) 0 ;
     width: 60%;
     margin: 0 auto;
@@ -11,6 +13,7 @@
         width: 100%;
     }
     .form{
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
         margin: var(--default-medium-zone) 0;
         padding: var(--default-xxlarge-zone);
         background-color: var(--white);
