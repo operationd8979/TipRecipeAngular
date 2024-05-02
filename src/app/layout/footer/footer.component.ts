@@ -8,11 +8,11 @@ import { Component, OnInit } from '@angular/core';
   </footer>`,
   styles: [`
   .wrapper {
-    padding: var(--default-medium-zone);
+    padding: var(--default-small-zone);
     background-color: var(--darkPrimary);
     text-align: center;
     p{
-        font-size: var(--default-small-font-size);
+        font-size: var(--default-mini-font-size);
         color: var(--white);
     }
   }`]

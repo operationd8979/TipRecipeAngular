@@ -27,13 +27,14 @@ a, button {
     --color-shadow: rgba(0, 0, 0, 0.15);
     --color-background: rgb(229 231 235);
     // Default layout
+    --default-tiny-zone: 2px;
     --default-mini-zone: 5px;
     --default-small-zone: 8px;
     --default-medium-zone: 16px;
     --default-large-zone: 24px;
     --default-xlarge-zone: 32px;
     --default-xxlarge-zone: 48px;
-    --default-tiny-font-size: 0.8rem;
+    --default-tiny-font-size: 1rem;
     --default-mini-font-size: 1.2rem;
     --default-small-font-size: 1.4rem;
     --default-medium-font-size: 1.8rem;

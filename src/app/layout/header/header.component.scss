@@ -6,7 +6,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--default-medium-zone);
+    padding: var(--default-small-zone);
 }
 
 .logo__wrapper{
@@ -15,9 +15,9 @@
         align-items: center;
         color: var(--white);
         font-weight: var(--default-large-font-weight);
-        font-size: var(--default-small-font-size);
+        font-size: var(--default-mini-font-size);
         img{
-            height: var(--default-small-icon-size);
+            height: var(--default-mini-icon-size);
             margin-right: var(--default-small-zone);
         }
     }

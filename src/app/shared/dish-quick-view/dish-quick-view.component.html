@@ -4,29 +4,32 @@
             <div class="title__dish">
                 {{dish.getName()}}
             </div>
-            <div class="rating__dish">
-                Your rating: {{dish.getRating()}}/10
-            </div>
         </div>
         <div class="body__properties">
             <div class="image__dish">
                 <img src="{{dish.getUrl()}}" alt="{{dish.getName()}}">
             </div>
             <div class="detail__dish">
-                <div class="description__dish">
-                    Desciption: {{dish.getSummary()}}
-                </div>
                 <div class="ingredients__dish">
                     Ingredients: 
                     <ul >
                         <li *ngFor="let ingredient of dish.getIngredients()">{{ingredient.getName()}} : {{ingredient.getQuantity()}} {{ingredient.getUnit()}}</li>
                     </ul>
                 </div>
-                <div class="types__dish">
-                    Types: 
-                    <shared-tag-item *ngFor="let type of dish.getTypes()" [tag]="type.getName()" [color]="'red'"></shared-tag-item>
-                </div>
             </div>
+        </div>
+        <div class="footer">
+            <div class="description__dish">
+                Desciption: {{dish.getSummary()}}
+            </div>
+            <div class="types__dish">
+                Types: 
+                <shared-tag-item *ngFor="let type of dish.getTypes()" [tag]="type.getName()" [color]="'red'"></shared-tag-item>
+            </div>
+        </div>
+        <hr>
+        <div class="recipe">
+            <p><strong>*Sơ chế </strong></p><p>Bước 1: Nấu nước dùng bánh canh.</p><p>Bước 2: Chuẩn bị cua và các nguyên liệu khác.</p><p><strong>*Chế biến </strong></p><p>Bước 1: Làm sạch cua.</p><p>Bước 2: Làm sạch các loại rau cải.</p><p>Bước 3: Nấu bánh canh.</p><p>Bước 4: Thêm cua vào nồi nước dùng và nấu chín.</p><p>Bước 5: Dọn ra bát và thêm rau sống.</p><p>Bước 6: Thưởng thức.</p>
         </div>
     </div>
 </div>

@@ -9,6 +9,7 @@ export class Dish {
     private ingredients: Ingredient[];
     private types: TypeDish[];
     private rating: number;
+    private recipe: string = "";
 
 
     public constructor(dishID: string, dishName: string, summary: string, url: string, ingredients: Ingredient[], types: TypeDish[], rating: number) {
@@ -19,6 +20,10 @@ export class Dish {
         this.ingredients = ingredients;
         this.types = types;
         this.rating = rating;
+    }
+
+    public setRecipe(recipe: string): void {
+        this.recipe = recipe;
     }
 
     public getID(): string {
@@ -47,6 +52,10 @@ export class Dish {
 
     public getRating(): number {
         return this.rating;
+    }
+
+    public getRecipe(): string {
+        return this.recipe;
     }
 
 }

@@ -1,11 +1,15 @@
 .wrapper{
     display: inline-block;
-    margin-top: var(--default-small-zone);
-    margin-right: var(--default-small-zone);
+    min-width: 40px;
+    text-align: center;
+    margin-top: var(--default-tiny-zone);
+    margin-right: var(--default-mini-zone);
     background-color: var(--white);
     color: var(--black);
-    padding: var(--default-mini-zone) var(--default-small-zone);
+    padding: var(--default-tiny-zone) var(--default-mini-zone);
     border-radius: var(--default-medium-zone);
+    font-size: var(--default-tiny-font-size);
+    font-weight: var(--default-medium-font-weight);
 }
 
 .red {

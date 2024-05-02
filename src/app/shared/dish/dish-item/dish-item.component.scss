@@ -12,11 +12,11 @@
         align-items: center;
         margin-bottom: var(--default-small-zone);
         .title__dish{
-            flex: 8;
+            flex: 2;
             font-weight: var(--default-large-font-weight);
         }
         .rating__dish{
-            flex: 3;
+            flex: 1;
             margin-left: var(--default-small-zone);
             color: var(--red);
             font-size: var(--default-mini-font-size);
@@ -43,8 +43,9 @@
             }
             .action__dish{
                 a{
+                    font-size: var(--default-tiny-font-size);
                     color: var(--primary);
-                    font-weight: var(--default-mini-font-weight);
+                    font-weight: var(--default-medium-font-weight);
                 }
                 a:hover{
                     color: var(--primary-hover);
