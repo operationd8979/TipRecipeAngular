@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { TagPayload } from 'src/app/types';
+import { TagPayload } from 'src/app/models';
 
 @Component({
   selector: 'shared-tag-input',

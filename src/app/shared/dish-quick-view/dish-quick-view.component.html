@@ -18,19 +18,13 @@
                 </div>
                 <div class="ingredients__dish">
                     Ingredients: 
-                    <shared-tag-item *ngFor="let ingredient of dish.getIngredients()" [tag]="ingredient.getName()" [color]="'gray'"></shared-tag-item>
+                    <ul >
+                        <li *ngFor="let ingredient of dish.getIngredients()">{{ingredient.getName()}} : {{ingredient.getQuantity()}} {{ingredient.getUnit()}}</li>
+                    </ul>
                 </div>
                 <div class="types__dish">
                     Types: 
                     <shared-tag-item *ngFor="let type of dish.getTypes()" [tag]="type.getName()" [color]="'red'"></shared-tag-item>
-                </div>
-                <div class="action__dish">
-                    <div>
-                        <a>quick view</a>
-                    </div>
-                    <div>
-                        <a>view detail</a>
-                    </div>
                 </div>
             </div>
         </div>

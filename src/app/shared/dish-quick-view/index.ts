@@ -1,0 +1,1 @@
+export { DishQuickViewComponent as DishQuickView } from './dish-quick-view.component';

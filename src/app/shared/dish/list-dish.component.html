@@ -1,1 +1,13 @@
-<shared-dish-item *ngFor="let dish in listDish" [dish]="dish"></shared-dish-item>
+<div class="wrapper">
+    <div class="container">
+        <ng-container *ngIf="listDish && listDish.length === 0; else recipeList">
+            <div class="notification__noRecipe">No recipe found</div>
+        </ng-container>
+        <ng-template  #recipeList>
+            <div *ngFor="let dish of listDish">
+                <shared-dish-item [dish]="dish"></shared-dish-item>
+            </div>
+        </ng-template>
+    </div>
+
+</div>

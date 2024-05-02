@@ -12,6 +12,7 @@ import { Component, OnInit } from '@angular/core';
     background-color: var(--darkPrimary);
     text-align: center;
     p{
+        font-size: var(--default-small-font-size);
         color: var(--white);
     }
   }`]

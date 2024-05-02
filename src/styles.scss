@@ -4,6 +4,7 @@
     box-sizing: border-box;
     color: var(--color-text);
     background-color: transparent;
+    word-break: break-all;
 }
 
 a, button {
@@ -19,6 +20,7 @@ a, button {
     --primary-hover: #0f519c;
     --black: #000;
     --white: #fff;
+    --red: rgb(220 38 38);
     --color-text: #333;
     --color-light-text: #9e9e9e;
     --color-disable: rgba(22, 24, 35, 0.5);
@@ -31,8 +33,8 @@ a, button {
     --default-large-zone: 24px;
     --default-xlarge-zone: 32px;
     --default-xxlarge-zone: 48px;
-    --default-tiny-font-size: 0.6rem;
-    --default-mini-font-size: 1.0rem;
+    --default-tiny-font-size: 0.8rem;
+    --default-mini-font-size: 1.2rem;
     --default-small-font-size: 1.4rem;
     --default-medium-font-size: 1.8rem;
     --default-large-font-size: 2.4rem;

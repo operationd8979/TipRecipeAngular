@@ -5,5 +5,6 @@ import { TagInput } from "./tag-input";
 import { TagItem } from "./tag-item";
 import { DishList } from "./dish";
 import { DishItem } from "./dish/dish-item";
+import { DishQuickView } from "./dish-quick-view";
 
-export { Button, TextBox, PlainTextCard, TagInput, TagItem, DishList, DishItem };
+export { Button, TextBox, PlainTextCard, TagInput, TagItem, DishList, DishItem, DishQuickView };

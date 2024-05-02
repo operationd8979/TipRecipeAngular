@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Dish } from 'src/app/types';
+import { Dish } from 'src/app/models';
 
 @Component({
   selector: 'shared-dish-item',
@@ -8,14 +8,6 @@ import { Dish } from 'src/app/types';
 })
 export class DishItemComponent {
 
-  @Input() dish: Dish = {
-    dishID: "1234",
-    dishName: "cơm trứng",
-    summary: "món ăn việt", 
-    url: "https://www.google.com", 
-    ingredients: [], 
-    type: [], 
-    rating: 5
-  };
+  @Input() dish: Dish = new Dish("1234", "cơm trứng", "món ăn việt", "https://cdn11.dienmaycholon.vn/filewebdmclnew/public//userupload/images/cach-nau-com-ngon-va-lau-thiu-3.jpg", [], [], 5);
 
 }

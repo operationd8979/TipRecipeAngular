@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TagPayload } from 'src/app/types';
+import { TagPayload } from 'src/app/models';
 import { KeyValue } from '@angular/common';
 
 @Component({

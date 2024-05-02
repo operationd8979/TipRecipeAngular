@@ -3,6 +3,12 @@
     margin-bottom: var(--default-medium-zone);
     font-size: var(--default-small-font-size);
     font-style: var(--default-small-font-weight);
+    ul{
+        margin-left: var(--default-medium-zone);
+        li{
+            list-style: outside;
+        }
+    }
 }
 
 .container {
@@ -40,16 +46,6 @@
             margin-left: var(--default-small-zone);
             .description__dish{
                 font-weight: var(--default-mini-font-weight);
-            }
-            .action__dish{
-                a{
-                    color: var(--primary);
-                    font-weight: var(--default-mini-font-weight);
-                }
-                a:hover{
-                    color: var(--primary-hover);
-                    text-decoration: underline;
-                }
             }
         }
     }
