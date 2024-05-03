@@ -33,22 +33,47 @@ export class TagInputComponent implements OnInit{
     this.valueModelChange.emit(this.tagValue);
   }
 
+  @ViewChild('hintTag') hintTag!: ElementRef;
+
   constructor() { }
 
   ngOnInit(): void {
   }
   onChange($event: any){
-    // let char = $event.data;
-    // let value = $event.target.value;
-    // let tags = value.split(',');
-    // let finalTags = tags[tags.length - 1];
-    // //check if the last character is a comma or enter
-    // if(char === ',' || char === 'Enter'){
-    //   if(finalTags.trim() !== ''){
-    //     this.tagPageLoad[0].payload.push(finalTags.trim());
-    //     this.tagValue = '';
-    //   }
+    const types = this.tagPageLoad[0].payload;
+    const filterTypes = this.tagPageLoad[0].filter;
+    const ingredients = this.tagPageLoad[1].payload;
+    const filterIngredients = this.tagPageLoad[1].filter;
+    const value = $event.target.value;
+    const currentChracter = $event.data;
+    const currentTags = value.split(',');
+    const lastTag = currentTags[currentTags.length - 1];
+    let hintTags = [];
+    hintTags = ingredients.filter((ingredient) => {
+      return ingredient.value.toLowerCase().includes(lastTag.toLowerCase());
+    });
+    hintTags = hintTags.concat(types.filter((type) => {
+      return type.value.toLowerCase().includes(lastTag.toLowerCase());
+    }));
+    let stringValues = '';
+    hintTags.filter((tag) => {
+      stringValues+= tag.value + ', ';
+    });
+    this.hintTag.nativeElement.innerHTML = stringValues;
+    // if($event.inputType==="insertLineBreak"){
+    //   alert('Enter');
     // }
+    // if($event.inputType==="deleteContentBackward"){
+    //   alert('Backspace');
+    // }
+    // if($event.inputType==="deleteContentForward"){
+    //   alert('Delete');
+    // }
+    // if($event.inputType==="insertText"){
+    //   if(currentChracter === ',')
+    //     alert(',');
+    // }
+    this.tagPayModel = [{payload: types, filter: types}, {payload: ingredients, filter: ingredients}];
   }
 
 }

@@ -1,5 +1,5 @@
-import { Ingredient } from "./ingredient";
-import { TypeDish } from "./type";
+import { Ingredient } from "./ingredient.model";
+import { TypeDish } from "./type.model";
 
 export class Dish {
     private id: string;

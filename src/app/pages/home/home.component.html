@@ -26,13 +26,13 @@
                     <div class="tags__container">
                         <div class="header__title">Ingredients filter</div>
                         <div class="tag__load">
-                            <shared-tag-item *ngFor="let ingredient of ingredients" [tag]="ingredient.value" [color]="'gray'"></shared-tag-item>
+                            <shared-tag-item *ngFor="let ingredient of filterIngredients" [tag]="ingredient.value" [color]="'gray'"></shared-tag-item>
                         </div>
                     </div>
                     <div class="tags__container">
                         <div class="header__title">Type filter</div>
                         <div class="tag__load">
-                            <shared-tag-item *ngFor="let type of types" [tag]="type.value" [color]="'red'"></shared-tag-item>
+                            <shared-tag-item *ngFor="let type of filterTypes" [tag]="type.value" [color]="'red'"></shared-tag-item>
                         </div>
                     </div>
                 </div>
