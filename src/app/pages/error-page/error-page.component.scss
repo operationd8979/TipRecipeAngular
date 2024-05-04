@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    font-size: var(--default-large-font-size);
+    color: var(--color-text);
+}
+
+p {
+    font-size: var(--default-small-font-size);
+    color: var(--color-light-text);
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: var(--default-medium-font-weight);
+}

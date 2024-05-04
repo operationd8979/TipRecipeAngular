@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DetailDish, Home, Login, Register, UserProfile } from './pages';
+import { DetailDish, ErrorPage, Home, Login, Register, UserProfile } from './pages';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'login', component: Login},
   { path: 'register', component: Register},
   { path: 'profile', component: UserProfile},
-  { path: '**', redirectTo: 'home', pathMatch: 'full' }
+  { path: '**', component: ErrorPage, data: {message: 'Page not found!'}}
 ];
 
 @NgModule({
