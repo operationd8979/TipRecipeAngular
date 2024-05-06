@@ -28,9 +28,7 @@ export class TextBoxComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    if(this.size === 'small') {
-      
-    }
+
   }
 
 

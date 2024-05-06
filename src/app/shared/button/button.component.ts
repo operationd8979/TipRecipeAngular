@@ -3,14 +3,13 @@ import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
 @Component({
   selector: 'shared-button',
   template: `
-    <button [ngClass]="buttonClasses" (click)="onClick()"><ng-content></ng-content></button>`,
+    <button [ngClass]="buttonClasses" type="submit" (click)="onClick()" [disabled]="disabled"><ng-content></ng-content></button>`,
   styleUrls: ['./button.component.scss']
 })
 export class ButtonComponent implements OnInit {
 
   @Output() clicked: EventEmitter<void> = new EventEmitter<void>();
   onClick() {
-    if(this.disabled) return;
     this.clicked.emit();
   }
 

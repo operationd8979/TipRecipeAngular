@@ -1,32 +1,36 @@
 <div class="wrapper">
     <div class="container">
         <div class="header__title">Register</div>
-        <div class="error__message">error</div>
-        <form action="" method="POST">
+        <div class="error__message">{{errorMessage}}</div>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="form__fill">
                 <label for="email">Email</label>
-                <shared-text-box [type]="'email'" [size]="'medium'" [(valueModel)]="email"></shared-text-box>
+                <input type="email" placeholder="email" id="email" class="medium" formControlName="email">
+                <span class="help-block">{{checkChain(registerForm.get('email'))}}</span>
             </div>
             <div class="form__fill">
                 <label for="username">Username (display name)</label>
-                <shared-text-box [type]="'text'" [size]="'medium'" [(valueModel)]="username"></shared-text-box>
+                <input type="text" placeholder="username" id="username" class="medium" formControlName="username">
+                <span class="help-block">{{checkChain(registerForm.get('username'))}}</span>
             </div>
             <div class="form__fill">
                 <label for="password">Password</label>
-                <shared-text-box [type]="'password'" [size]="'medium'" [(valueModel)]="password"></shared-text-box>
+                <input type="password" placeholder="password" id="password" class="medium" formControlName="password">
+                <span class="help-block">{{checkChain(registerForm.get('password'))}}</span>
             </div>
             <div class="form__fill">
                 <label for="confrimPassword">Confirm Password</label>
-                <shared-text-box [type]="'passwrod'" [size]="'medium'" [(valueModel)]="confirmPassword"></shared-text-box>
+                <input type="password" placeholder="confirm password" id="confirmPassword" class="medium" formControlName="confirmPassword">
+                <span class="help-block">{{checkChain(registerForm.get('confirmPassword'))}}</span>
             </div>
-            <div class="form__catcha">
+            <!-- <div class="form__catcha">
                 <div class="captcha">
                     <img src="captcha.php" alt="Captcha" onclick="this.src='captcha.php?refresh=1'">
                 </div>
-                <shared-text-box [type]="'text'" [size]="'small'" [(valueModel)]="captcha"></shared-text-box>
-            </div>
+                <input type="text" placeholder="" id="captcha" class="medium" formControlName="captcha">
+            </div> -->
             <div class="active__wrapper">
-                <shared-button [type]="'primary'" [size]="'medium'">Sign up</shared-button>
+                <shared-button [type]="'primary'" [size]="'medium'" [disabled]="registerForm.invalid">Sign up</shared-button>
                 <a href="login">Sign in?</a>
             </div>
         </form>

@@ -1,24 +1,47 @@
 <div class="wrapper">
     <div class="container">
         <div class="header__title">Login</div>
-        <div class="error__message">error</div>
-        <form action="" method="POST">
+        <div class="error__message">{{ errorMessage }}</div>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="form__fill">
                 <label for="email">Email</label>
-                <shared-text-box [type]="'email'" [size]="'medium'" [(valueModel)]="email"></shared-text-box>
+                <input
+                    type="email"
+                    placeholder="email"
+                    id="email"
+                    class="medium"
+                    formControlName="email"
+                />
+                <span class="help-block">{{
+                    checkChain(loginForm.get('email'))
+                }}</span>
             </div>
             <div class="form__fill">
                 <label for="password">Password</label>
-                <shared-text-box [type]="'password'" [size]="'medium'" [(valueModel)]="password"></shared-text-box>
+                <input
+                    type="password"
+                    placeholder="password"
+                    id="password"
+                    class="medium"
+                    formControlName="password"
+                />
+                <span class="help-block">{{
+                    checkChain(loginForm.get('password'))
+                }}</span>
             </div>
-            <div class="form__catcha">
+            <!-- <div class="form__catcha">
                 <div class="captcha">
                     <img src="captcha.php" alt="Captcha" onclick="this.src='captcha.php?refresh=1'">
                 </div>
-                <shared-text-box [type]="'text'" [size]="'small'" [(valueModel)]="captcha"></shared-text-box>
-            </div>
+                <input type="text" [placeholder]="checkChain(loginForm.get('captcha'))" id="captcha" class="medium" formControlName="captcha">
+            </div> -->
             <div class="active__wrapper">
-                <shared-button [type]="'primary'" [size]="'medium'">Sign in</shared-button>
+                <shared-button
+                    [type]="'primary'"
+                    [size]="'medium'"
+                    [disabled]="loginForm.invalid"
+                    >Sign in</shared-button
+                >
                 <a href="register">Sign up?</a>
             </div>
         </form>

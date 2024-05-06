@@ -19,7 +19,7 @@
     }
     .error__message{
         margin: 8px 0px;
-        color: red;
+        color: var(--red);
     }
 }
 
@@ -58,4 +58,48 @@
     a:hover{
         color: var(--primary-hover);
     }
+}
+
+input {
+    width: 100%;
+    border-radius: var(--default-mini-zone);
+    border: solid 1px #ccc;
+}
+input:focus {
+    outline: none;
+}
+input::placeholder {
+    color: var(--color-text);
+    font-size: var(--default-mini-font-size);
+}
+
+.small {
+    padding: var(--default-mini-zone) var(--default-small-zone);
+    font-size: var(--default-mini-font-size);
+    font-weight: var(--default-small-font-weight);
+}
+
+.medium {
+    padding: var(--default-small-zone) var(--default-medium-zone);
+    font-size: var(--default-small-font-size);
+    font-weight: var(--default-small-font-weight);
+}
+
+.large {
+    padding: var(--default-large-zone) var(--default-xlarge-zone);
+    font-size: var(--default-large-font-size);
+    font-weight: var(--default-large-font-weight);
+}
+
+input.ng-invalid.ng-touched {
+    border: solid 1px var(--red);
+    
+}
+
+input.ng-invalid.ng-touched::placeholder {
+    color: var(--red);
+}
+
+.help-block{
+    color: var(--red);
 }

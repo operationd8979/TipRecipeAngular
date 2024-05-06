@@ -1,36 +1,26 @@
 export class User {
-    private id: string;
-    private name: string;
     private email: string;
-    private password: string;
-    private fullName: string;
+    private username: string;
+    private role: string;
 
-    public constructor(userID: string, userName: string, email: string, password: string, fullName: string) {
-        this.id = userID;
-        this.name = userName;
+    public constructor(email: string, username: string, role: string) {
         this.email = email;
-        this.password = password;
-        this.fullName = fullName;
+        this.username = username;
+        this.role = role;
     }
 
-    public getID(): string {
-        return this.id;
-    }
 
-    public getName(): string {
-        return this.name;
+    public getUsername(): string {
+        return this.username;
     }
 
     public getEmail(): string {
         return this.email;
     }
 
-    public getPassword(): string {
-        return this.password;
+    public getRole(): string {
+        return this.role;
     }
 
-    public getFullName(): string {
-        return this.fullName;
-    }
 
 }
