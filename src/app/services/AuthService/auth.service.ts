@@ -14,6 +14,10 @@ interface RegisterRequest {
     username: string;
     password: string;
 }
+interface UpdateRequest{
+    username: string;
+    password: string;
+}
 interface authResponse {
     success: boolean;
     data: {
@@ -45,7 +49,10 @@ export class AuthService {
                 this.userSubject$.next(user);
             },
             (error) => {
-                this.userSubject$.next(null);
+                if(error.status === 403){
+                    this.logout();
+                    return;
+                }
             },
         );
     }
@@ -78,6 +85,27 @@ export class AuthService {
                     this.userSubject$.next(user);
                 },
                 (error) => {
+                    const errorMessage = error.error.message;
+                    this.errorSubject$.next(errorMessage);
+                },
+            );
+    }
+
+    updateProfile(username: string, newPassword: string) {
+        const updateRequest:UpdateRequest = { username, password: newPassword };
+        this.httpClient
+            .post<authResponse>(config.serverUrl + 'user/update', updateRequest)
+            .subscribe(
+                (response) => {
+                    const { email, username, role } = response.data;
+                    const user = new User(email, username, role);
+                    this.userSubject$.next(user);
+                },
+                (error) => {
+                    if(error.status === 403){
+                        this.logout();
+                        return;
+                    }
                     const errorMessage = error.error.message;
                     this.errorSubject$.next(errorMessage);
                 },

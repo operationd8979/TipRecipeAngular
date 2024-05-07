@@ -42,27 +42,24 @@
             <div class="listView__header">
                 <div class="header__title">Dishs</div>
                 <div class="pageSelect">
-                    <a href="javascript:void(0)" onClick="changePage('back')"
-                        class="mr-2 text-blue-500 hover:text-blue-800">back</a>
-                    <a href="javascript:void(0)" onClick="changePage('next')"
-                        class="mr-2 text-blue-500 hover:text-blue-800">next</a>
+                    <a *ngIf="page>1" (click)="onClickChangePage('prev')">prev</a>
+                    <a *ngIf="dishes.length!==0" (click)="onClickChangePage('next')">next</a>
                 </div>
             </div>
             <hr>
             <ul>
-                <shared-list-dish></shared-list-dish>
-                <!-- <?php renderRecipce($dishs); ?> -->
+                <shared-list-dish [listDish]="dishes"></shared-list-dish>
             </ul>
         </section>
         <aside class="quickView">
             <div class="header__title">Quick view</div>
             <hr>
             <ul>
-                <shared-dish-quick-view></shared-dish-quick-view>
+                <shared-dish-quick-view [dish]="selectedDish"></shared-dish-quick-view>
             </ul>
-            <p id="dish-description" class="text-gray-600"></p>
-            <p id="dish-types" class="text-gray-600"></p>
-            <div id="dish-content" class="mt-4"></div>
+            <p id="dish-description"></p>
+            <p id="dish-types"></p>
+            <div id="dish-content"></div>
         </aside>
     </main>
 </body>

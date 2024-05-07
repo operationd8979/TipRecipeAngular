@@ -1,26 +1,26 @@
 <div class="wrapper">
     <div class="header">
-        Cơm tấm sườn bì Recipe
+        {{dish.getName()}} Recipe
     </div>
     <hr>
     <div class="container">
         <div class="side__bar">
             <div class="dish__photo">
-                <img src="https://i.ytimg.com/vi/AabvzQyml9E/maxresdefault.jpg">
+                <img src={{dish.getUrl()}}>
             </div>
             <div class="dish__name">
-                Cơm tấm sườn bì
+                {{dish.getName()}}
             </div>
             <div class="dish__sumary">
-                Món ăn phổ biến với cơm tấm, sườn và bì thơm ngon.
+                {{dish.getSummary()}}
             </div>
             <div class="types">
-                <shared-tag-item [tag]="'chính'" [color]="'red'"></shared-tag-item>
+                <shared-tag-item *ngFor="let type of dish.getTypes()" [tag]="type.getName()" [color]="'red'"></shared-tag-item>
             </div>
             <div class="ingredients">
                 Ingredients:
                 <ul>
-                    <li>Hành lá: 100 gram</li>
+                    <li *ngFor="let ingredient of dish.getIngredients()">{{ingredient.getName()}} : {{ingredient.getQuantity()}} {{ingredient.getUnit()}}</li>
                 </ul>
             </div>
         </div>
@@ -28,26 +28,12 @@
             <div class="header">
                 Step by step
             </div>
-            <div class="recipe">
-                *Sơ chế
-                <br>
-                Bước 1: Làm sạch sườn, bì và các nguyên liệu khác.
-                <br>
-                *Chế biến
-                <br>
-                Bước 1: Nướng sườn và thái thành lát.
-                <br>
-                Bước 2: Xào bì với gia vị.
-                <br>
-                Bước 3: Làm cơm và dọn ra đĩa cùng với sườn và bì.
-                <br>
-                Bước 4: Thêm nước mắm và thưởng thức.
-            </div>
+            <div class="recipe" [innerHTML]="dish.getRecipe()"></div>
             <div class="header">
                 Rating this recipe
             </div>
             <div class="rating">
-                Your rating before: Not yet
+                Your rating before: {{dish.getIsRated()? dish.getRating() : 'none'}}
                 <div class="rating__input">
                     Rating score:
                     <shared-text-box [type]="'number'" [size]="'small'" [placeholder]="'your rating'"></shared-text-box>

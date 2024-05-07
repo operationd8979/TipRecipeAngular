@@ -4,9 +4,22 @@
             <div class="title__dish">
                 {{dish.getName()}}
             </div>
-            <div class="rating__dish">
+            <div class="rating__dish" *ngIf="dish.getIsRated() else elseRating">
                 Your rating: {{dish.getRating()}}/10
             </div>
+            <ng-template #elseRating>
+                <!-- <div class="rating__dish" *ngIf="dish.getRating()>7 else elsePre">
+                    You will loved it
+                </div>
+                <ng-template #elsePre>
+                    <div class="rating__dish">
+                        Your rating: none
+                    </div>
+                </ng-template> -->
+                <div class="rating__dish">
+                    {{dish.getRating()>7 ? 'You will loved it' : 'Your rating: none'}}
+                </div>
+            </ng-template>
         </div>
         <div class="body__properties">
             <div class="image__dish">
@@ -26,10 +39,10 @@
                 </div>
                 <div class="action__dish">
                     <div>
-                        <a>quick view</a>
+                        <a (click)="onClickQuickView()">quick view</a>
                     </div>
                     <div>
-                        <a>view detail</a>
+                        <a [routerLink]="['/detail', dish.getID()]">view detail</a>
                     </div>
                 </div>
             </div>

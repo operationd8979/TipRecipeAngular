@@ -9,6 +9,7 @@ import { TagPayload } from 'src/app/models';
 export class TagInputComponent implements OnInit{
 
   tagPageLoad: TagPayload[] = [{payload: [], filter: []}];
+  hintString: string = '';
 
   @Input() 
   get tagPayModel() {
@@ -47,7 +48,11 @@ export class TagInputComponent implements OnInit{
     const value = $event.target.value;
     const currentChracter = $event.data;
     const currentTags = value.split(',');
-    const lastTag = currentTags[currentTags.length - 1];
+    const lastTag = currentTags[currentTags.length - 1].trim();
+    if(lastTag === ''){
+      this.hintString = '';
+      return;
+    }
     let hintTags = [];
     hintTags = ingredients.filter((ingredient) => {
       return ingredient.value.toLowerCase().includes(lastTag.toLowerCase());
@@ -59,7 +64,11 @@ export class TagInputComponent implements OnInit{
     hintTags.filter((tag) => {
       stringValues+= tag.value + ', ';
     });
-    this.hintTag.nativeElement.innerHTML = stringValues;
+    this.hintString = stringValues;
+    if($event.inputType === "insertLineBreak"){
+      alert('Enter');
+    }
+    // this.hintTag.nativeElement.innerHTML = stringValues;
     // if($event.inputType==="insertLineBreak"){
     //   alert('Enter');
     // }
@@ -73,7 +82,7 @@ export class TagInputComponent implements OnInit{
     //   if(currentChracter === ',')
     //     alert(',');
     // }
-    this.tagPayModel = [{payload: types, filter: types}, {payload: ingredients, filter: ingredients}];
+    this.tagPayModel = [{payload: types, filter: filterTypes}, {payload: ingredients, filter: filterIngredients}];
   }
 
 }

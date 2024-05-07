@@ -9,6 +9,7 @@ import { Header, Footer } from './layout';
 import { Home, Login, Register, UserProfile, DetailDish, ErrorPage } from './pages';
 import { Button, TextBox, PlainTextCard, TagInput, TagItem, DishList, DishItem, DishQuickView } from './shared';
 import { HttpInterceptorService } from './services';
+import { ShortenPipe } from './pipes';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { HttpInterceptorService } from './services';
     DishItem,
     DishQuickView,
     ErrorPage,
+    ShortenPipe
   ],
   imports: [
     BrowserModule,

@@ -9,10 +9,11 @@ export class Dish {
     private ingredients: Ingredient[];
     private types: TypeDish[];
     private rating: number;
+    private isRated: boolean = false;
     private recipe: string = "";
 
 
-    public constructor(dishID: string, dishName: string, summary: string, url: string, ingredients: Ingredient[], types: TypeDish[], rating: number) {
+    public constructor(dishID: string, dishName: string, summary: string, url: string, ingredients: Ingredient[], types: TypeDish[], rating: number, isRated: boolean = false) {
         this.id = dishID;
         this.name = dishName;
         this.summary = summary;
@@ -20,6 +21,11 @@ export class Dish {
         this.ingredients = ingredients;
         this.types = types;
         this.rating = rating;
+        this.isRated = isRated;
+    }
+
+    public setIngredients(ingredients: Ingredient[]): void {
+        this.ingredients = ingredients;
     }
 
     public setRecipe(recipe: string): void {
@@ -56,6 +62,10 @@ export class Dish {
 
     public getRecipe(): string {
         return this.recipe;
+    }
+
+    public getIsRated(): boolean {
+        return this.isRated;
     }
 
 }

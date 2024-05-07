@@ -71,3 +71,18 @@
     font-weight: var(--default-medium-font-weight);
     padding: var(--default-mini-zone);
 }
+
+@media screen and (max-width: 768px) {
+    .main{
+        flex-direction: column;
+        .filter{
+            margin-right: 0px;
+            margin-bottom: var(--default-medium-zone);
+        }
+        .listView{
+            margin-right: 0px;
+            margin-bottom: var(--default-medium-zone);
+        }
+    }
+    
+}

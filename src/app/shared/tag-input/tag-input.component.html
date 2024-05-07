@@ -3,10 +3,9 @@
         Ingredients/Type tag            
     </div>
     <div class="display__hintWord">
-        <p #hintTag>hint</p>
+        <p #hintTag>{{hintString | shorten : 80}}</p>
     </div>
     <div class="tag__input">
-        <!-- <textarea [(ngModel)]="valueModel" placeholder="Enter tags..." (input)="onChange($event);" #tagInput></textarea> -->
-        <textarea placeholder="Enter tags..." #tagInput></textarea>
+        <textarea [(ngModel)]="valueModel" placeholder="Enter tags..." (input)="onChange($event);" #tagInput></textarea>
     </div>
 </div>

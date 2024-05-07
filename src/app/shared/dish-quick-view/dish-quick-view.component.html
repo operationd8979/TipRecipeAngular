@@ -28,8 +28,10 @@
             </div>
         </div>
         <hr>
-        <div class="recipe">
-            <p><strong>*Sơ chế </strong></p><p>Bước 1: Nấu nước dùng bánh canh.</p><p>Bước 2: Chuẩn bị cua và các nguyên liệu khác.</p><p><strong>*Chế biến </strong></p><p>Bước 1: Làm sạch cua.</p><p>Bước 2: Làm sạch các loại rau cải.</p><p>Bước 3: Nấu bánh canh.</p><p>Bước 4: Thêm cua vào nồi nước dùng và nấu chín.</p><p>Bước 5: Dọn ra bát và thêm rau sống.</p><p>Bước 6: Thưởng thức.</p>
-        </div>
+        <div class="recipe" [innerHTML]="dish.getRecipe()"></div>
+
+        <!-- <div class="recipe">
+            {{dish.getRecipe()}}
+        </div> -->
     </div>
 </div>

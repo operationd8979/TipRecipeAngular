@@ -1,29 +1,58 @@
 <div class="wrapper">
     <div class="container">
-        <div class="card">
-            <shared-plain-text-card [title]="'Your Card'" [payload]="user"></shared-plain-text-card>
+        <div class="card" *ngIf="user">
+            <shared-plain-text-card [title]="'Your Card'" [payload]="getPayload()"></shared-plain-text-card>
         </div>
         <div class="form">
             <div class="form__title">
                 Update Profile
             </div>
-            <div class="form__body">
+            <form class="form__body" [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+                <div class="error__message">{{errorMessage}}</div>
                 <div class="form__fill">
-                    <label for="email">Username</label>
-                    <shared-text-box [type]="'text'" [size]="'medium'" [(valueModel)]="user.Name"></shared-text-box>
+                    <label for="email">Display name</label>
+                    <input
+                        type="text"
+                        placeholder="username"
+                        id="username"
+                        class="medium"
+                        [ngModel]="user?.getUsername()"
+                        formControlName="username"
+                    />
+                    <span class="help-block">{{
+                        checkChain(updateForm.get('username'))
+                    }}</span>
                 </div>
                 <div class="form__fill">
                     <label for="email">Email</label>
-                    <shared-text-box [type]="'email'" [size]="'medium'" [(valueModel)]="user.Email"></shared-text-box>
+                    <input
+                        type="email"
+                        placeholder="email"
+                        id="email"
+                        class="medium"
+                        [ngModel]="user?.getEmail()"
+                        formControlName="email"
+                        readonly
+                    />      
+                    <span class="help-block">{{
+                        checkChain(updateForm.get('email'))
+                    }}</span>        
                 </div>
                 <div class="form__fill">
-                    <label for="email">Password</label>
-                    <shared-text-box [type]="'password'" [size]="'medium'" [(valueModel)]="newPassword"></shared-text-box>
+                    <label for="email">New Password</label>
+                    <input
+                        type="password"
+                        placeholder="new password"
+                        id="newPassword"
+                        class="medium"
+                        formControlName="newPassword"
+                    />                
                 </div>
                 <div class="active__wrapper">
-                    <shared-button [type]="'primary'" [size]="'medium'">Update</shared-button>
+                    {{getErrorNoChange()}}
+                    <shared-button [type]="'primary'" [size]="'medium'" [disabled]="updateForm.invalid || !!getErrorNoChange()">Update</shared-button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

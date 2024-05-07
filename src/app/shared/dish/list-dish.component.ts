@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Dish, Ingredient, TypeDish } from 'src/app/models';
 
 @Component({
@@ -8,7 +8,7 @@ import { Dish, Ingredient, TypeDish } from 'src/app/models';
 })
 export class ListDishComponent {
 
-  listDish: Dish[] = [
+  @Input() listDish: Dish[] = [
     new Dish(
       "1234", 
       "cơm ", 
@@ -35,6 +35,5 @@ export class ListDishComponent {
       5),
   ];
 
-  // listDish: Dish[] = [];
 
 }
