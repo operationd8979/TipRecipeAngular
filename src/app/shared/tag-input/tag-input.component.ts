@@ -65,10 +65,6 @@ export class TagInputComponent implements OnInit{
       stringValues+= tag.value + ', ';
     });
     this.hintString = stringValues;
-    if($event.inputType === "insertLineBreak"){
-      alert('Enter');
-    }
-    // this.hintTag.nativeElement.innerHTML = stringValues;
     // if($event.inputType==="insertLineBreak"){
     //   alert('Enter');
     // }

@@ -3,9 +3,11 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
+import { AuthService } from '../AuthService';
 
 @Injectable()
 export class HttpInterceptorService implements HttpInterceptor {
@@ -18,4 +20,5 @@ export class HttpInterceptorService implements HttpInterceptor {
     });
     return next.handle(modifiedRequest);
   }
+
 }

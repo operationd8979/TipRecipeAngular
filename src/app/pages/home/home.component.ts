@@ -44,9 +44,9 @@ export class HomeComponent implements OnInit,OnDestroy {
     ];
   }
   set tagPayload(val) {
-    this.types = val[0].payload;
+    // this.types = val[0].payload;
+    // this.ingredients = val[1].payload;
     this.filterTypes = val[0].filter;
-    this.ingredients = val[1].payload;
     this.filterIngredients = val[1].filter;
   }
 

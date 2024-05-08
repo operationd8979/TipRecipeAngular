@@ -35,6 +35,7 @@
         font-size: var(--default-mini-font-size);
         .image__dish{
             flex:2;
+            align-self: center;
             img{
                 width: 100%;
                 height: auto;
@@ -42,6 +43,7 @@
             }
         }
         .detail__dish{
+            font-size: var(--default-tiny-font-size);
             flex:5;
             margin-left: var(--default-small-zone);
             .description__dish{

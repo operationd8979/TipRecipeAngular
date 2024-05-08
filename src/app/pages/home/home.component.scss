@@ -43,7 +43,7 @@
     }
     .listView{
         margin-right: var(--default-medium-zone);
-        flex: 1;
+        flex: 2;
         padding: 0px var(--default-medium-zone);
         box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
         .listView__header{
@@ -51,6 +51,14 @@
             justify-content: space-between;
             align-items: center;
             .pageSelect{
+                a{
+                    color: var(--primary);
+                }
+                a:hover{
+                    color: var(--primary-hover);
+                    font-weight: var(--default-large-font-weight);
+                    // font-size: var(--default-small-font-size);
+                }
                 a + a {
                     margin-left: 8px;
                 }
@@ -58,7 +66,7 @@
         }
     }
     .quickView{
-        flex: 1;
+        flex: 2;
         padding: 0px var(--default-medium-zone);
         box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
     }
