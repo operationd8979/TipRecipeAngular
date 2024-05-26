@@ -26,8 +26,8 @@ export class HomeComponent implements OnInit,OnDestroy {
     "cơm trứng", 
     "món ăn việt", 
     "https://cdn11.dienmaycholon.vn/filewebdmclnew/public//userupload/images/cach-nau-com-ngon-va-lau-thiu-3.jpg", 
-    [new Ingredient("1","trứng",200,"gram"), new Ingredient("1","cơm",200,"gram")], 
-    [new TypeDish("1234", "món chính")], 
+    [new Ingredient(1,"trứng",200,"gram"), new Ingredient(1,"cơm",200,"gram")], 
+    [new TypeDish(1, "món chính")], 
   5);;
 
   dishesSubscriptions:Subscription = new Subscription();

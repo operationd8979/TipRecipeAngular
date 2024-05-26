@@ -1,17 +1,17 @@
 export class Ingredient {
-    private id: string;
+    private id: number;
     private name: string;
     private quantity: number;
     private unit: string;
 
-    constructor(id: string, name: string, quantity: number, unit: string) {
+    constructor(id: number, name: string, quantity: number, unit: string) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.unit = unit;
     }
 
-    public getID(): string {
+    public getID(): number {
         return this.id;
     }
 

@@ -1,13 +1,13 @@
 export class TypeDish{
-    private id: string;
+    private id: number;
     private name: string;
 
-    constructor(id: string, name: string) {
+    constructor(id: number, name: string) {
         this.id = id;
         this.name = name;
     }
 
-    public getID(): string {
+    public getID(): number {
         return this.id;
     }
 

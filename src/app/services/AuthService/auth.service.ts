@@ -19,12 +19,9 @@ interface UpdateRequest{
     password: string;
 }
 interface authResponse {
-    success: boolean;
-    data: {
-        email: string;
-        username: string;
-        role: string;
-    };
+    email: string;
+    username: string;
+    role: string;
 }
 interface logoutResponse {
     success: boolean;
@@ -42,9 +39,9 @@ export class AuthService {
 
 
     authByToken() {
-        this.httpClient.get<authResponse>(config.serverUrl + 'user/getInfo').subscribe(
+        this.httpClient.get<authResponse>(config.serverUrl + 'auth').subscribe(
             (response) => {
-                const { email, username, role } = response.data;
+                const { email, username, role } = response;
                 const user = new User(email, username, role);
                 this.userSubject$.next(user);
             },
@@ -63,12 +60,12 @@ export class AuthService {
             .post<authResponse>(config.serverUrl + 'auth/login', loginRequest)
             .subscribe(
                 (response) => {
-                    const { email, username, role } = response.data;
+                    const { email, username, role } = response;
                     const user = new User(email, username, role);
                     this.userSubject$.next(user);
                 },
                 (error) => {
-                    const errorMessage = error.error.message;
+                    const errorMessage = error.error.message??"Something went wrong";
                     this.errorSubject$.next(errorMessage);
                 },
             );
@@ -80,7 +77,7 @@ export class AuthService {
             .post<authResponse>(config.serverUrl + 'auth/register', registerRequest)
             .subscribe(
                 (response) => {
-                    const { email, username, role } = response.data;
+                    const { email, username, role } = response;
                     const user = new User(email, username, role);
                     this.userSubject$.next(user);
                 },
@@ -97,7 +94,7 @@ export class AuthService {
             .post<authResponse>(config.serverUrl + 'user/update', updateRequest)
             .subscribe(
                 (response) => {
-                    const { email, username, role } = response.data;
+                    const { email, username, role } = response;
                     const user = new User(email, username, role);
                     this.userSubject$.next(user);
                 },
@@ -113,18 +110,18 @@ export class AuthService {
     }
 
     logout() {
-        this.httpClient.get<logoutResponse>(config.serverUrl + 'auth/logout').subscribe(
-            (response) => {
-                if(response.success){
-                    this.userSubject$.next(null);
-                    this.router.navigate(['/login']);
-                }
-            },
-            (error) => {
-                alert('Something went wrong');
-                console.log(error);
-            },
-        );
+        // this.httpClient.get<logoutResponse>(config.serverUrl + 'auth/logout').subscribe(
+        //     (response) => {
+        //         if(response.success){
+        //             this.userSubject$.next(null);
+        //             this.router.navigate(['/login']);
+        //         }
+        //     },
+        //     (error) => {
+        //         alert('Something went wrong');
+        //         console.log(error);
+        //     },
+        // );
     }
 
 }

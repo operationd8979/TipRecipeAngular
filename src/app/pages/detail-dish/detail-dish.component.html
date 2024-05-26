@@ -34,13 +34,25 @@
             </div>
             <div class="rating">
                 Your rating before: {{dish.getIsRated()? dish.getRating() : 'none'}}
-                <div class="rating__input">
-                    Rating score:
-                    <shared-text-box [type]="'number'" [size]="'small'" [placeholder]="'your rating'"></shared-text-box>
-                </div>
-                <div class="ratting__button">
-                    <shared-button [type]="'primary'" [size]="'small'">Send rating</shared-button>
-                </div>
+                <form [formGroup]="ratingForm" (ngSubmit)="onSubmit()">
+                    <div class="rating__input">
+                        Rating score:
+                        <input
+                            type="number"
+                            placeholder="rating score"
+                            id="ratingScore"
+                            class="small"
+                            formControlName="ratingScore"
+                            step="0.1"
+                        />
+                    </div>
+                    <div class="ratting__button">
+                        <shared-button
+                            [type]="'primary'"
+                            [size]="'small'"
+                            [disabled]="ratingForm.invalid">Send rating</shared-button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
