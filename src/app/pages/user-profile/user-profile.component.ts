@@ -39,6 +39,10 @@ export class UserProfileComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.userSubscription = this.authService.userSubject$.subscribe((user) => {
       this.user = user;
+      this.updateForm.patchValue({
+        "username": user?.getUsername(),
+        "email": user?.getEmail(),
+      });
     });
     this.errorSubscription = this.authService.errorSubject$.subscribe((error) => {
       this.errorMessage = error;
@@ -58,6 +62,10 @@ export class UserProfileComponent implements OnInit, OnDestroy{
   onSubmit(){
     const {username, email, newPassword} = this.updateForm.value;
     this.authService.updateProfile(username, newPassword);
+    alert("Profile updated successfully");
+    this.updateForm.patchValue({
+      "newPassword": "",
+    });
   }
 
   checkChain(control: any){

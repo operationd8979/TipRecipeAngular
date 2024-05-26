@@ -1,6 +1,6 @@
 import { KeyValue } from "@angular/common";
 
 export interface TagPayload {
-    payload: KeyValue<string,string>[];
-    filter: KeyValue<string,string>[];
+    payload: KeyValue<number,string>[];
+    filter: KeyValue<number,string>[];
 }

@@ -6,6 +6,6 @@
         <p #hintTag>{{hintString | shorten : 80}}</p>
     </div>
     <div class="tag__input">
-        <textarea [(ngModel)]="valueModel" placeholder="Enter tags..." (input)="onChange($event);" #tagInput></textarea>
+        <textarea [(ngModel)]="valueModel" placeholder="Enter tags..." (input)="onChange($event);" (keydown)="onKeyDown($event)" #tagInput></textarea>
     </div>
 </div>

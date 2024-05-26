@@ -10,6 +10,7 @@ export class TagInputComponent implements OnInit{
 
   tagPageLoad: TagPayload[] = [{payload: [], filter: []}];
   hintString: string = '';
+  lastTag: string = '';
 
   @Input() 
   get tagPayModel() {
@@ -48,37 +49,40 @@ export class TagInputComponent implements OnInit{
     const value = $event.target.value;
     const currentChracter = $event.data;
     const currentTags = value.split(',');
-    const lastTag = currentTags[currentTags.length - 1].trim();
-    if(lastTag === ''){
+    this.lastTag = currentTags[currentTags.length - 1].trim();
+    if(this.lastTag === ''){
       this.hintString = '';
       return;
     }
     let hintTags = [];
     hintTags = ingredients.filter((ingredient) => {
-      return ingredient.value.toLowerCase().includes(lastTag.toLowerCase());
+      return ingredient.value.toLowerCase().includes(this.lastTag.toLowerCase());
     });
     hintTags = hintTags.concat(types.filter((type) => {
-      return type.value.toLowerCase().includes(lastTag.toLowerCase());
+      return type.value.toLowerCase().includes(this.lastTag.toLowerCase());
     }));
     let stringValues = '';
     hintTags.filter((tag) => {
       stringValues+= tag.value + ', ';
     });
     this.hintString = stringValues;
-    // if($event.inputType==="insertLineBreak"){
-    //   alert('Enter');
-    // }
-    // if($event.inputType==="deleteContentBackward"){
-    //   alert('Backspace');
-    // }
-    // if($event.inputType==="deleteContentForward"){
-    //   alert('Delete');
-    // }
-    // if($event.inputType==="insertText"){
-    //   if(currentChracter === ',')
-    //     alert(',');
-    // }
+
+
     this.tagPayModel = [{payload: types, filter: filterTypes}, {payload: ingredients, filter: filterIngredients}];
+  }
+
+  onKeyDown(event: KeyboardEvent): void {
+    switch (event.key) {
+      case ',':
+        console.log('Comma key pressed');
+        break;
+      case 'Enter':
+        console.log('Enter key pressed');
+        break;
+      case 'Backspace':
+        console.log('Backspace key pressed');
+        break;
+    }
   }
 
 }

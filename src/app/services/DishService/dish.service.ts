@@ -7,18 +7,12 @@ import { config } from 'src/app/constants';
 import { Dish, Ingredient, TypeDish } from "src/app/models";
 
 interface ingredientsResponse {
-    success: boolean;
-    data: {
-        ingredientID: number;
-        ingredientName: string;
-    }[];
+    ingredientID: number;
+    ingredientName: string;
 }
 interface typesResponse {
-    success: boolean;
-    data: {
-        typeID: number;
-        typeName: string;
-    }[];
+    typeID: number;
+    typeName: string;
 }
 interface dishResponse {
     dishID: string;
@@ -49,8 +43,8 @@ interface dishResponse {
 export class DishService {
 
     dishSubject$ = new BehaviorSubject<Dish[]>([]);
-    ingredientSubject$ = new BehaviorSubject<KeyValue<string,string>[]>([]);
-    typesSubject$ = new BehaviorSubject<KeyValue<string,string>[]>([]);
+    ingredientSubject$ = new BehaviorSubject<KeyValue<number,string>[]>([]);
+    typesSubject$ = new BehaviorSubject<KeyValue<number,string>[]>([]);
     errorSubject$ = new Subject<string>();
     dishSelected$ = new Subject<Dish>();
 
@@ -60,7 +54,7 @@ export class DishService {
 
     getDishes(query: string, filterIngredients: number[] = [], filterTypes: number[] = [], offset: number = 0, itemsPerPage: number = 5) {
         const queryParams = new HttpParams()
-            .set('search', query)
+            .set('query', query)
             .set('ingredients', filterIngredients.join(','))
             .set('types', filterTypes.join(','))
             .set('itemsPerPage', itemsPerPage)
@@ -82,7 +76,7 @@ export class DishService {
                 this.errorSubject$.next('');
             },
             (error) => {
-                if(error.status === 403){
+                if(error.status === 401){
                     this.authService.logout();
                     return;
                 }
@@ -95,15 +89,16 @@ export class DishService {
     }
 
     getIngredients(){
-        this.httpClient.get<ingredientsResponse>(config.serverUrl +'ingredients').subscribe(
+        this.httpClient.get<ingredientsResponse[]>(config.serverUrl +'ingredients').subscribe(
             (response) => {
-                const data = response.data.map((item) => {
-                    return {key: item.ingredientID.toString(), value: item.ingredientName};
+                console.log(response);
+                const data = response.map((item) => {
+                    return {key: item.ingredientID, value: item.ingredientName};
                 });
                 this.ingredientSubject$.next(data);
             },
             (error) => {
-                if(error.status === 403){
+                if(error.status === 401){
                     this.authService.logout();
                     return;
                 }
@@ -114,15 +109,15 @@ export class DishService {
     }
 
     getTypes(){
-        this.httpClient.get<typesResponse>(config.serverUrl +'types').subscribe(
+        this.httpClient.get<typesResponse[]>(config.serverUrl +'types').subscribe(
             (response) => {
-                const data = response.data.map((item) => {
-                    return {key: item.typeID.toString(), value: item.typeName};
+                const data = response.map((item) => {
+                    return {key: item.typeID, value: item.typeName};
                 });
                 this.typesSubject$.next(data);
             },
             (error) => {
-                if(error.status === 403){
+                if(error.status === 401){
                     this.authService.logout();
                     return;
                 }
@@ -137,7 +132,6 @@ export class DishService {
     }
 
     getDeailtDish(dishID: string){
-        // http://localhost:3001/api/v1/dish?id=32df3g4df6df3gdf34
         this.httpClient.get<dishResponse>(config.serverUrl +'dish/'+dishID).subscribe(
             (response) => {
                 const ingredients = response.detailIngredientDishes.map((ingredient) => {

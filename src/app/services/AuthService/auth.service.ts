@@ -16,11 +16,11 @@ interface RegisterRequest {
 }
 interface UpdateRequest{
     username: string;
-    password: string;
+    newPassword: string;
 }
 interface authResponse {
     email: string;
-    username: string;
+    userName: string;
     role: string;
 }
 interface logoutResponse {
@@ -41,12 +41,12 @@ export class AuthService {
     authByToken() {
         this.httpClient.get<authResponse>(config.serverUrl + 'auth').subscribe(
             (response) => {
-                const { email, username, role } = response;
-                const user = new User(email, username, role);
+                const { email, userName, role } = response;
+                const user = new User(email, userName, role);
                 this.userSubject$.next(user);
             },
             (error) => {
-                if(error.status === 403){
+                if(error.status === 401){
                     this.logout();
                     return;
                 }
@@ -60,8 +60,8 @@ export class AuthService {
             .post<authResponse>(config.serverUrl + 'auth/login', loginRequest)
             .subscribe(
                 (response) => {
-                    const { email, username, role } = response;
-                    const user = new User(email, username, role);
+                    const { email, userName, role } = response;
+                    const user = new User(email, userName, role);
                     this.userSubject$.next(user);
                 },
                 (error) => {
@@ -77,7 +77,7 @@ export class AuthService {
             .post<authResponse>(config.serverUrl + 'auth/register', registerRequest)
             .subscribe(
                 (response) => {
-                    const { email, username, role } = response;
+                    const { email, userName, role } = response;
                     const user = new User(email, username, role);
                     this.userSubject$.next(user);
                 },
@@ -89,17 +89,17 @@ export class AuthService {
     }
 
     updateProfile(username: string, newPassword: string) {
-        const updateRequest:UpdateRequest = { username, password: newPassword };
+        const updateRequest:UpdateRequest = { username, newPassword: newPassword };
         this.httpClient
-            .post<authResponse>(config.serverUrl + 'user/update', updateRequest)
+            .post<authResponse>(config.serverUrl + 'auth/update', updateRequest)
             .subscribe(
                 (response) => {
-                    const { email, username, role } = response;
-                    const user = new User(email, username, role);
+                    const { email, userName, role } = response;
+                    const user = new User(email, userName, role);
                     this.userSubject$.next(user);
                 },
                 (error) => {
-                    if(error.status === 403){
+                    if(error.status === 401){
                         this.logout();
                         return;
                     }
@@ -110,18 +110,15 @@ export class AuthService {
     }
 
     logout() {
-        // this.httpClient.get<logoutResponse>(config.serverUrl + 'auth/logout').subscribe(
-        //     (response) => {
-        //         if(response.success){
-        //             this.userSubject$.next(null);
-        //             this.router.navigate(['/login']);
-        //         }
-        //     },
-        //     (error) => {
-        //         alert('Something went wrong');
-        //         console.log(error);
-        //     },
-        // );
+        this.httpClient.get<logoutResponse>(config.serverUrl + 'auth/logout').subscribe(
+            (response) => {
+                this.userSubject$.next(null);
+                this.router.navigate(['/login']);
+            },
+            (error) => {
+                console.log(error);
+            },
+        );
     }
 
 }

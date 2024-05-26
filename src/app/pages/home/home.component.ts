@@ -13,10 +13,10 @@ export class HomeComponent implements OnInit,OnDestroy {
 
   query: string = '';
   tagValue: string = '';
-  types : KeyValue<string, string>[] = [{key: "1", value: 'chính'}, {key: "2", value: 'tráng miệng'}, {key: "3", value: 'món Việt'}];
-  ingredients: KeyValue<string, string>[] = [{key: "1", value: 'thịt'}, {key: "2", value: 'rau'}, {key: "3", value: 'cá'}, {key: "4", value: 'tôm'}];
-  filterTypes: KeyValue<string, string>[] = [];
-  filterIngredients: KeyValue<string, string>[] = [];
+  types : KeyValue<number, string>[] = [{key: 1, value: 'chính'}, {key: 2, value: 'tráng miệng'}];
+  ingredients: KeyValue<number, string>[] = [{key: 1, value: 'thịt'}, {key: 2, value: 'rau'}];
+  filterTypes: KeyValue<number, string>[] = [];
+  filterIngredients: KeyValue<number, string>[] = [];
   offset: number = 0;
   itemsPerPage: number = 4;
   page: number = 1;
@@ -75,8 +75,8 @@ export class HomeComponent implements OnInit,OnDestroy {
   }
 
   getDishes() {
-    const filterIngredients = this.filterIngredients.map((item) => parseInt(item.key));
-    const filterTypes = this.filterTypes.map((item) => parseInt(item.key));
+    const filterIngredients = this.filterIngredients.map((item) => item.key);
+    const filterTypes = this.filterTypes.map((item) => item.key);
     const offset = (this.page - 1) * this.itemsPerPage;
     this.dishService.getDishes(this.query, filterIngredients, filterTypes, offset, this.itemsPerPage);
   }
