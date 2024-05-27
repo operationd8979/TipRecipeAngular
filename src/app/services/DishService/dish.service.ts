@@ -7,7 +7,7 @@ import { config } from 'src/app/constants';
 import { Dish, Ingredient, TypeDish } from "src/app/models";
 
 interface ingredientsResponse {
-    ingredientID: number;
+    ingredientId: number;
     ingredientName: string;
 }
 interface typesResponse {
@@ -42,10 +42,14 @@ interface dishResponse {
 @Injectable({providedIn: 'root'})
 export class DishService {
 
-    dishSubject$ = new BehaviorSubject<Dish[]>([]);
-    ingredientSubject$ = new BehaviorSubject<KeyValue<number,string>[]>([]);
-    typesSubject$ = new BehaviorSubject<KeyValue<number,string>[]>([]);
-    errorSubject$ = new Subject<string>();
+    private dishSubject$ = new BehaviorSubject<Dish[]>([]);
+    dishesObservable$ = this.dishSubject$.asObservable();
+    private ingredientSubject$ = new BehaviorSubject<KeyValue<number,string>[]>([]);
+    ingredientsObservable$ = this.ingredientSubject$.asObservable();
+    private typeSubject$ = new BehaviorSubject<KeyValue<number,string>[]>([]);
+    typesObservable$ = this.typeSubject$.asObservable();
+    private errorSubject$ = new Subject<string>();
+    errorObserable$ = this.errorSubject$.asObservable();
     dishSelected$ = new Subject<Dish>();
 
     constructor(private httpClient: HttpClient,private authService: AuthService) {
@@ -61,7 +65,6 @@ export class DishService {
             .set('offset', offset);
         this.httpClient.get<dishResponse[]>(config.serverUrl +'dish', {params: queryParams}).subscribe(
             (response) => {
-                console.log(response);
                 const dishes:Dish[] = response.map((item) => {
                     const ingredients = item.detailIngredientDishes.map((ingredient) => {
                         return new Ingredient(ingredient.ingredient.ingredientId,ingredient.ingredient.ingredientName,ingredient.amount,ingredient.unit);
@@ -91,9 +94,8 @@ export class DishService {
     getIngredients(){
         this.httpClient.get<ingredientsResponse[]>(config.serverUrl +'ingredients').subscribe(
             (response) => {
-                console.log(response);
                 const data = response.map((item) => {
-                    return {key: item.ingredientID, value: item.ingredientName};
+                    return {key: item.ingredientId, value: item.ingredientName};
                 });
                 this.ingredientSubject$.next(data);
             },
@@ -114,7 +116,7 @@ export class DishService {
                 const data = response.map((item) => {
                     return {key: item.typeID, value: item.typeName};
                 });
-                this.typesSubject$.next(data);
+                this.typeSubject$.next(data);
             },
             (error) => {
                 if(error.status === 401){
@@ -142,7 +144,6 @@ export class DishService {
                 });
                 const dish = new Dish(response.dishID, response.dishName, response.summary, response.urlPhoto, ingredients, types, response.ratingScore, response.isRated);
                 dish.setRecipe(response.recipe.content);
-                console.log(dish);
                 this.dishSelected$.next(dish);
                 this.errorSubject$.next('');
             },

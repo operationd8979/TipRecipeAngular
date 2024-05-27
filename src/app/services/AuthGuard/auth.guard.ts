@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../AuthService/auth.service';
-import { lastValueFrom, map, take } from 'rxjs';
+import {  map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +11,13 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): any {
-    return this.authService.userSubject$.pipe(
+    return this.authService.user$.pipe(
         map(user => {
-            if (user) {
-                return true;
-            } else {
-                return this.router.createUrlTree(['/login']);
-            }
+          if (user) {
+              return true;
+          } else {
+              return this.router.createUrlTree(['/login']);
+          }
         }
     ));
   }

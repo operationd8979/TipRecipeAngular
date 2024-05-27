@@ -15,13 +15,17 @@
             <div class="filter__body">
                 <div class="filter__search">
                     <div class="search__input">
-                        <shared-text-box [type]="'text'" [size]="'medium'" [placeholder]="'search by name'" [(valueModel)]="query"></shared-text-box>
+                        <shared-text-box [type]="'text'" [size]="'medium'" [placeholder]="'search by name'" [(valueModel)]="query" (keydown.enter)="callApiSearch()"></shared-text-box>
                     </div>
                     <shared-button [type]="'primary'" [size]="'medium'" (clicked)="callApiSearch()">Search</shared-button>
                 </div>
                 <div class="filter__display">
                     <div class="tag__input">
-                        <shared-tag-input [(valueModel)]="tagValue" [(tagPayModel)]="tagPayload" ></shared-tag-input>
+                        <shared-tag-input 
+                            [(tagPayModel)]="tagPayload" 
+                            [types]="types"
+                            [ingredients]="ingredients"
+                            ></shared-tag-input>
                     </div>
                     <div class="tags__container">
                         <div class="header__title">Ingredients filter</div>
@@ -54,7 +58,7 @@
         <aside class="quickView">
             <div class="header__title">Quick view</div>
             <hr>
-            <ul>
+            <ul *ngIf="selectedDish">
                 <shared-dish-quick-view [dish]="selectedDish"></shared-dish-quick-view>
             </ul>
             <p id="dish-description"></p>

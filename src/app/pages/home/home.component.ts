@@ -3,6 +3,7 @@ import { Dish, Ingredient, TagPayload, TypeDish } from 'src/app/models';
 import { KeyValue } from '@angular/common';
 import { DishService } from 'src/app/services/DishService/dish.service';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,58 +13,57 @@ import { Subscription } from 'rxjs';
 export class HomeComponent implements OnInit,OnDestroy {
 
   query: string = '';
-  tagValue: string = '';
-  types : KeyValue<number, string>[] = [{key: 1, value: 'chính'}, {key: 2, value: 'tráng miệng'}];
-  ingredients: KeyValue<number, string>[] = [{key: 1, value: 'thịt'}, {key: 2, value: 'rau'}];
+  types : KeyValue<number, string>[] = [];
+  ingredients: KeyValue<number, string>[] = [];
   filterTypes: KeyValue<number, string>[] = [];
   filterIngredients: KeyValue<number, string>[] = [];
   offset: number = 0;
   itemsPerPage: number = 4;
   page: number = 1;
   dishes: Dish[] = [];
-  selectedDish: Dish = new Dish(
-    "1234", 
-    "cơm trứng", 
-    "món ăn việt", 
-    "https://cdn11.dienmaycholon.vn/filewebdmclnew/public//userupload/images/cach-nau-com-ngon-va-lau-thiu-3.jpg", 
-    [new Ingredient(1,"trứng",200,"gram"), new Ingredient(1,"cơm",200,"gram")], 
-    [new TypeDish(1, "món chính")], 
-  5);;
+  selectedDish: Dish|null = null;
 
   dishesSubscriptions:Subscription = new Subscription();
   typesSubscriptions:Subscription = new Subscription();
   ingredientsSubscriptions:Subscription = new Subscription();
   dishSelectedSubscriptions:Subscription = new Subscription();
 
-
-
-  get tagPayload(): TagPayload[] {
-    return [
-      {payload: this.types, filter: this.filterTypes},
-      {payload: this.ingredients, filter: this.filterIngredients}
-    ];
+  get tagPayload(): TagPayload {
+    return {
+      filterIngredients: this.filterIngredients,
+      filterTypes: this.filterTypes
+    }
   }
   set tagPayload(val) {
-    // this.types = val[0].payload;
-    // this.ingredients = val[1].payload;
-    this.filterTypes = val[0].filter;
-    this.filterIngredients = val[1].filter;
+    this.filterTypes = val.filterTypes;
+    this.filterIngredients = val.filterIngredients;
   }
 
-  constructor(private dishService:DishService) { }
+  constructor(private dishService:DishService,private router:Router, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.dishSelectedSubscriptions = this.dishService.dishSelected$.subscribe((data) => {
+      const queryParams: Params = { 
+        selectedDish: data.getName()
+      };
+      this.router.navigate(
+        [], 
+        {
+          relativeTo: this.activatedRoute,
+          queryParams, 
+          queryParamsHandling: 'merge',
+        }
+      );
       this.selectedDish = data;
     });
-    this.dishesSubscriptions = this.dishService.ingredientSubject$.subscribe((data) => {
+    this.dishesSubscriptions = this.dishService.dishesObservable$.subscribe((data) => {
+      this.dishes = data;
+    });
+    this.ingredientsSubscriptions = this.dishService.ingredientsObservable$.subscribe((data) => {
       this.ingredients = data;
     });
-    this.typesSubscriptions = this.dishService.typesSubject$.subscribe((data) => {
+    this.typesSubscriptions = this.dishService.typesObservable$.subscribe((data) => {
       this.types = data;
-    });
-    this.ingredientsSubscriptions = this.dishService.dishSubject$.subscribe((data) => {
-      this.dishes = data;
     });
     this.dishService.getIngredients();
     this.dishService.getTypes();
@@ -79,6 +79,20 @@ export class HomeComponent implements OnInit,OnDestroy {
     const filterTypes = this.filterTypes.map((item) => item.key);
     const offset = (this.page - 1) * this.itemsPerPage;
     this.dishService.getDishes(this.query, filterIngredients, filterTypes, offset, this.itemsPerPage);
+    const queryParams: Params = { 
+      query: this.query!=""?this.query:null, 
+      page: this.page,
+      ingredients: this.filterIngredients.length>0?this.filterIngredients.map(ing => ing.value).join(","):null,
+      types: this.filterTypes.length>0?this.filterTypes.map(type => type.value).join(","):null
+    };
+    this.router.navigate(
+      [], 
+      {
+        relativeTo: this.activatedRoute,
+        queryParams, 
+        queryParamsHandling: 'merge',
+      }
+    );
   }
 
   onClickChangePage(option: string){
@@ -92,10 +106,10 @@ export class HomeComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.dishSelectedSubscriptions.unsubscribe();
     this.dishesSubscriptions.unsubscribe();
     this.typesSubscriptions.unsubscribe();
     this.ingredientsSubscriptions.unsubscribe();
-    this.dishSelectedSubscriptions.unsubscribe();
   }
 
 

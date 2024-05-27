@@ -37,14 +37,14 @@ export class UserProfileComponent implements OnInit, OnDestroy{
   constructor(private authService:AuthService) { }
 
   ngOnInit(): void {
-    this.userSubscription = this.authService.userSubject$.subscribe((user) => {
+    this.userSubscription = this.authService.user$.subscribe((user) => {
       this.user = user;
       this.updateForm.patchValue({
         "username": user?.getUsername(),
         "email": user?.getEmail(),
       });
     });
-    this.errorSubscription = this.authService.errorSubject$.subscribe((error) => {
+    this.errorSubscription = this.authService.errorObservable$.subscribe((error) => {
       this.errorMessage = error;
     });
     this.updateForm = new FormGroup({

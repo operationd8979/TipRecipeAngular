@@ -22,10 +22,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(private authService:AuthService, private router:Router) { }
 
   ngOnInit(): void {
-    this.userSubscription = this.authService.userSubject$.subscribe((user:User|null) => {
+    this.userSubscription = this.authService.user$.subscribe((user:User|null) => {
       if(user) this.router.navigate(['/']);
     });
-    this.errorSubscription = this.authService.errorSubject$.subscribe((error) => {
+    this.errorSubscription = this.authService.errorObservable$.subscribe((error) => {
       this.errorMessage = error;
     });
     this.registerForm = new FormGroup({

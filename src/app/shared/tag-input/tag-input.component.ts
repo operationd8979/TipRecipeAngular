@@ -1,3 +1,4 @@
+import { KeyValue } from '@angular/common';
 import { Component, EventEmitter, Input, Output, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { TagPayload } from 'src/app/models';
 
@@ -8,9 +9,12 @@ import { TagPayload } from 'src/app/models';
 })
 export class TagInputComponent implements OnInit{
 
-  tagPageLoad: TagPayload[] = [{payload: [], filter: []}];
+  tagPageLoad: TagPayload = {filterIngredients: [], filterTypes: []};
+  tagValue: string = '';
   hintString: string = '';
-  lastTag: string = '';
+  lastItem: {action:string,value:KeyValue<number,string>} = {action:"",value:{key:-1,value:""}}; 
+  @Input() types: KeyValue<number,string>[] = [];
+  @Input() ingredients: KeyValue<number,string>[] = [];
 
   @Input() 
   get tagPayModel() {
@@ -22,67 +26,123 @@ export class TagInputComponent implements OnInit{
     this.tagPayModelChange.emit(this.tagPageLoad);
   }
 
-  tagValue: string = '';
-
-  @Input()
-  get valueModel() {
-    return this.tagValue;
-  }
-
-  @Output() valueModelChange = new EventEmitter();
-  set valueModel(val) {
-    this.tagValue = val;
-    this.valueModelChange.emit(this.tagValue);
-  }
-
   @ViewChild('hintTag') hintTag!: ElementRef;
+  @ViewChild('tagInput') tagInput!: ElementRef;
 
   constructor() { }
 
   ngOnInit(): void {
   }
-  onChange($event: any){
-    const types = this.tagPageLoad[0].payload;
-    const filterTypes = this.tagPageLoad[0].filter;
-    const ingredients = this.tagPageLoad[1].payload;
-    const filterIngredients = this.tagPageLoad[1].filter;
-    const value = $event.target.value;
-    const currentChracter = $event.data;
-    const currentTags = value.split(',');
-    this.lastTag = currentTags[currentTags.length - 1].trim();
-    if(this.lastTag === ''){
-      this.hintString = '';
-      return;
-    }
-    let hintTags = [];
-    hintTags = ingredients.filter((ingredient) => {
-      return ingredient.value.toLowerCase().includes(this.lastTag.toLowerCase());
-    });
-    hintTags = hintTags.concat(types.filter((type) => {
-      return type.value.toLowerCase().includes(this.lastTag.toLowerCase());
-    }));
-    let stringValues = '';
-    hintTags.filter((tag) => {
-      stringValues+= tag.value + ', ';
-    });
-    this.hintString = stringValues;
-
-
-    this.tagPayModel = [{payload: types, filter: filterTypes}, {payload: ingredients, filter: filterIngredients}];
-  }
 
   onKeyDown(event: KeyboardEvent): void {
+    if (event.ctrlKey && event.key === 'a') {
+      event.preventDefault();
+      return;
+    }
+    if (event.ctrlKey && event.key === 'Backspace') {
+      event.preventDefault();
+      return;
+    }
+    let value = this.tagInput.nativeElement.value;
     switch (event.key) {
       case ',':
-        console.log('Comma key pressed');
+        event.preventDefault();
+        this.processTagInput(event,value);
         break;
       case 'Enter':
-        console.log('Enter key pressed');
+        event.preventDefault();
+        this.processTagInput(event,value);
         break;
       case 'Backspace':
-        console.log('Backspace key pressed');
+        this.processTagInput(event,value.substring(0,value.length-1));
         break;
+      case 'Delete':
+        console.log('Delete key pressed');
+        break;
+      default:
+        this.processTagInput(event,value+event.key);
     }
+  }
+
+  processTagInput(event: KeyboardEvent,value:string){
+    const currentTags = value.split(",");
+    const lastTag = currentTags[currentTags.length - 1].trim();
+    if(lastTag === ""){
+      this.hintString = "";
+      return;
+    }
+    const ingredientTags = this.ingredients.filter((ingredient) => {
+      return ingredient.value.toLowerCase().includes(lastTag.toLowerCase());
+    });
+    const typeTags = this.types.filter((type) => {
+      return type.value.toLowerCase().includes(lastTag.toLowerCase());
+    });
+    const hintTags = ingredientTags.concat(typeTags);
+    if(hintTags.length === 1){
+      if(this.ingredients.some(i=>i.value==hintTags[0].value)){
+        this.lastItem.action="ingredient";
+        this.lastItem.value = hintTags[0];
+      }
+      else{
+        this.lastItem.action="type";
+        this.lastItem.value = hintTags[0];
+      }
+    }
+    else{
+      this.lastItem = {action:"",value:{key:-1,value:""}}; 
+    }
+    switch (event.key) {
+      case ',':
+        this.insertTag();
+        break;
+      case 'Enter':
+        this.insertTag();
+        break;
+      case 'Backspace':
+        this.insertHint(hintTags);
+        break;
+      case 'Delete':
+        event.preventDefault();
+        break;
+      case 'Control':
+        event.preventDefault();
+        break;
+      default:
+        this.insertHint(hintTags);
+    }
+    
+  }
+
+  insertTag():void{
+    const filterTypes = this.tagPageLoad.filterTypes;
+    const filterIngredients = this.tagPageLoad.filterIngredients;
+    console.log(this.lastItem);
+    if(this.lastItem.action=="ingredient"){
+      if(!filterIngredients.some(i=>i.key==this.lastItem.value.key)){
+        const index = this.tagInput.nativeElement.value.lastIndexOf(',');
+        this.tagInput.nativeElement.value = this.tagInput.nativeElement.value.substring(0,index+1);
+        filterIngredients.push(this.lastItem.value);
+        this.hintString = "";
+        this.tagInput.nativeElement.value+= this.lastItem.value.value+",";
+      }
+    }
+    else if(this.lastItem.action=="type"){
+      if(!filterTypes.some(i=>i.key==this.lastItem.value.key)){
+        const index = this.tagInput.nativeElement.value.lastIndexOf(',');
+        this.tagInput.nativeElement.value = this.tagInput.nativeElement.value.substring(0,index+1);
+        filterTypes.push(this.lastItem.value);
+        this.hintString = "";
+        this.tagInput.nativeElement.value+= this.lastItem.value.value+",";
+      }
+    }
+  }
+
+  insertHint(hintTags:KeyValue<number,string>[]):void{
+    let finalHintString = "";
+    hintTags.filter(tag=>{
+      finalHintString+=tag.value+", ";
+    })
+    this.hintString = finalHintString;
   }
 
 }

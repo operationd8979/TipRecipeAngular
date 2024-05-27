@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { config } from 'src/app/constants';
-import { lastValueFrom, BehaviorSubject, Subject, map, take } from 'rxjs';
+import { lastValueFrom, BehaviorSubject, Subject, map, take, Observable } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { Router } from '@angular/router';
 
@@ -30,29 +30,32 @@ interface logoutResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    userSubject$ = new BehaviorSubject<User|null>(null);
-    errorSubject$ = new Subject<string>();
+    private userSubject$ = new BehaviorSubject<User|null>(null);
+    public user$ = this.userSubject$.asObservable();
+    private errorSubject$ = new Subject<string>();
+    public errorObservable$ = this.errorSubject$.asObservable();
 
     constructor(private httpClient: HttpClient,private router: Router) {
-       this.authByToken();
     }
 
-
-    authByToken() {
-        this.httpClient.get<authResponse>(config.serverUrl + 'auth').subscribe(
+    authByToken(): Promise<void> {
+        return new Promise((resolve, reject) => {
+          this.httpClient.get<authResponse>(config.serverUrl + 'auth').subscribe(
             (response) => {
-                const { email, userName, role } = response;
-                const user = new User(email, userName, role);
-                this.userSubject$.next(user);
+              const { email, userName, role } = response;
+              const user = new User(email, userName, role);
+              this.userSubject$.next(user);
+              resolve();
             },
             (error) => {
-                if(error.status === 401){
-                    this.logout();
-                    return;
-                }
-            },
-        );
-    }
+              if (error.status === 401) {
+                this.logout();
+              }
+              resolve(); 
+            }
+          );
+        });
+      }
 
     login(email: string, password: string) {
         const loginRequest: LoginRequest = { email, password };
