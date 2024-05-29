@@ -99,12 +99,10 @@ export class TagInputComponent implements OnInit{
         this.insertTag();
         break;
       case 'Backspace':
+        this.deleteTag();
         this.insertHint(hintTags);
         break;
       case 'Delete':
-        event.preventDefault();
-        break;
-      case 'Control':
         event.preventDefault();
         break;
       default:
@@ -116,9 +114,8 @@ export class TagInputComponent implements OnInit{
   insertTag():void{
     const filterTypes = this.tagPageLoad.filterTypes;
     const filterIngredients = this.tagPageLoad.filterIngredients;
-    console.log(this.lastItem);
     if(this.lastItem.action=="ingredient"){
-      if(!filterIngredients.some(i=>i.key==this.lastItem.value.key)){
+      if(!filterIngredients.some(i=>i.value===this.lastItem.value.value)){
         const index = this.tagInput.nativeElement.value.lastIndexOf(',');
         this.tagInput.nativeElement.value = this.tagInput.nativeElement.value.substring(0,index+1);
         filterIngredients.push(this.lastItem.value);
@@ -127,12 +124,27 @@ export class TagInputComponent implements OnInit{
       }
     }
     else if(this.lastItem.action=="type"){
-      if(!filterTypes.some(i=>i.key==this.lastItem.value.key)){
+      if(!filterTypes.some(i=>i.value===this.lastItem.value.value)){
         const index = this.tagInput.nativeElement.value.lastIndexOf(',');
         this.tagInput.nativeElement.value = this.tagInput.nativeElement.value.substring(0,index+1);
         filterTypes.push(this.lastItem.value);
         this.hintString = "";
         this.tagInput.nativeElement.value+= this.lastItem.value.value+",";
+      }
+    }
+  }
+
+  deleteTag():void{
+    const filterTypes = this.tagPageLoad.filterTypes;
+    const filterIngredients = this.tagPageLoad.filterIngredients;
+    if(this.lastItem.action=="ingredient"){
+      if(filterIngredients.some(i=>i.key==this.lastItem.value.key)){
+        filterIngredients.splice(filterIngredients.indexOf(this.lastItem.value),1);
+      }
+    }
+    else if(this.lastItem.action=="type"){
+      if(filterTypes.some(i=>i.key==this.lastItem.value.key)){
+        filterTypes.splice(filterTypes.indexOf(this.lastItem.value));        
       }
     }
   }

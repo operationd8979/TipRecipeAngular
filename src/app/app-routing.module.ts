@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'home', component: Home , canActivate: [AuthGuard]},
   { path: 'detail/:id', component: DetailDish, canActivate: [AuthGuard]},
   { path: 'profile', component: UserProfile, canActivate: [AuthGuard]},
+  { path: 'admin', component: Home, canActivate: [AuthGuard]},
   { path: 'login', component: Login},
   { path: 'register', component: Register},
   { path: '**', component: ErrorPage, data: {message: 'Page not found!'}}

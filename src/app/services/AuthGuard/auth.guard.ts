@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from '../AuthService/auth.service';
 import {  map } from 'rxjs';
 
@@ -8,15 +8,23 @@ import {  map } from 'rxjs';
 })
 export class AuthGuard implements CanActivate {
 
+  ADMINURLS = ['/admin'];
+
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(): any {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
     return this.authService.user$.pipe(
         map(user => {
           if (user) {
-              return true;
+            if(this.ADMINURLS.some(url => state.url.includes(url))){
+              if(user.getRole().includes("ADMIN")){
+                return true;
+              }
+              return this.router.createUrlTree(['/unauthorized']);
+            }
+            return true;
           } else {
-              return this.router.createUrlTree(['/login']);
+            return this.router.createUrlTree(['/login']);
           }
         }
     ));
