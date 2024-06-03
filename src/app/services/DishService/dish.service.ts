@@ -58,6 +58,8 @@ export class DishService {
     private errorSubject$ = new Subject<string>();
     errorObserable$ = this.errorSubject$.asObservable();
     dishSelected$ = new Subject<Dish>();
+    private recommendDishSubject$ = new BehaviorSubject<KeyValue<string,string>[]>([]);
+    recommendDishesObservable$ = this.recommendDishSubject$.asObservable();
 
     constructor(private httpClient: HttpClient) {
         
@@ -85,6 +87,24 @@ export class DishService {
                 if(dishes.length > 0){
                     this.getDeailtDish(dishes[0].getID());
                 }
+                this.errorSubject$.next('');
+            },
+            (error) => {
+                this.dishSubject$.next([]);
+                const errorMessage = error.error.message;
+                this.errorSubject$.next(errorMessage);
+            },
+        );
+        
+    }
+
+    getRecommendDishes() {
+        this.httpClient.get<dishResponse[]>(config.serverUrl +'dish/recommend').subscribe(
+            (response) => {
+                const items:KeyValue<string,string>[] = response.map((item) => {
+                    return {key: item.dishID, value: item.urlPhoto};
+                });
+                this.recommendDishSubject$.next(items);
                 this.errorSubject$.next('');
             },
             (error) => {

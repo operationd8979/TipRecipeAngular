@@ -4,7 +4,11 @@
             <img src="./assets/images/banner.png" alt="banner">
         </div>
         <div class="banner__soft">
-            <h1>This is banner recommend dishs</h1>
+            <div class="banner__item slide" *ngFor="let item of recommendDishes">
+                <a routerLink="/detail/{{item.key}}">
+                    <img src={{item.value}} alt="Slide 1" class="rounded-xl">
+                </a>
+            </div>
         </div>
     </div>
     <main class="main">

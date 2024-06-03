@@ -62,7 +62,6 @@ export class UserProfileComponent implements OnInit, OnDestroy{
   onSubmit(){
     const {username, email, newPassword} = this.updateForm.value;
     this.authService.updateProfile(username, newPassword);
-    alert("Profile updated successfully");
     this.updateForm.patchValue({
       "newPassword": "",
     });

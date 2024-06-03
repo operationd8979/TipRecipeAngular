@@ -10,7 +10,10 @@
         }
     }
     .banner__soft{
-        
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        padding: 0.5rem;
     }
 }
 
@@ -93,4 +96,43 @@
         }
     }
     
+}
+
+
+.banner__item{
+    a{
+        display: flex;
+        flex-direction: row-reverse;
+        img{
+            width: 100%;
+            border-radius: 1rem;
+        }
+    }
+}
+
+
+.slide {
+    animation: slide 10s infinite;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+@keyframes slide {
+    0% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
 }

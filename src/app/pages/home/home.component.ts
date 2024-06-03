@@ -24,12 +24,14 @@ export class HomeComponent implements OnInit,OnDestroy {
   page: number = 1;
   dishes: Dish[] = [];
   selectedDish: Dish|null = null;
+  recommendDishes: {key:string,value:string}[] = [];
 
   dishesSubscriptions:Subscription = new Subscription();
   typesSubscriptions:Subscription = new Subscription();
   ingredientsSubscriptions:Subscription = new Subscription();
   dishSelectedSubscriptions:Subscription = new Subscription();
   querySubscriptions:Subscription = new Subscription();
+  recommendDishSubscription: Subscription = new Subscription();
 
   get tagPayload(): TagPayload {
     return {
@@ -45,12 +47,15 @@ export class HomeComponent implements OnInit,OnDestroy {
   constructor(private dishService:DishService,private router:Router, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
-
     this.querySubscriptions = this.queryChangeSubject.asObservable().pipe(
       debounceTime(500),
     ).subscribe(() => {
       this.page = 1;
       this.callApiSearch();
+    });
+
+    this.recommendDishSubscription = this.dishService.recommendDishesObservable$.subscribe(recommendDishes => {
+      this.recommendDishes = recommendDishes;
     });
 
     this.dishSelectedSubscriptions = this.dishService.dishSelected$.subscribe((data) => {
@@ -76,6 +81,7 @@ export class HomeComponent implements OnInit,OnDestroy {
     this.typesSubscriptions = this.dishService.typesObservable$.subscribe((data) => {
       this.types = data;
     });
+    this.dishService.getRecommendDishes();
     this.dishService.getIngredients();
     this.dishService.getTypes();
     this.callApiSearch();
@@ -126,6 +132,7 @@ export class HomeComponent implements OnInit,OnDestroy {
     this.typesSubscriptions.unsubscribe();
     this.ingredientsSubscriptions.unsubscribe();
     this.querySubscriptions.unsubscribe();
+    this.recommendDishSubscription.unsubscribe();
   }
 
 
