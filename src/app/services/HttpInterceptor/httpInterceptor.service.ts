@@ -12,13 +12,21 @@ import { AuthService } from '../AuthService';
 @Injectable()
 export class HttpInterceptorService implements HttpInterceptor {
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const modifiedRequest = request.clone({
         withCredentials: true,
     });
-    return next.handle(modifiedRequest);
+    return next.handle(modifiedRequest).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          // Do something
+          this.authService.logout();
+        }
+        return throwError(error);
+      }
+    ));
   }
 
 }

@@ -14,9 +14,9 @@
             <div class="filter__body">
                 <div class="filter__search">
                     <div class="search__input">
-                        <shared-text-box [type]="'text'" [size]="'medium'" [placeholder]="'search by name'" [(valueModel)]="query" (keydown.enter)="callApiSearch()"></shared-text-box>
+                        <shared-text-box [type]="'text'" [size]="'medium'" [placeholder]="'search by name'" [(valueModel)]="query" (input)="updateQuery()" (keydown.enter)="callApiSearch()"></shared-text-box>
                     </div>
-                    <shared-button [type]="'primary'" [size]="'medium'" (clicked)="callApiSearch()">Search</shared-button>
+                    <!-- <shared-button [type]="'primary'" [size]="'medium'" (clicked)="callApiSearch()">Search</shared-button> -->
                 </div>
                 <div class="filter__display">
                     <div class="tag__input">

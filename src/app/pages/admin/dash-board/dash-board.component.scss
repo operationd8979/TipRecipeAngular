@@ -1,0 +1,33 @@
+.wrapper{
+    margin: 0 auto;
+    padding: 4rem;
+}
+
+
+.header{
+    h1{
+        font-size: 3rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+}
+.container__payload{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    .payload__wrapper{
+        background-color: var(--white);
+        padding: 1rem;
+        border-radius: 1rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        h2{
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        p{
+            color: var(--gray-700);
+        }
+    }
+}

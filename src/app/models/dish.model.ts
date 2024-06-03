@@ -10,6 +10,7 @@ export class Dish {
     private types: TypeDish[];
     private rating: number;
     private isRated: boolean = false;
+    private isDeleted: boolean = false;
     private recipe: string = "";
 
 
@@ -32,6 +33,10 @@ export class Dish {
         this.recipe = recipe;
     }
 
+    public setIsDeleted(isDeleted: boolean): void {
+        this.isDeleted = isDeleted;
+    }
+
     public getID(): string {
         return this.id;
     }
@@ -52,8 +57,16 @@ export class Dish {
         return this.ingredients.slice();
     }
 
+    public getIngredientNames(): string {
+        return this.ingredients.map(ingredient => ingredient.getName()).join(", ");
+    }
+
     public getTypes(): TypeDish[] {
         return this.types.slice();
+    }
+
+    public getTypeNames(): string {
+        return this.types.map(type => type.getName()).join(", ");
     }
 
     public getRating(): number {
@@ -66,6 +79,10 @@ export class Dish {
 
     public getIsRated(): boolean {
         return this.isRated;
+    }
+
+    public getIsDeleted(): boolean {
+        return this.isDeleted;
     }
 
 }

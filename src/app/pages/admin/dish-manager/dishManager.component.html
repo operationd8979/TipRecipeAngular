@@ -1,0 +1,47 @@
+<div class="wrapper">
+    <main class="container">
+      <h1 class="title">Dish Management</h1>
+      <div class="button-container">
+        <a routerLink="/editDish" class="add-button">Add Dish</a>
+      </div>
+      <div class="search-container">
+        <input type="text" id="search" (keydown.enter)="callApiSearch()" [(ngModel)]="searchTerm" class="search-input" placeholder="Search..by ID hoặc Name">
+        <button (click)="callApiSearch()" class="search-button">Search</button>
+      </div>
+      <div class="table-container">
+        <table class="dish-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Picture</th>
+              <th>Summary</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let dish of dishes">
+              <td>{{ dish.getID() }}</td>
+              <td>{{ dish.getName() }}</td>
+              <td class="dish-image"><img [src]="dish.getUrl()" alt="{{ dish.getName() }}"></td>
+              <td>
+                <p>{{ dish.getSummary() }}</p>
+                <p>Nguyên liệu: {{ dish.getIngredientNames() }}</p>
+                <p>Loại: {{ dish.getTypeNames() }}</p>
+              </td>
+              <td>
+                <a [routerLink]="['/editDish', dish.getID()]" class="edit-button">Edit</a>
+                <button (click)="confirmDelete(dish.getID())" class="delete-button">{{dish.getIsDeleted()?"Public":"Hide"}}</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <button *ngIf="currentPage > 1" (click)="changePage(currentPage - 1)" class="pagination-button">Previous</button>
+        <button *ngFor="let page of numberPagesArray; let i = index" [class.active]="i + 1 === currentPage" (click)="changePage(i + 1)" class="pagination-button">{{ i + 1 }}</button>
+        <button *ngIf="currentPage < numberPages" (click)="changePage(currentPage + 1)" class="pagination-button">Next</button>
+      </div>
+    </main>
+  </div>
+  

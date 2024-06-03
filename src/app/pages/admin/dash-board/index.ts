@@ -1,0 +1,1 @@
+export { DashBoardComponent as DashBoard } from './dash-board.component';

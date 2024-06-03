@@ -1,7 +1,7 @@
 import { KeyValue } from "@angular/common";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpParams, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Subject } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { AuthService } from "../AuthService";
 import { config } from 'src/app/constants';
 import { Dish, Ingredient, TypeDish } from "src/app/models";
@@ -38,12 +38,19 @@ interface dishResponse {
     recipe:{
         content: string;
     };
+    isDeleted: boolean;
+}
+interface dishesAdmin{
+    dishes: dishResponse[];
+    total: number;
 }
 @Injectable({providedIn: 'root'})
 export class DishService {
 
     private dishSubject$ = new BehaviorSubject<Dish[]>([]);
     dishesObservable$ = this.dishSubject$.asObservable();
+    private dishAdminSubject$ = new BehaviorSubject<{dishes: Dish[], total: number}>({dishes: [], total: 0});
+    dishesAdminObservable$ = this.dishAdminSubject$.asObservable();
     private ingredientSubject$ = new BehaviorSubject<KeyValue<number,string>[]>([]);
     ingredientsObservable$ = this.ingredientSubject$.asObservable();
     private typeSubject$ = new BehaviorSubject<KeyValue<number,string>[]>([]);
@@ -52,7 +59,7 @@ export class DishService {
     errorObserable$ = this.errorSubject$.asObservable();
     dishSelected$ = new Subject<Dish>();
 
-    constructor(private httpClient: HttpClient,private authService: AuthService) {
+    constructor(private httpClient: HttpClient) {
         
     }
 
@@ -61,7 +68,7 @@ export class DishService {
             .set('query', query)
             .set('ingredients', filterIngredients.join(','))
             .set('types', filterTypes.join(','))
-            .set('itemsPerPage', itemsPerPage)
+            .set('limit', itemsPerPage)
             .set('offset', offset);
         this.httpClient.get<dishResponse[]>(config.serverUrl +'dish', {params: queryParams}).subscribe(
             (response) => {
@@ -75,14 +82,42 @@ export class DishService {
                     return new Dish(item.dishID, item.dishName, item.summary, item.urlPhoto, ingredients, types, item.ratingScore, item.isRated);
                 });
                 this.dishSubject$.next(dishes);
-                this.getDeailtDish(dishes[0].getID());
+                if(dishes.length > 0){
+                    this.getDeailtDish(dishes[0].getID());
+                }
                 this.errorSubject$.next('');
             },
             (error) => {
-                if(error.status === 401){
-                    this.authService.logout();
-                    return;
-                }
+                this.dishSubject$.next([]);
+                const errorMessage = error.error.message;
+                this.errorSubject$.next(errorMessage);
+            },
+        );
+        
+    }
+
+    getDishesByAdmin(query: string, offset: number = 0, itemsPerPage: number = 5) {
+        const queryParams = new HttpParams()
+            .set('query', query)
+            .set('limit', itemsPerPage)
+            .set('offset', offset);
+        this.httpClient.get<dishesAdmin>(config.serverUrl +'admin/dish', {params: queryParams}).subscribe(
+            (response) => {
+                const dishes:Dish[] = response.dishes.map((item) => {
+                    const ingredients = item.detailIngredientDishes.map((ingredient) => {
+                        return new Ingredient(ingredient.ingredient.ingredientId,ingredient.ingredient.ingredientName,ingredient.amount,ingredient.unit);
+                    });
+                    const types = item.detailTypeDishes.map((type) => {
+                        return new TypeDish(type.type.typeID,type.type.typeName);
+                    });
+                    let dish: Dish = new Dish(item.dishID, item.dishName, item.summary, item.urlPhoto, ingredients, types, item.ratingScore, item.isRated);
+                    dish.setIsDeleted(item.isDeleted);
+                    return dish;
+                });
+                this.dishAdminSubject$.next({dishes: dishes, total: response.total});
+                this.errorSubject$.next('');
+            },
+            (error) => {
                 this.dishSubject$.next([]);
                 const errorMessage = error.error.message;
                 this.errorSubject$.next(errorMessage);
@@ -100,10 +135,6 @@ export class DishService {
                 this.ingredientSubject$.next(data);
             },
             (error) => {
-                if(error.status === 401){
-                    this.authService.logout();
-                    return;
-                }
                 const errorMessage = error.error.message;
                 this.errorSubject$.next(errorMessage);
             },
@@ -119,10 +150,6 @@ export class DishService {
                 this.typeSubject$.next(data);
             },
             (error) => {
-                if(error.status === 401){
-                    this.authService.logout();
-                    return;
-                }
                 const errorMessage = error.error.message;
                 this.errorSubject$.next(errorMessage);
             },
@@ -148,10 +175,6 @@ export class DishService {
                 this.errorSubject$.next('');
             },
             (error) => {
-                if(error.status === 403){
-                    this.authService.logout();
-                    return;
-                }
                 const errorMessage = error.error.message;
                 this.errorSubject$.next(errorMessage);
             },
@@ -169,13 +192,19 @@ export class DishService {
                 this.errorSubject$.next('');
             },
             (error) => {
-                if(error.status === 403){
-                    this.authService.logout();
-                    return;
-                }
                 const errorMessage = error.error.message;
                 this.errorSubject$.next(errorMessage);
             },
+        );
+    }
+
+    
+    modifyVisibleDish(dishID:string) : Observable<HttpResponse<any>>{
+        return this.httpClient.delete(
+            config.serverUrl + "admin/" + dishID,
+            {
+                observe: 'response' 
+            }
         );
     }
 

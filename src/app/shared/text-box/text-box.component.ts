@@ -21,8 +21,7 @@ export class TextBoxComponent implements OnInit {
 
   @Output() valueModelChange = new EventEmitter();
   set valueModel(val) {
-    this.value = val;
-    this.valueModelChange.emit(this.value);
+    this.valueModelChange.emit(val);
   }
 
   constructor() { }

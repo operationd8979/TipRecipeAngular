@@ -1,0 +1,1 @@
+export { AdminSideComponent as AdminSide } from "./adminSide.component";

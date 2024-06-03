@@ -42,16 +42,13 @@ export class AuthService {
         return new Promise((resolve, reject) => {
           this.httpClient.get<authResponse>(config.serverUrl + 'auth').subscribe(
             (response) => {
-              const { email, userName, role } = response;
-              const user = new User(email, userName, role);
-              this.userSubject$.next(user);
-              resolve();
+                const { email, userName, role } = response;
+                const user = new User(email, userName, role);
+                this.userSubject$.next(user);
+                resolve();
             },
             (error) => {
-              if (error.status === 401) {
-                this.logout();
-              }
-              resolve(); 
+                resolve(); 
             }
           );
         });
@@ -102,10 +99,6 @@ export class AuthService {
                     this.userSubject$.next(user);
                 },
                 (error) => {
-                    if(error.status === 401){
-                        this.logout();
-                        return;
-                    }
                     const errorMessage = error.error.message;
                     this.errorSubject$.next(errorMessage);
                 },

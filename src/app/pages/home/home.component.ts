@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Dish, Ingredient, TagPayload, TypeDish } from 'src/app/models';
+import { Dish, TagPayload } from 'src/app/models';
 import { KeyValue } from '@angular/common';
 import { DishService } from 'src/app/services/DishService/dish.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subject, Subscription, debounceTime, merge, takeUntil } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 export class HomeComponent implements OnInit,OnDestroy {
 
   query: string = '';
+  private queryChangeSubject = new Subject<void>();
   types : KeyValue<number, string>[] = [];
   ingredients: KeyValue<number, string>[] = [];
   filterTypes: KeyValue<number, string>[] = [];
@@ -27,6 +29,7 @@ export class HomeComponent implements OnInit,OnDestroy {
   typesSubscriptions:Subscription = new Subscription();
   ingredientsSubscriptions:Subscription = new Subscription();
   dishSelectedSubscriptions:Subscription = new Subscription();
+  querySubscriptions:Subscription = new Subscription();
 
   get tagPayload(): TagPayload {
     return {
@@ -42,6 +45,14 @@ export class HomeComponent implements OnInit,OnDestroy {
   constructor(private dishService:DishService,private router:Router, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
+
+    this.querySubscriptions = this.queryChangeSubject.asObservable().pipe(
+      debounceTime(500),
+    ).subscribe(() => {
+      this.page = 1;
+      this.callApiSearch();
+    });
+
     this.dishSelectedSubscriptions = this.dishService.dishSelected$.subscribe((data) => {
       const queryParams: Params = { 
         selectedDish: data.getName()
@@ -67,23 +78,27 @@ export class HomeComponent implements OnInit,OnDestroy {
     });
     this.dishService.getIngredients();
     this.dishService.getTypes();
-    this.getDishes();
+    this.callApiSearch();
+  }
+
+  updateQuery(): void {
+    this.queryChangeSubject.next();
   }
 
   callApiSearch() {
-    this.getDishes();
+    this.getDishes(this.query, this.filterIngredients, this.filterTypes, this.page, this.itemsPerPage);
   }
 
-  getDishes() {
-    const filterIngredients = this.filterIngredients.map((item) => item.key);
-    const filterTypes = this.filterTypes.map((item) => item.key);
-    const offset = (this.page - 1) * this.itemsPerPage;
-    this.dishService.getDishes(this.query, filterIngredients, filterTypes, offset, this.itemsPerPage);
+  getDishes(query: string, filterIngredients:KeyValue<number, string>[], filterTypes:KeyValue<number, string>[], page:number, itemsPerPage:number) {
+    const filterIngredientsQuery = filterIngredients.map((item) => item.key);
+    const filterTypesQuery = filterTypes.map((item) => item.key);
+    const offsetQuery = (page - 1) * itemsPerPage;
+    this.dishService.getDishes(query, filterIngredientsQuery, filterTypesQuery, offsetQuery, itemsPerPage);
     const queryParams: Params = { 
-      query: this.query!=""?this.query:null, 
-      page: this.page,
-      ingredients: this.filterIngredients.length>0?this.filterIngredients.map(ing => ing.value).join(","):null,
-      types: this.filterTypes.length>0?this.filterTypes.map(type => type.value).join(","):null
+      query: query!=""?query:null, 
+      page: page,
+      ingredients: filterIngredients.length>0?filterIngredients.map(ing => ing.value).join(","):null,
+      types: filterTypes.length>0?filterTypes.map(type => type.value).join(","):null
     };
     this.router.navigate(
       [], 
@@ -98,10 +113,10 @@ export class HomeComponent implements OnInit,OnDestroy {
   onClickChangePage(option: string){
     if(option === 'prev'){
       this.page = this.page - 1;
-      this.getDishes();
+      this.callApiSearch();
     } else if(option === 'next'){
       this.page = this.page + 1;
-      this.getDishes();
+      this.callApiSearch();
     }
   }
 
@@ -110,6 +125,7 @@ export class HomeComponent implements OnInit,OnDestroy {
     this.dishesSubscriptions.unsubscribe();
     this.typesSubscriptions.unsubscribe();
     this.ingredientsSubscriptions.unsubscribe();
+    this.querySubscriptions.unsubscribe();
   }
 
 

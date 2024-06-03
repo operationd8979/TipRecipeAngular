@@ -1,0 +1,12 @@
+.wrapper{
+    background-color: var(--white);
+    display: flex;
+    height: 100vh;
+    .side__bar{
+        flex: 1;
+    }
+    .container{
+       
+        flex: 4;
+    }
+}

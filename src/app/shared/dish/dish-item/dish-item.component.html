@@ -22,7 +22,7 @@
             </ng-template>
         </div>
         <div class="body__properties">
-            <div class="image__dish">
+            <div class="image__dish" routerLink="/detail/{{dish.getID()}}">
                 <img src="{{dish.getUrl()}}" alt="{{dish.getName()}}">
             </div>
             <div class="detail__dish">
