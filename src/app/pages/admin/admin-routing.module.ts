@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Admin, DashBoard, DishManager } from '.';
+import { Admin, DashBoard, DishManager, DishModify } from '.';
 import { AuthGuard } from 'src/app/services';
 
 const routes: Routes = [
@@ -11,6 +11,7 @@ const routes: Routes = [
     children: [
       { path: 'dishManager', component: DishManager, canActivate: [AuthGuard] },
       { path: 'dashboard', component: DashBoard, canActivate: [AuthGuard] },
+      { path: 'modify/:id', component: DishModify, canActivate: [AuthGuard] },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   }

@@ -24,6 +24,7 @@ export class Dish {
         this.rating = rating;
         this.isRated = isRated;
     }
+    
 
     public setIngredients(ingredients: Ingredient[]): void {
         this.ingredients = ingredients;

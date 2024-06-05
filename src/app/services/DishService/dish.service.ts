@@ -58,6 +58,7 @@ export class DishService {
     private errorSubject$ = new Subject<string>();
     errorObserable$ = this.errorSubject$.asObservable();
     dishSelected$ = new Subject<Dish>();
+    dishSelectedObservable$ = this.dishSelected$.asObservable();
     private recommendDishSubject$ = new BehaviorSubject<KeyValue<string,string>[]>([]);
     recommendDishesObservable$ = this.recommendDishSubject$.asObservable();
 

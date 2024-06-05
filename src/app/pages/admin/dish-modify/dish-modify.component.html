@@ -1,0 +1,139 @@
+<div class="wrapper">
+    <div class="header">
+        <h1 class="title">
+            {{ dish ? "Edit Dish" : "Add Dish" }}
+          </h1>
+    </div>
+    <main class="main-container">
+        <div class="grid-container">
+          <div class="form-section">
+            <div class="image-container">
+              <img
+                id="dishPhoto"
+                name="dishPhoto"
+                [src]="dish?.url || 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fdefault.png?alt=media&token=e7ccf739-5851-4a21-82a0-5769ef953c1e'"
+                alt="Dish image"
+                class="dish-image"
+              />
+            </div>
+            <div class="form-group">
+              <label for="dishName" class="form-label">Dish Name</label>
+              <input
+                type="text"
+                id="dishName"
+                name="dishName"
+                class="form-input"
+                [(ngModel)]="dish.dishName"
+              />
+            </div>
+            <div class="form-group">
+              <aside class="aside-section">
+                <div class="wrapper__section">
+                    <h2 class="section-title">Ingredients/Type tag</h2>
+                    <div class="hint-tag-container">
+                    <p class="hint-tag" id="hintTag">hello</p>
+                    </div>
+                    <div class="flex-wrap">
+                    <input
+                        id="tagInput"
+                        [(ngModel)]="tags"
+                        class="form-input"
+                        placeholder="Enter tags..."
+                    />
+                    </div>
+                </div>
+                <div class="wrapper__section">
+                    <h2 class="section-title">Ingredients filter</h2>
+                    <div class="flex-wrap gap-2" id="ingredients">
+                        <div *ngFor="let ingredient of filterIngredients" [id]="ingredient.name" class="ingredient__item">
+                            <input
+                            type="text"
+                            name="ingredientName"
+                            id="ingredientName"
+                            class="disabled-input"
+                            disabled
+                            [value]="ingredient.name"
+                            />
+                            <input
+                            type="number"
+                            name="amount"
+                            [id]="ingredient.name + '-amount'"
+                            [(ngModel)]="ingredient.amount"
+                            class="amount-input"
+                            />
+                            <input
+                            type="text"
+                            name="unit"
+                            [id]="ingredient.name + '-unit'"
+                            [(ngModel)]="ingredient.unit"
+                            class="form-input"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="wrapper__section">
+                    <h2 class="section-title">Type filter</h2>
+                    <div class="flex-wrap gap-2" id="types">
+                    <span
+                        *ngFor="let type of filterTypes"
+                        class="type-tag"
+                        >{{ type }}</span
+                    >
+                    </div>
+                </div>
+              </aside>
+            </div>
+          </div>
+          <div class="main-form-section">
+            <div class="form-group">
+              <label for="dishUrl" class="form-label">Photo</label>
+              <input
+                type="file"
+                id="dishUrl"
+                name="dishUrl"
+                accept="image/*"
+                class="form-input"
+                (change)="onFileSelected($event)"
+              />
+            </div>
+            <div class="form-group">
+              <label for="summary" class="form-label">Summary</label>
+              <input
+                id="summary"
+                name="summary"
+                rows="4"
+                class="form-input"
+                [(ngModel)]="dish.summary"
+              />
+            </div>
+            <div class="form-group">
+              <label for="recipe" class="form-label">Recipe</label>
+              <!-- <editor apiKey="1u5byklg9tall9ayqltrxvbcyie41qqc4ft9dknoji08i743"
+                [init]="{
+                  plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
+                  toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                }"
+              ></editor> -->
+              <textarea
+                type="text"
+                id="recipeBlog"
+                name="recipeBlog"
+                [(ngModel)]="dish.content"
+                class="form-input"
+              ></textarea>
+              <div class="recipe" [innerHTML]="dish.content"></div>
+            </div>
+            <div class="form-group">
+              <button
+                type="submit"
+                (click)="callUpdateFromDom()"
+                class="submit-button"
+              >
+                {{ dish ? "Edit Dish" : "Add Dish" }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+</div>
+

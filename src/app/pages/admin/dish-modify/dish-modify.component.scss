@@ -1,0 +1,159 @@
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 2rem;
+    height: 100%;
+}
+
+
+.main-container {
+    display: flex;
+    flex: 1;
+    height: 100vh;
+}
+  
+.title {
+    font-size: 1.875rem; 
+    font-weight: bold;
+    margin-bottom: 2rem;
+    }
+
+    .grid-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+
+    @media (min-width: 1024px) {
+        grid-template-columns: repeat(5, 1fr); 
+    }
+}
+
+.form-section {
+    max-width: 40rem; 
+    grid-column: span 2;
+    margin-right: 2rem;
+}
+
+.image-container {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.dish-image {
+    width: 16rem; 
+    height: 16rem; 
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    color: #4a5568; 
+    font-weight: 600; 
+    margin-bottom: 0.5rem;
+}
+
+.form-input {
+    border: 1px solid #d2d6dc; 
+    border-radius: 0.375rem; 
+    padding: 0.5rem 1rem; 
+    width: 100%;
+    outline: none;
+
+    &:focus {
+        border-color: #4299e1; 
+    }
+}
+
+.disabled-input {
+    border: 1px solid #d2d6dc;
+    border-radius: 0.375rem; 
+    padding: 0.5rem 1rem; 
+    cursor: not-allowed;
+}
+
+.amount-input {
+    width: 5rem; 
+    border: 1px solid #d2d6dc; 
+    border-radius: 0.375rem; 
+    padding: 0.5rem 1rem; 
+}
+
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.gap-2 {
+    gap: 0.5rem; 
+}
+
+.ingredient__item{
+    display: flex;
+    align-items: center;
+    input{
+        +input{
+            margin-left: 0.5rem;
+        }
+    }
+}
+
+.aside-section {
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
+    min-height: 18rem; 
+}
+
+.wrapper__section{
+    padding: 8px 0;
+}
+
+.section-title {
+    font-size: 1.125rem; 
+    font-weight: 600; 
+    margin-bottom: 4px;
+}
+
+.hint-tag-container {
+    height: 1.5rem; 
+}
+
+.hint-tag {
+    font-weight: 100; 
+    color: rgba(66, 153, 225, 1); 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.type-tag {
+    display: inline-block;
+    background-color: #feb2b2;
+    color: #4a5568; 
+    border-radius: 9999px; 
+    padding: 0.25rem 0.75rem; 
+    font-size: 0.875rem;
+    font-weight: 600; 
+}
+
+.main-form-section {
+    max-width: 48rem; 
+    grid-column: span 3;
+}
+
+.submit-button {
+    background-color: #4299e1; 
+    color: white;
+    font-weight: 600; 
+    padding: 0.5rem 1rem; 
+    border-radius: 0.375rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #3182ce; 
+    }
+}

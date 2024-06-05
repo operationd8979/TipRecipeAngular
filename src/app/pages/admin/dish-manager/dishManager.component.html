@@ -2,7 +2,7 @@
     <main class="container">
       <h1 class="title">Dish Management</h1>
       <div class="button-container">
-        <a routerLink="/editDish" class="add-button">Add Dish</a>
+        <a routerLink="/admin/modify/0" class="add-button">Add Dish</a>
       </div>
       <div class="search-container">
         <input type="text" id="search" (keydown.enter)="callApiSearch()" [(ngModel)]="searchTerm" class="search-input" placeholder="Search..by ID hoặc Name">
@@ -29,8 +29,8 @@
                 <p>Nguyên liệu: {{ dish.getIngredientNames() }}</p>
                 <p>Loại: {{ dish.getTypeNames() }}</p>
               </td>
-              <td>
-                <a [routerLink]="['/editDish', dish.getID()]" class="edit-button">Edit</a>
+              <td class="actions__col">
+                <a [routerLink]="['/admin/modify', dish.getID()]" class="edit-button">Edit</a>
                 <button (click)="confirmDelete(dish.getID())" class="delete-button">{{dish.getIsDeleted()?"Public":"Hide"}}</button>
               </td>
             </tr>
