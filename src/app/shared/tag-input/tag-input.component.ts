@@ -1,5 +1,5 @@
 import { KeyValue } from '@angular/common';
-import { Component, EventEmitter, Input, Output, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, ViewChild, ElementRef, AfterViewInit, OnChanges } from '@angular/core';
 import { TagPayload } from 'src/app/models';
 
 @Component({
@@ -7,7 +7,7 @@ import { TagPayload } from 'src/app/models';
   templateUrl: './tag-input.component.html',
   styleUrls: ['./tag-input.component.scss']
 })
-export class TagInputComponent implements OnInit{
+export class TagInputComponent implements OnChanges{
 
   tagPageLoad: TagPayload = {filterIngredients: [], filterTypes: []};
   tagValue: string = '';
@@ -15,6 +15,7 @@ export class TagInputComponent implements OnInit{
   lastItem: {action:string,value:KeyValue<number,string>} = {action:"",value:{key:-1,value:""}}; 
   @Input() types: KeyValue<number,string>[] = [];
   @Input() ingredients: KeyValue<number,string>[] = [];
+  @Input() isAdmin: boolean = false;
 
   @Input() 
   get tagPayModel() {
@@ -31,7 +32,18 @@ export class TagInputComponent implements OnInit{
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
+    if(this.isAdmin){
+      if(this.tagPageLoad.filterIngredients.length>0 && this.tagPageLoad.filterTypes.length>0){
+        this.tagPageLoad.filterIngredients.forEach(ingredient => {
+          this.tagValue+=ingredient.value+",";
+        });
+        this.tagPageLoad.filterTypes.forEach(type => {
+          this.tagValue+=type.value+","; 
+        });
+        this.isAdmin = false;
+      }
+    }
   }
 
   onKeyDown(event: KeyboardEvent): void {
@@ -99,7 +111,7 @@ export class TagInputComponent implements OnInit{
         this.insertTag();
         break;
       case 'Backspace':
-        this.deleteTag();
+        this.deleteTag(lastTag);
         this.insertHint(hintTags);
         break;
       case 'Delete':
@@ -134,16 +146,16 @@ export class TagInputComponent implements OnInit{
     }
   }
 
-  deleteTag():void{
+  deleteTag(lastTag:string):void{
     const filterTypes = this.tagPageLoad.filterTypes;
     const filterIngredients = this.tagPageLoad.filterIngredients;
     if(this.lastItem.action=="ingredient"){
-      if(filterIngredients.some(i=>i.key==this.lastItem.value.key)){
+      if(filterIngredients.some(i=>i.value===lastTag)){
         filterIngredients.splice(filterIngredients.indexOf(this.lastItem.value),1);
       }
     }
     else if(this.lastItem.action=="type"){
-      if(filterTypes.some(i=>i.key==this.lastItem.value.key)){
+      if(filterTypes.some(i=>i.value==lastTag)){
         filterTypes.splice(filterTypes.indexOf(this.lastItem.value));        
       }
     }

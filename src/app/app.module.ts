@@ -4,11 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { Header, Footer, AdminSide } from './layout';
+import { Header, Footer } from './layout';
 import { Home, Login, Register, UserProfile, DetailDish, Admin, ErrorPage, DishManager, DashBoard } from './pages';
 import { Button, TextBox, PlainTextCard, TagInput, TagItem, DishList, DishItem, DishQuickView } from './shared';
 import { AuthService, HttpInterceptorService } from './services';
 import { ShortenPipe } from './pipes';
+import { AdminModule } from './pages/admin/admin.module';
 
 export function initializeApp(authService: AuthService) {
   return (): Promise<void> => {
@@ -26,23 +27,20 @@ export function initializeApp(authService: AuthService) {
     Register,
     UserProfile,
     DetailDish,
-    Button,
     TextBox,
     PlainTextCard,
-    TagInput,
-    TagItem,
     DishList,
     DishItem,
     DishQuickView,
     ErrorPage,
-    ShortenPipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AdminModule
   ],
   providers: [
     { 

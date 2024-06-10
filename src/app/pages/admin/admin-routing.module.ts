@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Admin, DashBoard, DishManager, DishModify } from '.';
 import { AuthGuard } from 'src/app/services';
+import { CanDeactivateGuard } from 'src/app/services/AuthGuard';
 
 const routes: Routes = [
   {
@@ -11,7 +12,7 @@ const routes: Routes = [
     children: [
       { path: 'dishManager', component: DishManager, canActivate: [AuthGuard] },
       { path: 'dashboard', component: DashBoard, canActivate: [AuthGuard] },
-      { path: 'modify/:id', component: DishModify, canActivate: [AuthGuard] },
+      { path: 'modify/:id', component: DishModify, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard]},
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   }

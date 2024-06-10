@@ -229,4 +229,45 @@ export class DishService {
         );
     }
 
+    postAddDish(
+        dishName:string,
+        summary:string,
+        detailIngredientDishes: {Ingredient:{IngredientId:number,IngredientName:string},Amount:number,Unit:string}[],
+        detailTypeDishes: {Type:{TypeID:number,TypeName:string}}[],
+        recipe: {Content: string},
+        imageBlob: Blob | null
+    ): Observable<HttpResponse<any>> {
+        const formData = new FormData();
+        if(imageBlob){
+            formData.append('file', imageBlob, 'testSample.jpg');
+        }
+        formData.append('dishName', dishName);
+        formData.append('summary', summary);
+        formData.append('detailIngredientDishes', JSON.stringify(detailIngredientDishes));
+        formData.append('detailTypeDishes', JSON.stringify(detailTypeDishes));
+        formData.append('recipe', JSON.stringify(recipe));
+        return this.httpClient.post<dishResponse>('http://localhost:8080/api/admin/dish', formData, {observe: 'response'});
+    }
+
+    postUpdateDish(
+        dishID:string,
+        dishName:string,
+        summary:string,
+        detailIngredientDishes: {Ingredient:{IngredientId:number,IngredientName:string},Amount:number,Unit:string}[],
+        detailTypeDishes: {Type:{TypeID:number,TypeName:string}}[],
+        recipe: {Content: string},
+        imageBlob: Blob | null
+    ): Observable<HttpResponse<any>> {
+        const formData = new FormData();
+        if(imageBlob){
+            formData.append('file', imageBlob, 'testSample.jpg');
+        }
+        formData.append('dishName', dishName);
+        formData.append('summary', summary);
+        formData.append('detailIngredientDishes', JSON.stringify(detailIngredientDishes));
+        formData.append('detailTypeDishes', JSON.stringify(detailTypeDishes));
+        formData.append('recipe', JSON.stringify(recipe));
+        return this.httpClient.put<dishResponse>(`http://localhost:8080/api/admin/dish/${dishID}`, formData, {observe: 'response'});
+    }
+
 }

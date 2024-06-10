@@ -1,136 +1,135 @@
 <div class="wrapper">
     <div class="header">
         <h1 class="title">
-            {{ dish ? "Edit Dish" : "Add Dish" }}
-          </h1>
+          {{ isEdit ? "Edit Dish" : "Add Dish" }}
+        </h1>
+        <div class="error__message">{{error}}</div>
     </div>
-    <main class="main-container">
-        <div class="grid-container">
-          <div class="form-section">
-            <div class="image-container">
+    <main class="main__container">
+        <div class="grid__container">
+          <div class="form__section">
+            <div class="image__container">
               <img
                 id="dishPhoto"
                 name="dishPhoto"
                 [src]="dish?.url || 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fdefault.png?alt=media&token=e7ccf739-5851-4a21-82a0-5769ef953c1e'"
                 alt="Dish image"
-                class="dish-image"
               />
             </div>
-            <div class="form-group">
-              <label for="dishName" class="form-label">Dish Name</label>
+            <aside class="filter__container">
+              <div class="filter__display">
+                <div class="tag__input">
+                    <shared-tag-input 
+                        [(tagPayModel)]="tagPayload" 
+                        [types]="types"
+                        [ingredients]="ingredients"
+                        [isAdmin]="isRender"
+                        ></shared-tag-input>
+                </div>
+                <div class="tags__container">
+                    <div class="header__title">Ingredients</div>
+                    <div class="tag__load">
+                      <div *ngFor="let ingredient of filterIngredients2" [id]="ingredient.name" class="ingredient__item">
+                          <input
+                          type="text"
+                          name="ingredientName"
+                          id="ingredientName"
+                          class="disabled__input"
+                          disabled
+                          [value]="ingredient.name"
+                          />
+                          <input
+                          type="number"
+                          name="amount"
+                          [id]="ingredient.name + '-amount'"
+                          [(ngModel)]="ingredient.amount"
+                          class="amount__input"
+                          />
+                          <input
+                          type="text"
+                          name="unit"
+                          [id]="ingredient.name + '-unit'"
+                          [(ngModel)]="ingredient.unit"
+                          class="form__input"
+                          />
+                      </div>
+                    </div>
+                </div>
+                <div class="tags__container">
+                    <div class="header__title">Types</div>
+                    <div class="tag__load">
+                        <shared-tag-item *ngFor="let type of filterTypes" [tag]="type.value" [color]="'red'"></shared-tag-item>
+                    </div>
+                </div>
+            </div>
+            </aside>
+          </div>
+          <div class="main__form__section hide-element">
+            <div class="form__group">
+              <label for="dishName" class="form__label">Dish Name</label>
               <input
+                spellcheck="false"
                 type="text"
                 id="dishName"
                 name="dishName"
-                class="form-input"
+                class="form__input"
                 [(ngModel)]="dish.dishName"
               />
             </div>
-            <div class="form-group">
-              <aside class="aside-section">
-                <div class="wrapper__section">
-                    <h2 class="section-title">Ingredients/Type tag</h2>
-                    <div class="hint-tag-container">
-                    <p class="hint-tag" id="hintTag">hello</p>
-                    </div>
-                    <div class="flex-wrap">
-                    <input
-                        id="tagInput"
-                        [(ngModel)]="tags"
-                        class="form-input"
-                        placeholder="Enter tags..."
-                    />
-                    </div>
-                </div>
-                <div class="wrapper__section">
-                    <h2 class="section-title">Ingredients filter</h2>
-                    <div class="flex-wrap gap-2" id="ingredients">
-                        <div *ngFor="let ingredient of filterIngredients" [id]="ingredient.name" class="ingredient__item">
-                            <input
-                            type="text"
-                            name="ingredientName"
-                            id="ingredientName"
-                            class="disabled-input"
-                            disabled
-                            [value]="ingredient.name"
-                            />
-                            <input
-                            type="number"
-                            name="amount"
-                            [id]="ingredient.name + '-amount'"
-                            [(ngModel)]="ingredient.amount"
-                            class="amount-input"
-                            />
-                            <input
-                            type="text"
-                            name="unit"
-                            [id]="ingredient.name + '-unit'"
-                            [(ngModel)]="ingredient.unit"
-                            class="form-input"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="wrapper__section">
-                    <h2 class="section-title">Type filter</h2>
-                    <div class="flex-wrap gap-2" id="types">
-                    <span
-                        *ngFor="let type of filterTypes"
-                        class="type-tag"
-                        >{{ type }}</span
-                    >
-                    </div>
-                </div>
-              </aside>
-            </div>
-          </div>
-          <div class="main-form-section">
-            <div class="form-group">
-              <label for="dishUrl" class="form-label">Photo</label>
+            <div class="form__group">
+              <label for="dishUrl" class="form__label">Photo</label>
               <input
                 type="file"
                 id="dishUrl"
                 name="dishUrl"
                 accept="image/*"
-                class="form-input"
+                class="form__input"
                 (change)="onFileSelected($event)"
               />
             </div>
-            <div class="form-group">
-              <label for="summary" class="form-label">Summary</label>
+            <div class="form__group">
+              <label for="summary" class="form__label">Summary</label>
               <input
+                spellcheck="false"
                 id="summary"
                 name="summary"
                 rows="4"
-                class="form-input"
+                class="form__input"
                 [(ngModel)]="dish.summary"
               />
             </div>
-            <div class="form-group">
-              <label for="recipe" class="form-label">Recipe</label>
+            <div class="form__group">
+              <label for="recipe" class="form__label">Recipe</label>
               <!-- <editor apiKey="1u5byklg9tall9ayqltrxvbcyie41qqc4ft9dknoji08i743"
-                [init]="{
-                  plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
-                  toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-                }"
               ></editor> -->
               <textarea
+                spellcheck="false"
                 type="text"
                 id="recipeBlog"
                 name="recipeBlog"
                 [(ngModel)]="dish.content"
-                class="form-input"
+                class="form__input"
               ></textarea>
               <div class="recipe" [innerHTML]="dish.content"></div>
             </div>
-            <div class="form-group">
-              <button
+            <div class="form__group">
+              <div class="submit__button">
+                <shared-button 
+                  (click)="uploadDish()" 
+                  [type]="'primary'" 
+                  [size]="'medium'" 
+                  [disabled]="!this.validate()">
+                  {{ isEdit ? "Edit Dish" : "Add Dish" }}
+                </shared-button>
+              </div>
+              <!-- <button
                 type="submit"
-                (click)="callUpdateFromDom()"
-                class="submit-button"
+                (clicked)="uploadDish()"
+                class="submit__button"
+                disabled="this.validate()"
               >
-                {{ dish ? "Edit Dish" : "Add Dish" }}
-              </button>
+                {{ isEdit ? "Edit Dish" : "Add Dish" }}
+              </button> -->
             </div>
           </div>
         </div>

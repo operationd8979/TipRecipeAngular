@@ -12,24 +12,24 @@
         <table class="dish-table">
           <thead>
             <tr>
-              <th>ID</th>
+              <th class="hide-column">ID</th>
               <th>Name</th>
               <th>Picture</th>
-              <th>Summary</th>
-              <th>Actions</th>
+              <th class="hide-column">Summary</th>
+              <th class="hide-column2">Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let dish of dishes">
-              <td>{{ dish.getID() }}</td>
+              <td class="hide-column">{{ dish.getID() }}</td>
               <td>{{ dish.getName() }}</td>
               <td class="dish-image"><img [src]="dish.getUrl()" alt="{{ dish.getName() }}"></td>
-              <td>
+              <td class="hide-column">
                 <p>{{ dish.getSummary() }}</p>
                 <p>Nguyên liệu: {{ dish.getIngredientNames() }}</p>
                 <p>Loại: {{ dish.getTypeNames() }}</p>
               </td>
-              <td class="actions__col">
+              <td class="actions__col hide-column2">
                 <a [routerLink]="['/admin/modify', dish.getID()]" class="edit-button">Edit</a>
                 <button (click)="confirmDelete(dish.getID())" class="delete-button">{{dish.getIsDeleted()?"Public":"Hide"}}</button>
               </td>

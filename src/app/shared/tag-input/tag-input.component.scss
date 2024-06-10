@@ -1,3 +1,7 @@
+.wrapper{
+    height: 100%;
+}
+
 .display__hintWord{
     margin-left: var(--default-small-zone);
     p {
@@ -11,6 +15,7 @@
     border: 1px solid var(--color-disable);
     border-radius: var(--default-small-zone);
     textarea{
+        min-height: 6rem;
         width: 100%;
         padding: var(--default-small-zone);
         background-color: transparent;

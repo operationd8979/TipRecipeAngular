@@ -6,7 +6,12 @@
         flex: 1;
     }
     .container{
-       
         flex: 4;
     }
 }
+
+@media (max-width: 612px) {
+    .side__bar {
+      display: none;
+    }
+  }
