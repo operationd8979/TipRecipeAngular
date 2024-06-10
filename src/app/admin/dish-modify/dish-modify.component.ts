@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, range } from 'rxjs';
-import { errorMessage } from 'src/app/constants';
+import { errorMessage, message } from 'src/app/constants';
 import { Dish, Ingredient, TagPayload, TypeDish } from 'src/app/models';
+import { ToastService } from 'src/app/services';
 import { CanComponentDeactivate } from 'src/app/services/AuthGuard/can-deactivate.guard';
 import { DishService } from 'src/app/services/DishService/dish.service';
 
@@ -63,7 +64,7 @@ export class DishModifyComponent implements OnInit, OnDestroy, CanComponentDeact
     }
   }
 
-  constructor(private router:Router,private route: ActivatedRoute,private dishService: DishService,private httpClient: HttpClient){
+  constructor(private router:Router,private route: ActivatedRoute,private dishService: DishService,private toastService: ToastService){
     
   }
 
@@ -117,6 +118,7 @@ export class DishModifyComponent implements OnInit, OnDestroy, CanComponentDeact
           const newHeight = Math.floor(Math.random() * 100) + 600;
           const resizedImage = await this.resizeImage(img, img.width/img.height*newHeight, newHeight);
           if (resizedImage) {
+            this.toastService.showInfo(message.MESSAGE_CHANGE_PHOTO_SUCCESS);
             this.changeImage(resizedImage);
           }
         };
@@ -205,10 +207,15 @@ export class DishModifyComponent implements OnInit, OnDestroy, CanComponentDeact
         ).subscribe(
             (response) => {
               if(response.status===201){
+                if(this.isEdit){
+                  this.toastService.showSuccess(message.MESSAGE_UPDATE_SUCCESS);
+                }
+                else{
+                  this.toastService.showSuccess(message.MESSAGE_CREATE_SUCCESS);
+                }
                 this.error = "";
                 URL.revokeObjectURL(this.dish.url);
                 this.blobImage = null;
-                alert("successful");
               }
             },
             (error) => {
@@ -270,7 +277,6 @@ export class DishModifyComponent implements OnInit, OnDestroy, CanComponentDeact
     if (!this.isChangesSaved()) {
       const confirmation = window.confirm('You have unsaved changes. Do you really want to leave?');
       if (confirmation) {
-        // this.uploadDish();
         return true;
       } else {
         return false;

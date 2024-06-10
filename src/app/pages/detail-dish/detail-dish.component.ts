@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { message } from 'src/app/constants';
 import { Dish } from 'src/app/models';
+import { ToastService } from 'src/app/services';
 import { DishService } from 'src/app/services/DishService/dish.service';
 
 @Component({
@@ -17,7 +19,7 @@ export class DetailDishComponent implements OnInit {
   dish:Dish = new Dish("1234", "cơm trứng", "món ăn việt", "https://cdn11.dienmaycholon.vn/filewebdmclnew/public//userupload/images/cach-nau-com-ngon-va-lau-thiu-3.jpg", [], [], 5);
   dishSubjectSubscription: Subscription = new Subscription();
 
-  constructor(private route:ActivatedRoute, private dishService:DishService) { 
+  constructor(private route:ActivatedRoute, private dishService:DishService, private toastService: ToastService) { 
   }
 
   ngOnInit() {
@@ -36,7 +38,19 @@ export class DetailDishComponent implements OnInit {
 
   onSubmit() {
     const { ratingScore } = this.ratingForm.value;
-    this.dishService.rateDish(this.dish.getID(), ratingScore);
+    this.dishService.rateDish(this.dish.getID(), ratingScore).subscribe(
+        (response) => {
+            if(response.status === 204){
+              this.toastService.showSuccess(message.MESSAGE_RATE_SUCCESS);
+              this.dish.setRating(ratingScore);
+              this.ratingForm.reset();
+            }
+        },
+        (error) => {
+            const errorMessage = error.error.message;
+            this.toastService.showError(errorMessage);
+        },
+    );
   }
 
   ratingInvalid(control: FormControl) : {[s: string]: boolean} {

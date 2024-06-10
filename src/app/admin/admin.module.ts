@@ -6,7 +6,7 @@ import { AdminSide } from 'src/app/layout';
 import { FormsModule } from '@angular/forms';
 import { DishModifyComponent } from './dish-modify/dish-modify.component';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
-import { Button, TagInput, TagItem } from 'src/app/shared';
+import { Button, TagInput, TagItem, ToastComponent } from 'src/app/shared';
 import { ShortenPipe } from 'src/app/pipes';
 
 @NgModule({
@@ -20,7 +20,8 @@ import { ShortenPipe } from 'src/app/pipes';
     TagInput,
     TagItem,
     ShortenPipe,
-    Button
+    Button,
+    ToastComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +33,8 @@ import { ShortenPipe } from 'src/app/pipes';
     TagInput,
     TagItem,
     ShortenPipe,
-    Button
+    Button,
+    ToastComponent
   ],
   providers: [
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }

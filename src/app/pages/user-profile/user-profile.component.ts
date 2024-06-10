@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { errorMessage } from 'src/app/constants';
+import { errorMessage, message } from 'src/app/constants';
 import { User } from 'src/app/models/user.model';
-import { AuthService } from 'src/app/services';
+import { AuthService, ToastService } from 'src/app/services';
 
 interface Payload {
   [key: string]: string;
@@ -20,6 +20,8 @@ export class UserProfileComponent implements OnInit, OnDestroy{
   userSubscription: Subscription = new Subscription();
   errorSubscription: Subscription = new Subscription();
 
+  isUpdate: boolean = false;
+
   newPassword: string = '';
   errorMessage: string = '';
 
@@ -33,11 +35,14 @@ export class UserProfileComponent implements OnInit, OnDestroy{
     };
   }
   
-
-  constructor(private authService:AuthService) { }
+  constructor(private authService:AuthService,private toastService:ToastService) { }
 
   ngOnInit(): void {
     this.userSubscription = this.authService.user$.subscribe((user) => {
+      if(this.isUpdate){
+        this.toastService.showSuccess(message.MESSAGE_UPDATE_SUCCESS);
+        this.isUpdate = false;
+      }
       this.user = user;
       this.updateForm.patchValue({
         "username": user?.getUsername(),
@@ -46,6 +51,7 @@ export class UserProfileComponent implements OnInit, OnDestroy{
     });
     this.errorSubscription = this.authService.errorObservable$.subscribe((error) => {
       this.errorMessage = error;
+      this.toastService.showError(error);
     });
     this.updateForm = new FormGroup({
       "username": new FormControl("", [Validators.required]),
@@ -60,6 +66,7 @@ export class UserProfileComponent implements OnInit, OnDestroy{
   }
 
   onSubmit(){
+    this.isUpdate = true;
     const {username, email, newPassword} = this.updateForm.value;
     this.authService.updateProfile(username, newPassword);
     this.updateForm.patchValue({
@@ -87,15 +94,6 @@ export class UserProfileComponent implements OnInit, OnDestroy{
     }
     return "";
   }
-
-  // noChange(control: FormControl) : ValidationErrors {
-  //   const email = this.user?.getEmail();
-  //   const username = this.user?.getUsername();
-  //   if(this.updateForm.get("email")?.value === email && this.updateForm.get("username")?.value === username){
-  //     return {noChange: true};
-  //   }
-  //   return {};
-  // }
 
   isNoChange(){
     const email = this.user?.getEmail();

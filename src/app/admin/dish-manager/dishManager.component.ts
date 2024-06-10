@@ -2,7 +2,9 @@ import { KeyValue } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { message } from 'src/app/constants';
 import { Dish } from 'src/app/models';
+import { ToastService } from 'src/app/services';
 import { DishService } from 'src/app/services/DishService/dish.service';
 
 @Component({
@@ -22,7 +24,7 @@ export class DishManagerComponent implements OnDestroy {
   dishesSubscriptions:Subscription = new Subscription();
 
 
-  constructor(private dishService: DishService,private router: Router, private activedRoute : ActivatedRoute) {}
+  constructor(private dishService: DishService,private router: Router, private activedRoute : ActivatedRoute, private toastService:ToastService) {}
 
   ngOnInit(): void {
     this.dishesSubscriptions = this.dishService.dishesAdminObservable$.subscribe((data) => {
@@ -64,6 +66,7 @@ export class DishManagerComponent implements OnDestroy {
     if (confirm('Are you sure you want to delete this dish?')) {
       this.dishService.modifyVisibleDish(dishID).subscribe((response)=>{
         if(response.status===204){
+          this.toastService.showSuccess(message.MESSAGE_DELETE_SUCCESS);
           let dish : Dish = this.dishes.find(p=>p.getID() === dishID)!;
           dish.setIsDeleted(!dish.getIsDeleted());
         }

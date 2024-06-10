@@ -9,7 +9,7 @@ import { Home, Login, Register, UserProfile, DetailDish, Admin, ErrorPage, DishM
 import { Button, TextBox, PlainTextCard, TagInput, TagItem, DishList, DishItem, DishQuickView } from './shared';
 import { AuthService, HttpInterceptorService } from './services';
 import { ShortenPipe } from './pipes';
-import { AdminModule } from './pages/admin/admin.module';
+import { AdminModule } from './admin/admin.module';
 
 export function initializeApp(authService: AuthService) {
   return (): Promise<void> => {

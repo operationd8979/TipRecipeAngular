@@ -202,21 +202,29 @@ export class DishService {
         );
     }
 
-    rateDish(dishID: string, rating: number){
+    // rateDish(dishID: string, rating: number){
+    //     const body = {
+    //         dishID: dishID,
+    //         ratingScore: rating
+    //     };
+    //     this.httpClient.post(config.serverUrl +'dish/rating', body).subscribe(
+    //         (response) => {
+    //             this.getDeailtDish(dishID);
+    //             this.errorSubject$.next('');
+    //         },
+    //         (error) => {
+    //             const errorMessage = error.error.message;
+    //             this.errorSubject$.next(errorMessage);
+    //         },
+    //     );
+    // }
+
+    rateDish(dishID: string, rating: number): Observable<HttpResponse<any>>{
         const body = {
             dishID: dishID,
             ratingScore: rating
         };
-        this.httpClient.post(config.serverUrl +'dish/rating', body).subscribe(
-            (response) => {
-                this.getDeailtDish(dishID);
-                this.errorSubject$.next('');
-            },
-            (error) => {
-                const errorMessage = error.error.message;
-                this.errorSubject$.next(errorMessage);
-            },
-        );
+        return this.httpClient.post(config.serverUrl +'dish/rating', body, {observe: 'response'});
     }
 
     
