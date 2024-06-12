@@ -21,11 +21,11 @@
           </thead>
           <tbody>
             <tr *ngFor="let dish of dishes">
-              <td class="hide-column">{{ dish.getID() }}</td>
+              <td class="hide-column">{{ dish.getID() | shorten : 20 }}</td>
               <td>{{ dish.getName() }}</td>
               <td class="dish-image"><img [src]="dish.getUrl()" alt="{{ dish.getName() }}"></td>
               <td class="hide-column">
-                <p>{{ dish.getSummary() }}</p>
+                <p>{{ dish.getSummary() | shorten : 60 }}</p>
                 <p>Nguyên liệu: {{ dish.getIngredientNames() }}</p>
                 <p>Loại: {{ dish.getTypeNames() }}</p>
               </td>
@@ -39,7 +39,9 @@
       </div>
       <div class="pagination">
         <button *ngIf="currentPage > 1" (click)="changePage(currentPage - 1)" class="pagination-button">Previous</button>
-        <button *ngFor="let page of numberPagesArray; let i = index" [class.active]="i + 1 === currentPage" (click)="changePage(i + 1)" class="pagination-button">{{ i + 1 }}</button>
+        <button *ngFor="let page of numberPagesArray; let i = index" 
+          [class.active]="i + 1 === currentPage" 
+          (click)="changePage(i + 1)" class="pagination-button">{{ i + 1 }}</button>
         <button *ngIf="currentPage < numberPages" (click)="changePage(currentPage + 1)" class="pagination-button">Next</button>
       </div>
     </main>

@@ -89,12 +89,12 @@
     .edit-button {
       background-color: #4299e1;
       color: #fff;
+      font-size: var(--default-xsmall-font-size);
       font-weight: var(--default-medium-font-weight);
       padding: 0.5rem 1rem;
       border-radius: 0.25rem;
-      margin-right: 0.25rem;
       text-decoration: none;
-
+      margin-right: 10px;
       &:hover {
         background-color: #3182ce;
       }
@@ -103,6 +103,7 @@
     .delete-button {
       background-color: #e53e3e;
       color: #fff;
+      font-size: var(--default-xsmall-font-size);
       font-weight: var(--default-medium-font-weight);
       padding: 0.5rem 1rem;
       border-radius: 0.25rem;
@@ -140,7 +141,7 @@
 
 
 .actions__col{
-  min-width: 10rem;
+  min-width: 12rem;
 }
 
 

@@ -5,7 +5,7 @@ import { ToastService } from 'src/app/services';
 @Component({
   selector: 'app-toast',
   templateUrl: './toast.component.html',
-  styleUrls: ['./toast.component.css']
+  styleUrls: ['./toast.component.scss']
 })
 export class ToastComponent implements OnInit {
   toasts: Toast[] = [];
@@ -21,4 +21,9 @@ export class ToastComponent implements OnInit {
   removeToast(toast: Toast) {
     this.toastService.removeToast(toast);
   }
+
+  capitalizeFirstLetter(s:string) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+
 }

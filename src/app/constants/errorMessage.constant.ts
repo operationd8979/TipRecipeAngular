@@ -4,6 +4,7 @@ const MESSAGE_PASSWORD_MIN_LENGTH = 'Password must be at least 6 characters';
 const MESSAGE_CAPTCHA_INVALID = 'Captcha is invalid';
 const MESSAGE_INVALID = 'Invalid email or password';
 const MESSAGE_NO_MATCH_PASSWORD = 'Password does not match';
+const MESSAGE_UNKNOWN_ERROR = 'Unknown error';
 
 const DISH_ID_EMPTY = 'Dish id is empty';
 const DISH_NAME_EMPTY = 'Dish name is empty';
@@ -20,6 +21,7 @@ export {
     MESSAGE_CAPTCHA_INVALID,
     MESSAGE_INVALID,
     MESSAGE_NO_MATCH_PASSWORD,
+    MESSAGE_UNKNOWN_ERROR,
     DISH_ID_EMPTY,
     DISH_NAME_EMPTY,
     DISH_SUMMARY_EMPTY,

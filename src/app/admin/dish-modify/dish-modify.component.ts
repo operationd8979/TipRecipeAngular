@@ -1,6 +1,6 @@
 import { KeyValue } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, Type } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, range } from 'rxjs';
 import { errorMessage, message } from 'src/app/constants';
@@ -14,7 +14,7 @@ import { DishService } from 'src/app/services/DishService/dish.service';
   templateUrl: './dish-modify.component.html',
   styleUrls: ['./dish-modify.component.scss']
 })
-export class DishModifyComponent implements OnInit, OnDestroy, CanComponentDeactivate {
+export class DishModifyComponent implements OnInit, OnDestroy, CanComponentDeactivate, AfterViewChecked {
 
   dishSubscriptions:Subscription = new Subscription();
   typesSubscriptions:Subscription = new Subscription();
@@ -64,7 +64,12 @@ export class DishModifyComponent implements OnInit, OnDestroy, CanComponentDeact
     }
   }
 
-  constructor(private router:Router,private route: ActivatedRoute,private dishService: DishService,private toastService: ToastService){
+  constructor(
+    private router:Router,
+    private route: ActivatedRoute,
+    private dishService: DishService,
+    private toastService: ToastService,
+    private cdr: ChangeDetectorRef){
     
   }
 
@@ -104,6 +109,10 @@ export class DishModifyComponent implements OnInit, OnDestroy, CanComponentDeact
     });
     this.dishService.getIngredients();
     this.dishService.getTypes();
+  }
+
+  ngAfterViewChecked() {
+    this.cdr.detectChanges(); 
   }
 
   

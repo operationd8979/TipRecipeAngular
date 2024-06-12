@@ -1,8 +1,8 @@
 import { KeyValue } from '@angular/common';
-import { Component, OnDestroy } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { message } from 'src/app/constants';
+import { errorMessage, message } from 'src/app/constants';
 import { Dish } from 'src/app/models';
 import { ToastService } from 'src/app/services';
 import { DishService } from 'src/app/services/DishService/dish.service';
@@ -12,7 +12,7 @@ import { DishService } from 'src/app/services/DishService/dish.service';
   templateUrl: './dishManager.component.html',
   styleUrls: ['./dishManager.component.scss']
 })
-export class DishManagerComponent implements OnDestroy {
+export class DishManagerComponent implements AfterViewChecked, OnDestroy {
 
   dishes: Dish[] = [];
   searchTerm: string = '';
@@ -23,8 +23,18 @@ export class DishManagerComponent implements OnDestroy {
 
   dishesSubscriptions:Subscription = new Subscription();
 
+  constructor(
+    private dishService: DishService,
+    private router: Router, 
+    private activedRoute : ActivatedRoute, 
+    private toastService:ToastService,
+    private cdr: ChangeDetectorRef) {
 
-  constructor(private dishService: DishService,private router: Router, private activedRoute : ActivatedRoute, private toastService:ToastService) {}
+  }
+
+  ngAfterViewChecked() {
+    this.cdr.detectChanges(); 
+  }
 
   ngOnInit(): void {
     this.dishesSubscriptions = this.dishService.dishesAdminObservable$.subscribe((data) => {
@@ -36,7 +46,7 @@ export class DishManagerComponent implements OnDestroy {
   }
 
   callApiSearch() {
-    this.currentPage = 1;
+    this.currentPage = this.activedRoute.snapshot.queryParams['page'] || 1;
     this.fetchDishes(this.searchTerm, this.currentPage, this.itemsPerPage);
   }
 
@@ -66,12 +76,17 @@ export class DishManagerComponent implements OnDestroy {
     if (confirm('Are you sure you want to delete this dish?')) {
       this.dishService.modifyVisibleDish(dishID).subscribe((response)=>{
         if(response.status===204){
-          this.toastService.showSuccess(message.MESSAGE_DELETE_SUCCESS);
-          let dish : Dish = this.dishes.find(p=>p.getID() === dishID)!;
+          let dish : Dish = this.dishes.find(d=>d.getID() === dishID)!;
+          if(dish.getIsDeleted()){
+            this.toastService.showSuccess(message.MESSAGE_PUBLIC_SUCCESS);
+          }
+          else{
+            this.toastService.showSuccess(message.MESSAGE_HIDE_SUCCESS);
+          }
           dish.setIsDeleted(!dish.getIsDeleted());
         }
         else{
-          alert("something wrong!");
+          this.toastService.showSuccess(errorMessage.MESSAGE_UNKNOWN_ERROR);
         }
       });
     }

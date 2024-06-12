@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {  DetailDish, DishManager, ErrorPage, Home, Login, Register, UserProfile } from './pages';
+import {  DetailDish, ErrorPage, Home, Login, Register, UserProfile } from './pages';
 import { AuthGuard } from './services';
 
 const routes: Routes = [

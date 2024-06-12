@@ -1,7 +1,11 @@
 <div class="toast-container">
     <div *ngFor="let toast of toasts" [ngClass]="toast.type" class="toast" 
-    
     (click)="removeToast(toast)">
-        {{ toast.message }}
+        <div class="header">
+            {{ capitalizeFirstLetter(toast.type) }}
+        </div>
+        <div class="payload">
+            {{ toast.message }}
+        </div>
     </div>
 </div>

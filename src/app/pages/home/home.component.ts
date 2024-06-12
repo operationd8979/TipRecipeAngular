@@ -53,11 +53,9 @@ export class HomeComponent implements OnInit,OnDestroy {
       this.page = 1;
       this.callApiSearch();
     });
-
     this.recommendDishSubscription = this.dishService.recommendDishesObservable$.subscribe(recommendDishes => {
       this.recommendDishes = recommendDishes;
     });
-
     this.dishSelectedSubscriptions = this.dishService.dishSelected$.subscribe((data) => {
       const queryParams: Params = { 
         selectedDish: data.getName()
