@@ -1,7 +1,6 @@
 import { KeyValue } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit, Type } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription, range } from 'rxjs';
 import { errorMessage, message } from 'src/app/constants';
 import { Dish, Ingredient, TagPayload, TypeDish } from 'src/app/models';
@@ -36,7 +35,6 @@ export class DishModifyComponent implements OnInit, OnDestroy, CanComponentDeact
 
   rawDish:Dish|null = null;
 
-  // tags: string = '';
   filterTypes: KeyValue<number, string>[] = [];
   filterIngredients: KeyValue<number, string>[] = [];
   filterIngredients2: {id: number ,name: string, amount: number, unit: string }[] = [];
@@ -85,6 +83,7 @@ export class DishModifyComponent implements OnInit, OnDestroy, CanComponentDeact
 
   ngOnInit(): void {
     this.dishSubscriptions = this.dishService.dishSelectedObservable$.subscribe(dish => {
+      this.isEdit = true;
       this.rawDish = dish;
       this.filterTypes = dish.getTypes().map(type => ({ key: type.getID(), value: type.getName() }));
       this.filterIngredients = dish.getIngredients().map(ingredient => ({ key: ingredient.getID(), value: ingredient.getName() }));
@@ -101,10 +100,6 @@ export class DishModifyComponent implements OnInit, OnDestroy, CanComponentDeact
     this.route.params.subscribe(params => {
       if(params['id']!=="0"){
         this.dishService.getDeailtDish(params['id']);
-        this.isEdit = true;
-      }
-      else{
-        this.dishSubscriptions.unsubscribe();
       }
     });
     this.dishService.getIngredients();
@@ -216,15 +211,7 @@ export class DishModifyComponent implements OnInit, OnDestroy, CanComponentDeact
         ).subscribe(
             (response) => {
               if(response.status===201){
-                if(this.isEdit){
-                  this.toastService.showSuccess(message.MESSAGE_UPDATE_SUCCESS);
-                }
-                else{
-                  this.toastService.showSuccess(message.MESSAGE_CREATE_SUCCESS);
-                }
-                this.error = "";
-                URL.revokeObjectURL(this.dish.url);
-                this.blobImage = null;
+                this.onGetRespone(response);
               }
             },
             (error) => {
@@ -243,13 +230,7 @@ export class DishModifyComponent implements OnInit, OnDestroy, CanComponentDeact
         ).subscribe(
             (response) => {
               if(response.status===201){
-                this.error = "";
-                this.dish.id = response.body.dishID;
-                URL.revokeObjectURL(this.dish.url);
-                this.blobImage = null;
-                this.dish.url = response.body.urlPhoto;
-                this.isEdit = true;
-                alert("successful");
+                this.onGetRespone(response);
               }
             },
             (error) => {
@@ -259,6 +240,32 @@ export class DishModifyComponent implements OnInit, OnDestroy, CanComponentDeact
       }
     }
   }
+
+  onGetRespone(response:any){
+    if(this.isEdit){
+      this.toastService.showSuccess(message.MESSAGE_UPDATE_SUCCESS);
+    }
+    else{
+      this.toastService.showSuccess(message.MESSAGE_CREATE_SUCCESS);
+      const queryParams: Params = { 
+        id: response.body.dishID
+      };
+      this.router.navigate(
+        [], 
+        {
+          relativeTo: this.route,
+          queryParams, 
+          queryParamsHandling: 'merge',
+        }
+      );
+    }
+    this.error = "";
+    URL.revokeObjectURL(this.dish.url);
+    this.blobImage = null;
+    const dish = this.dishService.transalteDishResponse(response.body);
+    this.dishService.dishSelected$.next(dish);
+  }
+
 
   ngOnDestroy(): void {
     this.dishSubscriptions.unsubscribe();

@@ -5,6 +5,7 @@ import { DishService } from 'src/app/services/DishService/dish.service';
 import { Observable, Subject, Subscription, debounceTime, merge, takeUntil } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
+import { LoadingService } from 'src/app/services';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit,OnDestroy {
+
 
   query: string = '';
   private queryChangeSubject = new Subject<void>();
@@ -44,7 +46,11 @@ export class HomeComponent implements OnInit,OnDestroy {
     this.filterIngredients = val.filterIngredients;
   }
 
-  constructor(private dishService:DishService,private router:Router, private activatedRoute:ActivatedRoute) { }
+  constructor(
+    private dishService:DishService,
+    private router:Router, 
+    private activatedRoute:ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.querySubscriptions = this.queryChangeSubject.asObservable().pipe(

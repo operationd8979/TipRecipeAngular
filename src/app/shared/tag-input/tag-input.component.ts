@@ -35,6 +35,7 @@ export class TagInputComponent implements OnChanges{
   ngOnChanges(): void {
     if(this.isAdmin){
       if(this.tagPageLoad.filterIngredients.length>0 && this.tagPageLoad.filterTypes.length>0){
+        this.tagValue = "";
         this.tagPageLoad.filterIngredients.forEach(ingredient => {
           this.tagValue+=ingredient.value+",";
         });

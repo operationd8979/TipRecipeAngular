@@ -1,0 +1,1 @@
+export {BlobManagerComponent as BlobManager} from './blob_manager.component';

@@ -11,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
             <ul>
                 <li><a routerLink="/admin">Dashboard</a></li>
                 <li><a routerLink="dishManager">Diskes manage</a></li>
+                <li><a routerLink="blobManager">Blobs manage</a></li>
             </ul>
         </nav>
     </aside>`,

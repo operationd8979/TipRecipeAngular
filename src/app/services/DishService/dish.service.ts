@@ -1,10 +1,11 @@
 import { KeyValue } from "@angular/common";
 import { HttpClient, HttpParams, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { BehaviorSubject, Observable, Subject, finalize } from "rxjs";
 import { AuthService } from "../AuthService";
 import { config } from 'src/app/constants';
 import { Dish, Ingredient, TypeDish } from "src/app/models";
+import { LoadingService } from "../LoadingService";
 
 interface ingredientsResponse {
     ingredientId: number;
@@ -62,18 +63,25 @@ export class DishService {
     private recommendDishSubject$ = new BehaviorSubject<KeyValue<string,string>[]>([]);
     recommendDishesObservable$ = this.recommendDishSubject$.asObservable();
 
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient,private loadingService: LoadingService) {
         
     }
 
     getDishes(query: string, filterIngredients: number[] = [], filterTypes: number[] = [], offset: number = 0, itemsPerPage: number = 5) {
+        this.loadingService.show();
         const queryParams = new HttpParams()
             .set('query', query)
             .set('ingredients', filterIngredients.join(','))
             .set('types', filterTypes.join(','))
             .set('limit', itemsPerPage)
             .set('offset', offset);
-        this.httpClient.get<dishResponse[]>(config.serverUrl +'dish', {params: queryParams}).subscribe(
+        this.httpClient.get<dishResponse[]>(config.serverUrl +'dish', {params: queryParams})
+        .pipe(
+            finalize(() => {
+                this.loadingService.hide();
+            })
+        )
+        .subscribe(
             (response) => {
                 const dishes:Dish[] = response.map((item) => {
                     const ingredients = item.detailIngredientDishes.map((ingredient) => {
@@ -100,7 +108,8 @@ export class DishService {
     }
 
     getRecommendDishes() {
-        this.httpClient.get<dishResponse[]>(config.serverUrl +'dish/recommend').subscribe(
+        this.httpClient.get<dishResponse[]>(config.serverUrl +'dish/recommend')
+        .subscribe(
             (response) => {
                 const items:KeyValue<string,string>[] = response.map((item) => {
                     return {key: item.dishID, value: item.urlPhoto};
@@ -118,11 +127,18 @@ export class DishService {
     }
 
     getDishesByAdmin(query: string, offset: number = 0, itemsPerPage: number = 5) {
+        this.loadingService.show();
         const queryParams = new HttpParams()
             .set('query', query)
             .set('limit', itemsPerPage)
             .set('offset', offset);
-        this.httpClient.get<dishesAdmin>(config.serverUrl +'admin/dish', {params: queryParams}).subscribe(
+        this.httpClient.get<dishesAdmin>(config.serverUrl +'admin/dish', {params: queryParams})
+        .pipe(
+            finalize(() => {
+                this.loadingService.hide();
+            })
+        )
+        .subscribe(
             (response) => {
                 const dishes:Dish[] = response.dishes.map((item) => {
                     const ingredients = item.detailIngredientDishes.map((ingredient) => {
@@ -181,17 +197,29 @@ export class DishService {
         this.dishSelected$.next(dish);
     }
 
+    transalteDishResponse(dish: dishResponse):Dish{
+        const ingredients = dish.detailIngredientDishes.map((ingredient) => {
+            return new Ingredient(ingredient.ingredient.ingredientId,ingredient.ingredient.ingredientName,ingredient.amount,ingredient.unit);
+        });
+        const types = dish.detailTypeDishes.map((type) => {
+            return new TypeDish(type.type.typeID,type.type.typeName);
+        });
+        const tempDish = new Dish(dish.dishID, dish.dishName, dish.summary, dish.urlPhoto, ingredients, types, dish.ratingScore, dish.isRated);
+        tempDish.setRecipe(dish.recipe.content);
+        return tempDish;
+    }
+
     getDeailtDish(dishID: string){
-        this.httpClient.get<dishResponse>(config.serverUrl +'dish/'+dishID).subscribe(
+        this.loadingService.show();
+        this.httpClient.get<dishResponse>(config.serverUrl +'dish/'+dishID)
+        .pipe(
+            finalize(() => {
+                this.loadingService.hide();
+            })
+        )
+        .subscribe(
             (response) => {
-                const ingredients = response.detailIngredientDishes.map((ingredient) => {
-                    return new Ingredient(ingredient.ingredient.ingredientId,ingredient.ingredient.ingredientName,ingredient.amount,ingredient.unit);
-                });
-                const types = response.detailTypeDishes.map((type) => {
-                    return new TypeDish(type.type.typeID,type.type.typeName);
-                });
-                const dish = new Dish(response.dishID, response.dishName, response.summary, response.urlPhoto, ingredients, types, response.ratingScore, response.isRated);
-                dish.setRecipe(response.recipe.content);
+                const dish = this.transalteDishResponse(response);
                 this.dishSelected$.next(dish);
                 this.errorSubject$.next('');
             },
@@ -202,38 +230,32 @@ export class DishService {
         );
     }
 
-    // rateDish(dishID: string, rating: number){
-    //     const body = {
-    //         dishID: dishID,
-    //         ratingScore: rating
-    //     };
-    //     this.httpClient.post(config.serverUrl +'dish/rating', body).subscribe(
-    //         (response) => {
-    //             this.getDeailtDish(dishID);
-    //             this.errorSubject$.next('');
-    //         },
-    //         (error) => {
-    //             const errorMessage = error.error.message;
-    //             this.errorSubject$.next(errorMessage);
-    //         },
-    //     );
-    // }
-
     rateDish(dishID: string, rating: number): Observable<HttpResponse<any>>{
+        this.loadingService.show();
         const body = {
             dishID: dishID,
             ratingScore: rating
         };
-        return this.httpClient.post(config.serverUrl +'dish/rating', body, {observe: 'response'});
+        return this.httpClient.post(config.serverUrl +'dish/rating', body, {observe: 'response'})
+        .pipe(
+            finalize(() => {
+                this.loadingService.hide();
+            })
+        );
     }
 
     
     modifyVisibleDish(dishID:string) : Observable<HttpResponse<any>>{
+        this.loadingService.show();
         return this.httpClient.delete(
             config.serverUrl + "admin/" + dishID,
             {
                 observe: 'response' 
             }
+        ).pipe(
+            finalize(() => {
+                this.loadingService.hide();
+            })
         );
     }
 
@@ -245,6 +267,7 @@ export class DishService {
         recipe: {Content: string},
         imageBlob: Blob | null
     ): Observable<HttpResponse<any>> {
+        this.loadingService.show();
         const formData = new FormData();
         if(imageBlob){
             formData.append('file', imageBlob, 'testSample.jpg');
@@ -254,7 +277,12 @@ export class DishService {
         formData.append('detailIngredientDishes', JSON.stringify(detailIngredientDishes));
         formData.append('detailTypeDishes', JSON.stringify(detailTypeDishes));
         formData.append('recipe', JSON.stringify(recipe));
-        return this.httpClient.post<dishResponse>('http://localhost:8080/api/admin/dish', formData, {observe: 'response'});
+        return this.httpClient.post<dishResponse>('http://localhost:8080/api/admin/dish', formData, {observe: 'response'})
+        .pipe(
+            finalize(() => {
+                this.loadingService.hide();
+            })
+        );
     }
 
     postUpdateDish(
@@ -266,6 +294,7 @@ export class DishService {
         recipe: {Content: string},
         imageBlob: Blob | null
     ): Observable<HttpResponse<any>> {
+        this.loadingService.show();
         const formData = new FormData();
         if(imageBlob){
             formData.append('file', imageBlob, 'testSample.jpg');
@@ -275,7 +304,12 @@ export class DishService {
         formData.append('detailIngredientDishes', JSON.stringify(detailIngredientDishes));
         formData.append('detailTypeDishes', JSON.stringify(detailTypeDishes));
         formData.append('recipe', JSON.stringify(recipe));
-        return this.httpClient.put<dishResponse>(`http://localhost:8080/api/admin/dish/${dishID}`, formData, {observe: 'response'});
+        return this.httpClient.put<dishResponse>(`http://localhost:8080/api/admin/dish/${dishID}`, formData, {observe: 'response'})
+        .pipe(
+            finalize(() => {
+                this.loadingService.hide();
+            })
+        );
     }
 
 }

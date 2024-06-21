@@ -50,5 +50,14 @@ export class ToastService {
     });
   }
 
+  showSystemMessage(message: string) {
+    const toast:Toast = {
+      message: message,
+      type: 'info'
+    };
+    this.showToast(toast);
+    return toast;
+  }
+
 
 }

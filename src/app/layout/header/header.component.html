@@ -1,4 +1,7 @@
 <header class="wrapper">
+    <div *ngIf="isLoading" class="loading-indicator">
+        Loading...
+    </div>
     <div class="container">
         <div class="logo__wrapper">
             <a routerLink="/">

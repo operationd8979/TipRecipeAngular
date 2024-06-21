@@ -1,0 +1,45 @@
+<div class="wrapper">
+    <div class="header">
+        <div class="title">
+            Blob Manager
+        </div>
+        <div class="actions">
+            <button>Upload</button>
+            <button>Delete</button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="container__path">
+            <div class="collection">
+                <div class="name">
+                    Collection
+                </div>
+                <div class="value">
+                    <select [(ngModel)]="keySelected">
+                        <option *ngFor="let key of keys" value="{{key}}">{{key}}</option>
+                    </select>
+                </div>
+                <div class="path">
+                    <!-- {{containerPath[keySelected]}} -->
+                     <div *ngFor="let blob of containerPath[keySelected]" class="blob__card" (click)="onClickCard(blob)">
+                        <div class="thurmail">
+                            <img src="https://interndev.blob.core.windows.net/{{keySelected}}/{{blob}}?{{sasToken}}" />
+                        </div>
+                        <div class="name">{{blob | shorten : 20}}</div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="preview">
+            <div class="image">
+                <img [src]="imgSrc" />
+            </div>
+            <div class="title">
+                {{blobSelected | shorten : 20}}
+            </div>
+            <div class="description">
+                description
+        </div>
+    </div>
+   
+</div>
