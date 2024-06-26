@@ -1,7 +1,7 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { Header, Footer } from './layout';
@@ -16,44 +16,38 @@ export function initializeApp(authService: AuthService) {
   };
 }
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    Header,
-    Footer,
-    Home,
-    Login,
-    Register,
-    UserProfile,
-    DetailDish,
-    TextBox,
-    PlainTextCard,
-    DishList,
-    DishItem,
-    DishQuickView,
-    ErrorPage,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    AdminModule
-  ],
-  providers: [
-    { 
-      provide: HTTP_INTERCEPTORS, 
-      useClass: HttpInterceptorService, 
-      multi: true 
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeApp,
-      deps: [AuthService],
-      multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        Header,
+        Footer,
+        Home,
+        Login,
+        Register,
+        UserProfile,
+        DetailDish,
+        TextBox,
+        PlainTextCard,
+        DishList,
+        DishItem,
+        DishQuickView,
+        ErrorPage,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AdminModule], providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpInterceptorService,
+            multi: true
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initializeApp,
+            deps: [AuthService],
+            multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }
