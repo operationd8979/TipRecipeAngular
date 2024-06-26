@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: var(--white);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,7 +22,7 @@ p {
 }
 
 a {
-    color: var(--primary);
+    color: var(--color-primary);
     text-decoration: none;
     font-weight: var(--default-medium-font-weight);
 }

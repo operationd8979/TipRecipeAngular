@@ -44,11 +44,11 @@
             .action__dish{
                 a{
                     font-size: var(--default-tiny-font-size);
-                    color: var(--primary);
+                    color: var(--color-primary);
                     font-weight: var(--default-medium-font-weight);
                 }
                 a:hover{
-                    color: var(--primary-hover);
+                    color: var(--color-primary-hover);
                     text-decoration: underline;
                 }
             }

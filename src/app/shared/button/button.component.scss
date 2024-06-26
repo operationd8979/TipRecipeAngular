@@ -12,20 +12,20 @@ button:hover{
 
 .primary{
     color: var(--white);
-    background-color: var(--primary);
+    background-color: var(--color-primary);
 }
 .primary:hover{
-    background-color: var(--primary-hover);
+    background-color: var(--color-primary-hover);
 }
 
 .outline{
-    color: var(--primary);
+    color: var(--color-primary);
     background-color: var(--white);
-    border: 1.5px solid var(--primary);
+    border: 1.5px solid var(--color-primary);
 }
 .outline:hover{
     color: var(--white);
-    background-color: var(--primary);
+    background-color: var(--color-primary);
 }
 
 .disabled{

@@ -17,20 +17,18 @@ a, button {
 
 
 :root {
-    //4299e1
-    //006ce8
-    --primary: #006ce8;
-    --darkPrimary: rgb(31 41 55);
-    --primary-hover: #0f519c;
     --black: #000;
     --white: #f4f4f4;
     --red: rgb(220 38 38);
+    --color-primary: #006ce8;
+    --color-primary-hover: #0f519c;
+    --color-dark: rgb(31 41 55);
+    --color-disable: rgba(22, 24, 35, 0.5);
     --color-text: #333;
     --color-light-text: #9e9e9e;
-    --color-disable: rgba(22, 24, 35, 0.5);
+    --color-border-light: #d2d6dc;
     --color-shadow: rgba(0, 0, 0, 0.15);
     --color-background: rgb(229 231 235);
-    --color-border-light: #d2d6dc;
     // Default layout
     --default-tiny-zone: 2px;
     --default-mini-zone: 5px;

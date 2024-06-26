@@ -53,11 +53,11 @@
     align-items: center;
     justify-content: space-between;
     a{
-        color: var(--primary);
+        color: var(--color-primary);
         font-size: var(--default-small-font-size);
     }
     a:hover {
-        color: var(--primary-hover);
+        color: var(--color-primary-hover);
     }
 }
 

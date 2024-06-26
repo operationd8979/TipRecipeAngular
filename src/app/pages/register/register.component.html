@@ -23,12 +23,6 @@
                 <input type="password" placeholder="confirm password" id="confirmPassword" class="medium" formControlName="confirmPassword">
                 <span class="help-block">{{checkChain(registerForm.get('confirmPassword'))}}</span>
             </div>
-            <!-- <div class="form__catcha">
-                <div class="captcha">
-                    <img src="captcha.php" alt="Captcha" onclick="this.src='captcha.php?refresh=1'">
-                </div>
-                <input type="text" placeholder="" id="captcha" class="medium" formControlName="captcha">
-            </div> -->
             <div class="active__wrapper">
                 <shared-button [type]="'primary'" [size]="'medium'" [disabled]="registerForm.invalid">Sign up</shared-button>
                 <a routerLink="/login">Sign in?</a>

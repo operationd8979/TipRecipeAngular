@@ -1,7 +1,7 @@
 .wrapper{
     height: 100%;
     width: 100%;
-    background-color: var(--darkPrimary);
+    background-color: var(--color-dark);
     .header{
         display: flex;
         justify-content: center;
@@ -24,7 +24,7 @@
                     display: block;
                     padding: 10px;
                     &:hover{
-                        background-color: var(--darkPrimary);
+                        background-color: var(--color-dark);
                     }
                 
                 }

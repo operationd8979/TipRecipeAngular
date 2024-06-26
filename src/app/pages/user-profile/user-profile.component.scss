@@ -27,13 +27,11 @@
             padding: 0 var(--default-large-zone);
             .form__fill{
                 margin-bottom: var(--default-medium-zone);
-
                 label{
                     font-size: var(--default-small-font-size);
                     font-weight: var(--default-medium-font-weight);
                     padding: var(--default-small-zone) 0;
                 }
-
             }
             .error__message{
                 margin: 8px 0px;

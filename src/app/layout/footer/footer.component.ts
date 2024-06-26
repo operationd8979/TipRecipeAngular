@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
   styles: [`
   .wrapper {
     padding: var(--default-small-zone);
-    background-color: var(--darkPrimary);
+    background-color: var(--color-dark);
     text-align: center;
     p{
         font-size: var(--default-mini-font-size);

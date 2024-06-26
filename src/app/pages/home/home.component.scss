@@ -55,10 +55,10 @@
             align-items: center;
             .pageSelect{
                 a{
-                    color: var(--primary);
+                    color: var(--color-primary);
                 }
                 a:hover{
-                    color: var(--primary-hover);
+                    color: var(--color-primary-hover);
                     font-weight: var(--default-large-font-weight);
                     // font-size: var(--default-small-font-size);
                 }

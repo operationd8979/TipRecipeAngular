@@ -8,14 +8,6 @@
                 Your rating: {{dish.getRating()}}/10
             </div>
             <ng-template #elseRating>
-                <!-- <div class="rating__dish" *ngIf="dish.getRating()>7 else elsePre">
-                    You will loved it
-                </div>
-                <ng-template #elsePre>
-                    <div class="rating__dish">
-                        Your rating: none
-                    </div>
-                </ng-template> -->
                 <div class="rating__dish">
                     {{dish.getRating()>7 ? 'You will loved it' : 'Your rating: none'}}
                 </div>

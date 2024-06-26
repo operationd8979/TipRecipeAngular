@@ -21,7 +21,34 @@
                     margin-top: 10px;
                 }
                 .value{
-
+                    margin: var(--default-medium-zone);
+                    select {
+                        width: 100%;
+                        padding: var(--default-small-zone);
+                        font-size: var(--default-small-font-size);
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                        background-color: #f9f9f9;
+                        color: var(--color-text);
+                        appearance: none;
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+                        background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+                        background-repeat: no-repeat;
+                        background-position: right 10px center;
+                        background-size: 12px 12px;
+                        cursor: pointer;
+                    }
+                    select:focus {
+                        outline: none;
+                        border-color: #66afe9;
+                        box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+                    }
+                    option {
+                        padding: 10px;
+                        font-size: 16px;
+                        color: var(--color-text);
+                    }
                 }
                 .path{
                     height: 80vh;

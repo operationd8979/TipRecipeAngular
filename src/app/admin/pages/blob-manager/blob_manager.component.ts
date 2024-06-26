@@ -24,15 +24,18 @@ export class BlobManagerComponent implements OnInit{
             this.sasToken = sas;
             this.containerPath = containers;
             this.keys = Object.keys(this.containerPath);
-            // Object.keys(this.containerPath).forEach((key) => {
-            //     console.log(key, this.containerPath[key]);
-            // });
+            this.keySelected = this.keys[0];
+            this.onClickCard(this.containerPath[this.keySelected][0]);
         });
     }
 
     onClickCard(blobName:string){
         this.blobSelected = blobName;
         this.imgSrc = `https://interndev.blob.core.windows.net/${this.keySelected}/${blobName}?${this.sasToken}`;
+    }
+
+    onClickUpload(){
+        console.log("abc");
     }
 
 }
