@@ -3,8 +3,14 @@
         {{dish.getName()}} Recipe
     </div>
     <hr>
-    <div class="container">
-        <div class="side__bar">
+    <div class="container"
+        fxLayout.gt-sm="row"
+        fxLayoutAlign.gt-sm="space-between start"
+        fxLayout.lt-md="column"
+    >
+        <div class="side__bar"
+            fxFlex.gt-sm="33"
+        >
             <div class="dish__photo">
                 <img src={{dish.getUrl()}}>
             </div>
@@ -24,7 +30,9 @@
                 </ul>
             </div>
         </div>
-        <div class="main__body">
+        <div class="main__body"
+            fxFlex.gt-sm="63"
+        >
             <div class="header">
                 Step by step
             </div>

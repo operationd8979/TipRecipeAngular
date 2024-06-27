@@ -210,13 +210,7 @@ export class DishService {
     }
 
     getDeailtDish(dishID: string){
-        this.loadingService.show();
         this.httpClient.get<dishResponse>(config.serverUrl +'dish/'+dishID)
-        .pipe(
-            finalize(() => {
-                this.loadingService.hide();
-            })
-        )
         .subscribe(
             (response) => {
                 const dish = this.transalteDishResponse(response);
@@ -226,7 +220,7 @@ export class DishService {
             (error) => {
                 const errorMessage = error.error.message;
                 this.errorSubject$.next(errorMessage);
-            },
+            }
         );
     }
 

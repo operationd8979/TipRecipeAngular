@@ -1,9 +1,9 @@
 <body class="wrapper">
-    <div class="banner">
+    <div class="banner" ngStyle.lt-sm="display:none">
         <div class="banner__hard">
             <img src="./assets/images/banner.png" alt="banner">
         </div>
-        <div class="banner__soft">
+        <div class="banner__soft" >
             <div class="banner__item slide" *ngFor="let item of recommendDishes">
                 <a routerLink="/detail/{{item.key}}">
                     <img src={{item.value}} alt="Slide 1" class="rounded-xl">
@@ -11,8 +11,17 @@
             </div>
         </div>
     </div>
-    <main class="main">
-        <aside class="filter">
+    <main 
+    fx.Layout="row"
+    fxLayout.gt-sm="row"
+    fxLayout.lt-md="column" 
+    fxLayoutAlign="start start" 
+    fxLayoutAlign.lt-md="center center" 
+    class="main">
+        <aside fxFlex="25%" fxFlex.gt-sm="25%" fxFlex.lt-md="100%" 
+        ngStyle.gt-sm="margin-right: var(--default-medium-zone);" 
+        ngStyle.lt-md="margin-bottom: var(--default-medium-zone);" 
+        class="filter">
             <div class="header__title">Filter</div>
             <hr>
             <div class="filter__body">
@@ -20,7 +29,6 @@
                     <div class="search__input">
                         <shared-text-box [type]="'text'" [size]="'medium'" [placeholder]="'search by name'" [(valueModel)]="query" (input)="updateQuery()" (keydown.enter)="callApiSearch()"></shared-text-box>
                     </div>
-                    <!-- <shared-button [type]="'primary'" [size]="'medium'" (clicked)="callApiSearch()">Search</shared-button> -->
                 </div>
                 <div class="filter__display">
                     <div class="tag__input">
@@ -45,7 +53,10 @@
                 </div>
             </div>
         </aside>
-        <section class="listView">
+        <section fxFlex="40%" fxFlex.gt-sm="40%" fxFlex.lt-md="100%" 
+        ngStyle.gt-sm="margin-right: var(--default-medium-zone);" 
+        ngStyle.lt-md="margin-bottom: var(--default-medium-zone);" 
+        class="listView">
             <div class="listView__header">
                 <div class="header__title">Dishs</div>
                 <div class="pageSelect">
@@ -58,7 +69,8 @@
                 <shared-list-dish [listDish]="dishes"></shared-list-dish>
             </ul>
         </section>
-        <aside class="quickView">
+        <aside fxFlex="35%" fxFlex.gt-sm="35%" fxFlex.lt-md="100%" 
+        class="quickView">
             <div class="header__title">Quick view</div>
             <hr>
             <ul *ngIf="selectedDish">

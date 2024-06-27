@@ -7,28 +7,21 @@
 
 .container {
     .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
         margin-bottom: var(--default-small-zone);
         .title__dish{
-            flex: 2;
             font-weight: var(--default-large-font-weight);
         }
         .rating__dish{
-            flex: 1;
-            margin-left: var(--default-small-zone);
-            color: var(--red);
-            font-size: var(--default-mini-font-size);
+            *{
+                color: var(--red);
+                font-size: var(--default-mini-font-size);
+            }
         }
     }
 
     .body__properties{
-        display: flex;
-        // align-items: center;
         font-size: var(--default-mini-font-size);
         .image__dish{
-            flex:2;
             img{
                 width: 100%;
                 height: auto;
@@ -36,8 +29,6 @@
             }
         }
         .detail__dish{
-            flex:5;
-            margin-left: var(--default-small-zone);
             .description__dish{
                 font-weight: var(--default-mini-font-weight);
             }
@@ -50,6 +41,7 @@
                 a:hover{
                     color: var(--color-primary-hover);
                     text-decoration: underline;
+                    text-shadow: 0 0 5px var(--color-primary-hover);
                 }
             }
         }

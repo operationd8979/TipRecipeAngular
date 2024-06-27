@@ -2,8 +2,13 @@
     <div *ngIf="isLoading" class="loading-indicator">
         Loading...
     </div>
-    <div class="container">
-        <div class="logo__wrapper">
+    <div class="container"
+        ngStyle.lt-sm="justify-content: center;"
+    >
+        <div class="logo__wrapper" 
+            ngStyle.gt-xs="display:block"
+            ngStyle.lt-sm="display:none"
+        >
             <a routerLink="/">
                 <img src="./assets/images/logo.png" />TipRecipeAngular</a>
         </div>

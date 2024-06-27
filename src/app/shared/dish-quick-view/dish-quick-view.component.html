@@ -1,17 +1,28 @@
 <div class="wrapper" *ngIf="dish">
-    <div class="container">
+    <div class="container"
+        fxLayout="column"
+        fxLayoutAlign="center center"
+    >
         <div class="header">
             <div class="title__dish">
                 {{dish.getName()}}
             </div>
         </div>
-        <div class="body__properties">
-            <div class="image__dish">
+        <div class="body__properties"
+            fxLayout.gt-md="row"
+            fxLayoutAlign.gt-md="space-between center"
+            fxLayout.lt-lg="column"
+            fxLayoutAlign.lt-lg="center center"
+        >
+            <div class="image__dish"
+                fxFlex.gt-md="35"
+            >
                 <img src="{{dish.getUrl()}}" alt="{{dish.getName()}}">
             </div>
-            <div class="detail__dish">
+            <div class="detail__dish"
+                fxFlex.gt-md="60"
+            >
                 <div class="ingredients__dish">
-                    Ingredients: 
                     <ul >
                         <li *ngFor="let ingredient of dish.getIngredients()">{{ingredient.getName()}} : {{ingredient.getQuantity()}} {{ingredient.getUnit()}}</li>
                     </ul>

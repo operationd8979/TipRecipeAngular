@@ -51,8 +51,9 @@
                     }
                 }
                 .path{
-                    height: 80vh;
+                    height: 70vh;
                     overflow: auto;
+                    scrollbar-width: none;
                     font-size: 14px;
                     padding: 10px;
                     display: flex;

@@ -1,16 +1,14 @@
 .wrapper{
-    // background-color: var(--white);
 
 }
 
 
 .container{
-    // box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-    padding: var(--default-medium-zone) 0 ;
-    width: 60%;
+    padding: var(--default-medium-zone) var(--default-large-zone) ;
     margin: 0 auto;
     .card{
         width: 100%;
+        text-align: center;
     }
     .form{
         box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);

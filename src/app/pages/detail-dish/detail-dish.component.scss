@@ -15,9 +15,7 @@
 
 .container {
     padding: var(--default-large-zone);
-    display: flex;
     .side__bar{
-        flex: 1;
         .dish__photo{
             img{
                 width: 100%;
@@ -39,16 +37,15 @@
         }
     }
     .main__body{
-        flex: 2;
-        margin-left: var(--default-large-zone);
+        padding: var(--default-medium-zone) 0;
         .rating{
             padding: var(--default-medium-zone);
             .rating__input{
-                width: 20%;
+                width: 20rem;
             }
             .ratting__button{
                 margin: var(--default-medium-zone) 0px;
-                width: 20%;
+                width: 10rem;
             }
         }
         .recipe{

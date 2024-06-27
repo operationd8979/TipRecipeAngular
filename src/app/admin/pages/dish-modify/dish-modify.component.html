@@ -1,13 +1,26 @@
 <div class="wrapper">
-    <div class="header">
+    <div class="header"
+      fxLayout.gt-xs="row"
+      fxLayoutAlign.gt-xs="space-between center" 
+      fxLayout.lt-sm="column"
+      fxLayoutAlign.lt-sm="center center" 
+    >
         <h1 class="title">
           {{ isEdit ? "Edit Dish" : "Add Dish" }}
         </h1>
         <div class="error__message">{{error}}</div>
     </div>
     <main class="main__container">
-        <div class="grid__container">
-          <div class="form__section">
+        <div class="grid__container"
+          fxLayout.gt-md="row"
+          fxLayout.lt-lg="column"
+          fxLayoutAlign.gt-md="space-between start"
+          fxLayoutAlign.lt-lg="center center"
+        >
+          <div class="form__section"
+            fxFlex.gt-md="38"
+            ngStyle.lt-lg="margin-bottom: 20px;"
+          >
             <div class="image__container">
               <img
                 id="dishPhoto"
@@ -64,7 +77,9 @@
             </div>
             </aside>
           </div>
-          <div class="main__form__section hide-element">
+          <div class="main__form__section"
+            fxFlex.gt-md="58"
+          >
             <div class="form__group">
               <label for="dishName" class="form__label">Dish Name</label>
               <input
@@ -133,6 +148,6 @@
             </div>
           </div>
         </div>
-      </main>
+    </main>
 </div>
 

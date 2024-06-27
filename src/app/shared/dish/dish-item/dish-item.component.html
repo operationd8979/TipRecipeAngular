@@ -1,23 +1,39 @@
 <div class="wrapper">
-    <div class="container">
-        <div class="header">
+    <div *ngIf="dish" class="container">
+        <div class="header"
+            fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="space-between center"
+            fxLayout.lt-md="column"
+            fxLayoutAlign.lt-md="center center"
+        >
             <div class="title__dish">
                 {{dish.getName()}}
             </div>
-            <div class="rating__dish" *ngIf="dish.getIsRated() else elseRating">
-                Your rating: {{dish.getRating()}}/10
-            </div>
-            <ng-template #elseRating>
-                <div class="rating__dish">
-                    {{dish.getRating()>7 ? 'You will loved it' : 'Your rating: none'}}
+            <div class="rating__dish">
+                <div *ngIf="dish.getIsRated() else elseRating">
+                    Rating: {{dish.getRating()}}/10
                 </div>
-            </ng-template>
+                <ng-template #elseRating>
+                    <div>
+                        {{dish.getRating()>7 ? 'Will like it' : ''}}
+                    </div>
+                </ng-template>
+            </div>
         </div>
-        <div class="body__properties">
-            <div class="image__dish" routerLink="/detail/{{dish.getID()}}">
+        <div class="body__properties"
+            fxLayout.gt-md="row"
+            fxLayoutAlign.gt-md="space-between start"
+            fxLayout.lt-lg="column"
+            fxLayoutAlign.lt-lg="center center"
+        >
+            <div class="image__dish" routerLink="/detail/{{dish.getID()}}"
+                fxFlex.gt-md="35"
+            >
                 <img src="{{dish.getUrl()}}" alt="{{dish.getName()}}">
             </div>
-            <div class="detail__dish">
+            <div class="detail__dish"
+                fxFlex.gt-md="60"
+            >
                 <div class="description__dish">
                     Desciption: {{dish.getSummary()}}
                 </div>
@@ -32,9 +48,6 @@
                 <div class="action__dish">
                     <div>
                         <a (click)="onClickQuickView()">quick view</a>
-                    </div>
-                    <div>
-                        <a [routerLink]="['/detail', dish.getID()]">view detail</a>
                     </div>
                 </div>
             </div>

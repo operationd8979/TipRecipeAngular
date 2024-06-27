@@ -13,14 +13,15 @@ export class DishItemComponent implements OnInit {
 
   constructor(private dishService:DishService) { }
 
-  @Input() dish: Dish = new Dish("1234", "cơm trứng", "món ăn việt", "https://cdn11.dienmaycholon.vn/filewebdmclnew/public//userupload/images/cach-nau-com-ngon-va-lau-thiu-3.jpg", [], [], 5);
+  @Input() dish: Dish|null = null;
 
   ngOnInit(): void {
 
   }
   
   onClickQuickView() {
+    if(this.dish == null) return;
     this.dishService.getDeailtDish(this.dish.getID());
-    // this.dishService.setSelectedDish(this.dish);
   }
+
 }

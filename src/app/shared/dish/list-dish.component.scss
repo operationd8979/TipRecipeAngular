@@ -3,9 +3,8 @@
 }
 
 .container {
-    
     .notification__noRecipe{
-        margin-top: var(--default-large-zone);
+        padding: var(--default-large-zone);
         text-align: center;
         color: var(--black);
         font-size: var(--default-medium-font-size);

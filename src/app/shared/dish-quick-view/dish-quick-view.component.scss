@@ -1,6 +1,6 @@
 .wrapper {
     padding: 0 var(--default-small-zone);
-    margin-bottom: var(--default-medium-zone);
+    padding-bottom: var(--default-medium-zone);
     font-size: var(--default-small-font-size);
     font-style: var(--default-small-font-weight);
     ul{
@@ -13,28 +13,15 @@
 
 .container {
     .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
         margin-bottom: var(--default-small-zone);
         .title__dish{
-            flex: 8;
             font-weight: var(--default-large-font-weight);
         }
-        .rating__dish{
-            flex: 3;
-            margin-left: var(--default-small-zone);
-            color: var(--red);
-            font-size: var(--default-mini-font-size);
-        }
     }
-
     .body__properties{
-        display: flex;
-        // align-items: center;
+        margin-bottom: var(--default-small-zone);
         font-size: var(--default-mini-font-size);
         .image__dish{
-            flex:2;
             align-self: center;
             img{
                 width: 100%;
@@ -44,15 +31,17 @@
         }
         .detail__dish{
             font-size: var(--default-tiny-font-size);
-            flex:5;
-            margin-left: var(--default-small-zone);
-            .description__dish{
-                font-weight: var(--default-mini-font-weight);
+            .ingredients__dish{
+                font-size: var(--default-mini-font-size);
+            
             }
         }
     }
     .footer{
-        font-size: var(--default-mini-font-size);
         margin-bottom: var(--default-small-zone);
+        font-size: var(--default-mini-font-size);
+        .description__dish{
+            font-weight: var(--default-mini-font-weight);
+        }
     }
 }

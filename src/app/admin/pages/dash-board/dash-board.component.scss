@@ -3,7 +3,6 @@
     padding: 4rem;
 }
 
-
 .header{
     h1{
         font-size: 3rem;
@@ -13,8 +12,13 @@
     }
 }
 .container__payload{
+    overflow-x: auto;
+    scrollbar-width: none;
+    height: 70vh;
+    padding: var(--default-small-zone);
+
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 2rem;
     .payload__wrapper{
         background-color: var(--white);
